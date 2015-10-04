@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:background="@color/card_two_background"
+	android:orientation="vertical"
+	tools:context=".TimeActivity"
+	>
+
+	<AnalogClock
+		android:layout_width="match_parent"
+		android:layout_height="200dp"
+		/>
+
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="0dp"
+		android:layout_weight="1"
+		android:orientation="vertical">
+
+		<TextView
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:gravity="center"
+			android:text="你的大学余额剩下XX%"
+			android:textColor="#fff"
+			android:textSize="20sp"/>
+
+		<View
+			android:layout_width="match_parent"
+			android:layout_height="20dp"/>
+
+		<TextView
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:text="剩下的日子，你大概还可以"
+			android:textColor="#fff"
+			android:textSize="13sp"/>
+	</LinearLayout>
+
+	<FrameLayout
+		android:layout_width="match_parent"
+		android:layout_height="100dp">
+
+		<Button
+			android:id="@+id/btn_time_now"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_gravity="center"
+			android:gravity="center"
+			android:text="眼前"/>
+	</FrameLayout>
+</LinearLayout>
