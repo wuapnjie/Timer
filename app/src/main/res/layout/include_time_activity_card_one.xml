@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:background="@color/card_one_background"
+	android:orientation="vertical"
+	tools:context=".TimeActivity"
+	tools:showIn="@layout/activity_time">
+
+	<AnalogClock
+		android:layout_width="match_parent"
+		android:layout_height="200dp"
+		/>
+
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="0dp"
+		android:layout_weight="1"
+		android:orientation="vertical">
+
+		<TextView
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:gravity="center"
+			android:text="你在电子科技大学\n已经有XXX.XXXXXX天"
+			android:textSize="20sp"/>
+
+		<View
+			android:layout_width="match_parent"
+			android:layout_height="20dp"/>
+
+		<TextView
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:text="在这个校园，你已经"
+			android:textSize="13sp"/>
+	</LinearLayout>
+
+	<FrameLayout
+		android:layout_width="match_parent"
+		android:layout_height="100dp">
+
+		<Button
+			android:id="@+id/btn_time_leave"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_gravity="center"
+			android:gravity="center"
+			android:text="离别"/>
+	</FrameLayout>
+
+</LinearLayout>

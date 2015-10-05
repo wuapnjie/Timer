@@ -5,10 +5,9 @@ import android.os.Bundle;
 import android.widget.Button;
 
 import com.iec.dwx.timer.Activities.BaseActivity;
-import com.iec.dwx.timer.Activities.MainActivity;
+import com.iec.dwx.timer.Activities.TimeActivity;
 
 import butterknife.Bind;
-import rx.Observable;
 
 public class TestActivity extends BaseActivity {
 
@@ -25,7 +24,7 @@ public class TestActivity extends BaseActivity {
     }
 
     private void linkTo() {
-        Observable.just(new Intent()).map(intent1 -> intent1.setClass(this, MainActivity.class)).subscribe(intent -> startActivity(intent));
+        startActivity(new Intent(this, TimeActivity.class));
     }
 
     @Override

@@ -3,5 +3,6 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
 
-    <dimen name="fragment_my_wishes_add_text">30dp</dimen>
+    <integer name="card_flip_full_time">500</integer>
+    <integer name="card_flip_half_time">250</integer>
 </resources>

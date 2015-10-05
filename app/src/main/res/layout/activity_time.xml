@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.iec.dwx.timer.Views.CardFlipLayout
+	android:id="@+id/card_container"
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	tools:context="com.iec.dwx.timer.Activities.TimeActivity">
+
+	<include layout="@layout/include_time_activity_card_two"/>
+
+	<include layout="@layout/include_time_activity_card_one"/>
+
+</com.iec.dwx.timer.Views.CardFlipLayout>

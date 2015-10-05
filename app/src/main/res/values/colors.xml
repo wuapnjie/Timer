@@ -5,4 +5,8 @@
     <color name="colorAccent">#FF4081</color>
 
     <color name="black_overlay">#66000000</color>
+
+    <color name="card_two_background">#000000</color>
+    <color name="card_one_background">#FFFFFF</color>
+
 </resources>

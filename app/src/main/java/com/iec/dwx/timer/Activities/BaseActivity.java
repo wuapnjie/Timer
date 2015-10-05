@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.iec.dwx.timer.BuildConfig;
-import com.iec.dwx.timer.Utils.Utils;
 
 import butterknife.ButterKnife;
 import me.imid.swipebacklayout.lib.SwipeBackLayout;
@@ -14,7 +13,7 @@ import me.imid.swipebacklayout.lib.app.SwipeBackActivity;
  * 基础Activity，继承自SwipeBackActivity，提供外部修改接口
  * Created by Flying SnowBean on 2015/10/2.
  */
-public abstract class BaseActivity extends SwipeBackActivity{
+public abstract class BaseActivity extends SwipeBackActivity {
     protected final String TAG = this.getClass().getSimpleName();
 
     protected SwipeBackLayout mSwipeBackLayout;
@@ -29,11 +28,9 @@ public abstract class BaseActivity extends SwipeBackActivity{
         ButterKnife.bind(this);
         mSwipeBackLayout = getSwipeBackLayout();
 
-        if (getEdgeSize() != 0)
-            mSwipeBackLayout.setEdgeSize(getEdgeSize());
-        else mSwipeBackLayout.setEdgeSize(Utils.dp2px(100));
+        mSwipeBackLayout.setEdgeSize(getEdgeSize());
 
-        mSwipeBackLayout.setEdgeTrackingEnabled(SwipeBackLayout.EDGE_LEFT|SwipeBackLayout.EDGE_RIGHT);
+        mSwipeBackLayout.setEdgeTrackingEnabled(SwipeBackLayout.EDGE_LEFT | SwipeBackLayout.EDGE_RIGHT);
     }
 
     /**
