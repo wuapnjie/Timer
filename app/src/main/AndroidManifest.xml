@@ -21,6 +21,8 @@
         </activity>
         <activity android:name=".Activities.MainActivity" >
         </activity>
+        <activity android:name=".Activities.PublicWishes">
+        </activity>
 
     </application>
 

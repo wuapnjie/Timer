@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.widget.Button;
 
 import com.iec.dwx.timer.Activities.BaseActivity;
+import com.iec.dwx.timer.Activities.MainActivity;
 import com.iec.dwx.timer.Activities.TimeActivity;
 
 import butterknife.Bind;
@@ -25,6 +26,8 @@ public class TestActivity extends BaseActivity {
 
     private void linkTo() {
         startActivity(new Intent(this, TimeActivity.class));
+        //进入viewpager测试使用，记得修改回去
+//        startActivity(new Intent(this, MainActivity.class));
     }
 
     @Override
