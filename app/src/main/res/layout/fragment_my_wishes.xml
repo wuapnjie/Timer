@@ -17,5 +17,12 @@
         android:layout_height="wrap_content"
         android:textSize="30dp"
         android:hint="Life will be  better !"/>
+    <Button
+        android:background="#e62222"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/fragment_my_wishes_add"
+        android:textSize="@dimen/fragment_my_wishes_add_text"
+        />
 
 </FrameLayout>
