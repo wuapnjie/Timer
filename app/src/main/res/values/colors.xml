@@ -6,7 +6,10 @@
 
     <color name="black_overlay">#66000000</color>
 
-    <color name="card_two_background">#000000</color>
-    <color name="card_one_background">#FFFFFF</color>
+    <color name="card_one_background">#bcffffff</color>
 
+    <color name="card_two_background">#bd000000</color>
+    <color name="card_two_head_text_color">#fff</color>
+    <color name="card_two_subhead_text_color">#dfff</color>
+    <color name="card_two_btn_text_color">#fff</color>
 </resources>

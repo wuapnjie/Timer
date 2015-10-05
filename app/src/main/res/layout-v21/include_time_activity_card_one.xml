@@ -35,6 +35,7 @@
 			android:layout_height="20dp"/>
 
 		<TextView
+			android:paddingLeft="@dimen/card_subhead_padding_left"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:text="@string/card_one_subhead"
@@ -51,7 +52,8 @@
 			android:layout_height="wrap_content"
 			android:layout_gravity="center"
 			android:gravity="center"
-			android:background="@android:color/transparent"
+			android:textSize="@dimen/card_btn_text_size"
+			android:background="?android:attr/selectableItemBackgroundBorderless"
 			android:text="@string/card_one_btn"/>
 	</FrameLayout>
 
