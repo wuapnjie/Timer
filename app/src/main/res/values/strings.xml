@@ -1,9 +1,8 @@
 <resources>
 	<string name="app_name">Timer</string>
 
-<!-- TODO: Remove or change this placeholder text -->
+	<!-- TODO: Remove or change this placeholder text -->
 	<string name="hello_blank_fragment">Hello blank fragment</string>
-<<<<<<< HEAD
 
 	<string name="card_one_head">你在学校已经  XXX.XXX  天了</string>
 	<string name="card_one_subhead">在这个校园，你已经</string>
@@ -12,7 +11,21 @@
 	<string name="card_two_head">你的校园时光剩下XX%</string>
 	<string name="card_two_subhead">在剩下的时光里，你大约还可以</string>
 	<string name="card_two_btn">眼  前</string>
-=======
+
+	<string name="pick_view_head">你正在读</string>
+	<string name="pick_view_btn_yes">确认</string>
+	<string name="pick_view_value_1">大一</string>
+	<string name="pick_view_value_2">大二</string>
+	<string name="pick_view_value_3">大三</string>
+	<string name="pick_view_value_4">大四</string>
+
+
 	<string name="fragment_my_wishes_add">新心愿</string>
->>>>>>> 805c3bf5fe9efbb608f4f06842e71a225b478100
+
+	<string-array name="pick_values">
+		<item>@string/pick_view_value_1</item>
+		<item>@string/pick_view_value_2</item>
+		<item>@string/pick_view_value_3</item>
+		<item>@string/pick_view_value_4</item>
+	</string-array>
 </resources>

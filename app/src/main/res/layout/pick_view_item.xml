@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.AppCompatCheckBox
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/chk_value"
+    android:layout_width="match_parent"
+    android:layout_height="56dp"
+    android:paddingLeft="8dp"
+    android:text="@string/pick_view_value_4"
+    android:textColor="#5F5F5F"
+    android:textSize="16sp"/>

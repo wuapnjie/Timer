@@ -18,9 +18,9 @@
 	<LinearLayout
 		android:layout_width="match_parent"
 		android:layout_height="0dp"
-		android:layout_weight="1"
 		android:layout_marginLeft="@dimen/card_margin"
 		android:layout_marginRight="@dimen/card_margin"
+		android:layout_weight="1"
 		android:orientation="vertical">
 
 		<TextView
@@ -35,9 +35,9 @@
 			android:layout_height="20dp"/>
 
 		<TextView
-			android:paddingLeft="@dimen/card_subhead_padding_left"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
+			android:paddingLeft="@dimen/card_subhead_padding_left"
 			android:text="@string/card_one_subhead"
 			android:textSize="@dimen/card_subhead_size"/>
 	</LinearLayout>
@@ -51,10 +51,9 @@
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:layout_gravity="center"
-			android:gravity="center"
-			android:textSize="@dimen/card_btn_text_size"
 			android:background="?android:attr/selectableItemBackgroundBorderless"
-			android:text="@string/card_one_btn"/>
+			android:gravity="center"
+			android:text="@string/card_one_btn"
+			android:textSize="@dimen/card_btn_text_size"/>
 	</FrameLayout>
-
 </LinearLayout>

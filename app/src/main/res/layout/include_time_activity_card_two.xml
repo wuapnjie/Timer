@@ -9,23 +9,26 @@
 	tools:context=".TimeActivity"
 	>
 
-	<AnalogClock
+	<com.iec.dwx.timer.Views.ClockView
 		android:layout_width="match_parent"
-		android:layout_height="200dp"
+		android:layout_height="0dp"
+		android:layout_weight="1"
 		/>
 
 	<LinearLayout
 		android:layout_width="match_parent"
 		android:layout_height="0dp"
 		android:layout_weight="1"
+		android:layout_marginLeft="@dimen/card_margin"
+		android:layout_marginRight="@dimen/card_margin"
 		android:orientation="vertical">
 
 		<TextView
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:gravity="center"
-			android:text="你的大学余额剩下XX%"
-			android:textColor="#fff"
+			android:textColor="@color/card_two_head_text_color"
+			android:text="@string/card_two_head"
 			android:textSize="@dimen/card_head_size"/>
 
 		<View
@@ -33,16 +36,17 @@
 			android:layout_height="20dp"/>
 
 		<TextView
+			android:paddingLeft="@dimen/card_subhead_padding_left"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:text="剩下的日子，你大概还可以"
-			android:textColor="#fff"
+			android:text="@string/card_two_subhead"
+			android:textColor="@color/card_two_subhead_text_color"
 			android:textSize="@dimen/card_subhead_size"/>
 	</LinearLayout>
 
 	<FrameLayout
 		android:layout_width="match_parent"
-		android:layout_height="100dp">
+		android:layout_height="72dp">
 
 		<Button
 			android:id="@+id/btn_time_now"
@@ -50,6 +54,9 @@
 			android:layout_height="wrap_content"
 			android:layout_gravity="center"
 			android:gravity="center"
-			android:text="眼前"/>
+			android:textColor="@color/card_two_btn_text_color"
+			android:textSize="@dimen/card_btn_text_size"
+			android:background="@android:color/transparent"
+			android:text="@string/card_two_btn"/>
 	</FrameLayout>
 </LinearLayout>

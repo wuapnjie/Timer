@@ -24,6 +24,7 @@ import java.util.Calendar;
 import java.util.TimeZone;
 
 /**
+ * 自定义时钟控件
  * Created by Flying SnowBean on 2015/10/5.
  */
 public class ClockView extends View {
@@ -54,6 +55,7 @@ public class ClockView extends View {
 
     private float mScale = 2;
 
+    //监听时间变化的广播接收者，时间改变，改变时钟指针
     private final BroadcastReceiver mIntentReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -84,7 +86,7 @@ public class ClockView extends View {
     }
 
     private void startDialAnim() {
-        float scale = (float)mWidth / mDial.getIntrinsicWidth();
+        float scale = (float) mWidth / mDial.getIntrinsicWidth();
         //Log.d(TAG,"scale->"+scale+"mHeight->"+mHeight+",mDial->Height->"+mDial.getIntrinsicHeight());
         Animator anim = ObjectAnimator.ofFloat(this, "scale", 0, scale).setDuration(1000);
         anim.addListener(new AnimatorListenerAdapter() {

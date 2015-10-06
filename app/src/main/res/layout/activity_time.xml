@@ -11,4 +11,20 @@
 
 	<include layout="@layout/include_time_activity_card_one"/>
 
+	<FrameLayout
+		android:id="@+id/pick_container"
+		android:layout_width="wrap_content"
+		android:layout_height="match_parent"
+		android:layout_gravity="center"
+		android:clickable="true"
+		android:background="@color/activity_time_background_translucent"
+		android:focusable="true">
+
+		<com.iec.dwx.timer.Views.PickView
+			android:id="@+id/pick_view"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_gravity="center"
+			android:layout_margin="16dp"/>
+	</FrameLayout>
 </com.iec.dwx.timer.Views.CardFlipLayout>
