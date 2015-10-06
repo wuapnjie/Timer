@@ -4,10 +4,10 @@
 	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
-	android:background="@color/card_one_background"
+	android:background="@color/card_two_background"
 	android:orientation="vertical"
 	tools:context=".TimeActivity"
-	tools:showIn="@layout/activity_time">
+	>
 
 	<com.iec.dwx.timer.Views.ClockView
 		android:layout_width="match_parent"
@@ -27,7 +27,8 @@
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:gravity="center"
-			android:text="@string/card_one_head"
+			android:textColor="@color/card_two_head_text_color"
+			android:text="@string/card_two_head"
 			android:textSize="@dimen/card_head_size"/>
 
 		<View
@@ -35,9 +36,11 @@
 			android:layout_height="20dp"/>
 
 		<TextView
+			android:paddingLeft="@dimen/card_subhead_padding_left"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:text="@string/card_one_subhead"
+			android:text="@string/card_two_subhead"
+			android:textColor="@color/card_two_subhead_text_color"
 			android:textSize="@dimen/card_subhead_size"/>
 	</LinearLayout>
 
@@ -46,13 +49,14 @@
 		android:layout_height="72dp">
 
 		<Button
-			android:id="@+id/btn_time_leave"
+			android:id="@+id/btn_time_now"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:layout_gravity="center"
 			android:gravity="center"
-			android:background="@android:color/transparent"
-			android:text="@string/card_one_btn"/>
+			android:textColor="@color/card_two_btn_text_color"
+			android:textSize="@dimen/card_btn_text_size"
+			android:background="?android:attr/selectableItemBackgroundBorderless"
+			android:text="@string/card_two_btn"/>
 	</FrameLayout>
-
 </LinearLayout>

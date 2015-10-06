@@ -3,5 +3,15 @@
 
 <!-- TODO: Remove or change this placeholder text -->
 	<string name="hello_blank_fragment">Hello blank fragment</string>
+
+	<string name="card_one_head">你在学校已经  XXX.XXX  天了</string>
+	<string name="card_one_subhead">在这个校园，你已经</string>
+	<string name="card_one_btn">离  别</string>
+
+	<string name="card_two_head">你的校园时光剩下XX%</string>
+	<string name="card_two_subhead">在剩下的时光里，你大约还可以</string>
+	<string name="card_two_btn">眼  前</string>
+
 	<string name="fragment_my_wishes_add">新心愿</string>
+
 </resources>
