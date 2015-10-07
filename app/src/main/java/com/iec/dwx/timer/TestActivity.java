@@ -1,32 +1,48 @@
 package com.iec.dwx.timer;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import com.iec.dwx.timer.Activities.BaseActivity;
 import com.iec.dwx.timer.Activities.TimeActivity;
-import com.iec.dwx.timer.Views.PickView;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.iec.dwx.timer.Utils.CacheManager.SDiskCacheManager;
+import com.iec.dwx.timer.Utils.CacheManager.SMemoryCacheManager;
 
 import butterknife.Bind;
 
 public class TestActivity extends BaseActivity {
 
 
-    @Bind(R.id.btn_test)
-    Button mBtnTest;
+    @Bind(R.id.btn_test_1)
+    Button mBtnTest1;
+    @Bind(R.id.btn_test_2)
+    Button mBtnTest2;
+    @Bind(R.id.iv_show)
+    ImageView mIvShow;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mBtnTest.setOnClickListener(v -> linkTo());
         mSwipeBackLayout.setEnableGesture(false);
+        mBtnTest1.setOnClickListener(v -> save());
+        mBtnTest2.setOnClickListener(v -> get());
+    }
 
+    private void get() {
+        Bitmap bitmap = SDiskCacheManager.getInstance(this).getBitmap("http:\\sdfas");
+        if (bitmap==null) System.out.println("get null");
+        mIvShow.setImageBitmap(bitmap);
+    }
+
+    private void save() {
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.b);
+        if (bitmap==null) System.out.println("save null");
+        SDiskCacheManager.getInstance(this).putBitmap("http:\\sdfas", bitmap);
     }
 
     private void linkTo() {
