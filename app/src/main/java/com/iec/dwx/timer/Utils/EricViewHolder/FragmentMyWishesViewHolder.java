@@ -14,9 +14,10 @@ public class FragmentMyWishesViewHolder {
     private TextView mTv=null;
     private Boolean flag=null;
 
-    private Button intoPublicButton=null;
+    private ImageButton intoOthersBtn=null;
     private ImageButton addImgBtn=null;
     private ImageButton deleteImgBtn=null;
+    private ImageButton shareBtn=null;
 
 
     public FragmentMyWishesViewHolder(){
@@ -38,9 +39,6 @@ public class FragmentMyWishesViewHolder {
         return mTv;
     }
 
-    public Button getIntoPublicButton(){
-        return intoPublicButton;
-    }
 
     public ImageButton getAddImgBtn(){
         return addImgBtn;
@@ -48,6 +46,14 @@ public class FragmentMyWishesViewHolder {
 
     public ImageButton getDeleteImgBtn(){
         return deleteImgBtn;
+    }
+
+    public ImageButton getIntoOthersBtn(){
+        return intoOthersBtn;
+    }
+
+    public ImageButton getShareBtn(){
+        return shareBtn;
     }
 
     //set
@@ -63,15 +69,20 @@ public class FragmentMyWishesViewHolder {
         flag=this.flag;
     }
 
-    public void setIntoPublicButton(Button btn){
-        this.intoPublicButton=btn;
-    }
 
     public void setAddImgBtn(ImageButton btn){
         this.addImgBtn=btn;
     }
 
     public void setDeleteImgBtn(ImageButton btn){
-        this.addImgBtn=btn;
+        this.deleteImgBtn=btn;
+    }
+
+    public void setIntoOthersBtn(ImageButton btn){
+        this.intoOthersBtn=btn;
+    }
+
+    public void setShareBtn(ImageButton btn){
+        this.shareBtn=btn;
     }
 }
