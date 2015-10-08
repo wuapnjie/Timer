@@ -10,13 +10,15 @@
         android:id="@+id/fragment_my_wishes_iv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@drawable/baclground"/>
+        android:src="@drawable/mywishes1"/>
     <TextView
+        android:layout_marginTop="400dp"
+        android:layout_marginLeft="100dp"
         android:id="@+id/fragment_my_wishes_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="@dimen/fragment_my_wishes_tv_size"
-        android:hint="Life will be  better !"/>
+        android:text="@string/fragment_my_wishes_test_content1"/>
     <LinearLayout
         android:id="@+id/fragment_my_wishes_linearLayout"
         android:layout_width="wrap_content"
@@ -24,22 +26,36 @@
         android:layout_gravity="center_vertical"
         android:layout_marginLeft="0dp"
         android:orientation="vertical">
-    <ImageButton
-        android:id="@+id/fragment_my_wishes_add_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-    <ImageButton
-        android:id="@+id/fragment_my_wishes_delete_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-    <Button
-        android:id="@+id/fragment_my_wishes_into_public_wishes_button"
-        android:background="@color/mywish_into_public_wish_background"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/fragment_my_wishes_add"
-        android:visibility="gone"
-        android:textSize="@dimen/fragment_my_wishes_button"
-        />
+
+        <ImageButton
+            android:id="@+id/fragment_my_wishes_delete_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/fragment_my_wishes_delate_button"
+            android:visibility="invisible"/>
+
+        <ImageButton
+            android:layout_marginTop="@dimen/fragment_my_wishes_right_buttons_margin_between"
+            android:id="@+id/fragment_my_wishes_add_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/fragment_my_wishes_add_button"
+            android:visibility="invisible"/>
+
+        <ImageButton
+            android:layout_marginTop="@dimen/fragment_my_wishes_right_buttons_margin_between"
+            android:id="@+id/fragment_my_wishes_share_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/fragment_my_wishes_share_button"
+            android:visibility="invisible"/>
+
+        <ImageButton
+            android:layout_marginTop="@dimen/fragment_my_wishes_right_buttons_margin_between"
+            android:id="@+id/fragment_my_wishes_Into_others_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/fragment_my_wishes_into_others_button"
+            android:visibility="invisible"/>
     </LinearLayout>
 </FrameLayout>

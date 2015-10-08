@@ -15,13 +15,11 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.iec.dwx.timer.Activities.PublicWishes;
 import com.iec.dwx.timer.R;
 import com.iec.dwx.timer.Utils.EricViewHolder.FragmentMyWishesViewHolder;
-import com.iec.dwx.timer.Utils.ScreenSizeUtils;
 
 public class MyWishesFragment extends Fragment {
 
@@ -33,6 +31,13 @@ public class MyWishesFragment extends Fragment {
     //设定最小滑动距离
     private  float Y_DISTANCE_SLIDE=30f;
 
+    //测试数据
+    private int currentPosition=0;
+    private int imges[]=new int[]{R.drawable.mywishes1,R.drawable.mywishes2,
+                                  R.drawable.mywishes3,R.drawable.mywishes4};
+    private int txts[]=new int[]{R.string.fragment_my_wishes_test_content1,R.string.fragment_my_wishes_test_content2,
+            R.string.fragment_my_wishes_test_content3,R.string.fragment_my_wishes_test_content4};
+    //测试数据结束
 
     public static MyWishesFragment newInstance() {
         return new MyWishesFragment();
@@ -65,11 +70,13 @@ public class MyWishesFragment extends Fragment {
             myViewHolder.setmTv((TextView) fragmentActivity.findViewById(R.id.fragment_my_wishes_tv));
             myViewHolder.setmImg((ImageView) fragmentActivity.findViewById(R.id.fragment_my_wishes_iv));
 
-            //点击侧边键
-            myViewHolder.setIntoPublicButton((Button) fragmentActivity.findViewById(R.id.fragment_my_wishes_into_public_wishes_button));
+            //点击侧边键初始化
+            myViewHolder.setIntoOthersBtn((ImageButton) fragmentActivity.findViewById(R.id.fragment_my_wishes_Into_others_button));
+            myViewHolder.setShareBtn((ImageButton) fragmentActivity.findViewById(R.id.fragment_my_wishes_share_button));
             myViewHolder.setAddImgBtn((ImageButton) fragmentActivity.findViewById(R.id.fragment_my_wishes_add_button));
             myViewHolder.setDeleteImgBtn((ImageButton) fragmentActivity.findViewById(R.id.fragment_my_wishes_delete_button));
 
+            //为右边键添加响应
             componentAddOnclickRegister();
             myViewHolder.changeFlag(false);
         }
@@ -114,7 +121,7 @@ public class MyWishesFragment extends Fragment {
 
     //为侧边键添加点击响应
     private void componentAddOnclickRegister(){
-        myViewHolder.getIntoPublicButton().setOnClickListener(new View.OnClickListener() {
+        myViewHolder.getIntoOthersBtn().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent=new Intent(getActivity(), PublicWishes.class);
@@ -130,16 +137,22 @@ public class MyWishesFragment extends Fragment {
 
             if(buttonEnable=(!buttonEnable)){
                 //按钮进入
-                myViewHolder.getIntoPublicButton().setVisibility(View.VISIBLE);
-                Animation buttonIn=AnimationUtils.loadAnimation(getContext(), R.anim.my_wishes_into_public_button_in);
-                myViewHolder.getIntoPublicButton().startAnimation(buttonIn);
-                myViewHolder.getIntoPublicButton().setClickable(true);
+                myAnimationButtonInDelayStart(myViewHolder.getDeleteImgBtn(),0);
+                myAnimationButtonInDelayStart(myViewHolder.getAddImgBtn(),
+                        getContext().getResources().getInteger(R.integer.fragment_my_wishes_buttons_animation_gap_time));
+                myAnimationButtonInDelayStart(myViewHolder.getShareBtn(),
+                        2*getContext().getResources().getInteger(R.integer.fragment_my_wishes_buttons_animation_gap_time));
+                myAnimationButtonInDelayStart(myViewHolder.getIntoOthersBtn(),
+                        3*getContext().getResources().getInteger(R.integer.fragment_my_wishes_buttons_animation_gap_time));
             }else{
                 //按钮消失
-                Animation buttonOut=AnimationUtils.loadAnimation(getContext(),R.anim.my_wishes_into_public_button_out);
-                myViewHolder.getIntoPublicButton().startAnimation(buttonOut);
-                myViewHolder.getIntoPublicButton().setVisibility(View.INVISIBLE);
-                myViewHolder.getIntoPublicButton().setClickable(false);
+                myAnimationButtonOutDelayStart(myViewHolder.getDeleteImgBtn(),0);
+                myAnimationButtonOutDelayStart(myViewHolder.getAddImgBtn(),
+                        getContext().getResources().getInteger(R.integer.fragment_my_wishes_buttons_animation_gap_time));
+                myAnimationButtonOutDelayStart(myViewHolder.getShareBtn(),
+                        2 * getContext().getResources().getInteger(R.integer.fragment_my_wishes_buttons_animation_gap_time));
+                myAnimationButtonOutDelayStart(myViewHolder.getIntoOthersBtn(),
+                        3 * getContext().getResources().getInteger(R.integer.fragment_my_wishes_buttons_animation_gap_time));
             }
 
         }
@@ -149,10 +162,10 @@ public class MyWishesFragment extends Fragment {
     //划动响应事件
     private  void MovingMethod(float y){
         if(y<-Y_DISTANCE_SLIDE){
-            myViewHolder.getmImg().setImageResource(R.drawable.b);
+            upMovingMehtod();
             Log.e("fragment_my_wishes", y + "上划");
         }else if(y>Y_DISTANCE_SLIDE){
-            myViewHolder.getmImg().setImageResource(R.drawable.b);
+            downMovingMethod();
             Log.e("fragment_my_wishes", y + "下划");
         }
     }
@@ -160,14 +173,38 @@ public class MyWishesFragment extends Fragment {
 
     //上划响应事件
     private void upMovingMehtod(){
-        //数据尚未拥有
+        //测试数据
+        if(currentPosition<3){
+            currentPosition++;
+            myViewHolder.getmImg().setImageResource(imges[currentPosition]);
+            myViewHolder.getmTv().setText(txts[currentPosition]);
+        }
 
     }
 
     //下划响应事件
     private void downMovingMethod(){
-       //数据尚未拥有
+       //测试数据
+        if(currentPosition>0){
+            currentPosition--;
+            myViewHolder.getmImg().setImageResource(imges[currentPosition]);
+            myViewHolder.getmTv().setText(txts[currentPosition]);
+        }
     }
 
+    private void myAnimationButtonInDelayStart(ImageButton imageButton,long delayMilliSecond){
+         Animation buttonIn=AnimationUtils.loadAnimation(getContext(),R.anim.fragment_my_wishes_buttons_in);
+        buttonIn.setStartOffset(delayMilliSecond);
+        imageButton.setVisibility(View.VISIBLE);
+        imageButton.setClickable(true);
+        imageButton.startAnimation(buttonIn);
+    }
 
+    private void myAnimationButtonOutDelayStart(ImageButton imageButton,long delayMilliSecond){
+        Animation buttonIn=AnimationUtils.loadAnimation(getContext(),R.anim.fragment_my_wishes_buttons_out);
+        buttonIn.setStartOffset(delayMilliSecond);
+        imageButton.startAnimation(buttonIn);
+        imageButton.setClickable(false);
+        imageButton.setVisibility(View.INVISIBLE);
+    }
 }
