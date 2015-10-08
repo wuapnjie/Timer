@@ -20,7 +20,7 @@
 	<string name="pick_view_value_4">大四</string>
 
 
-	<string name="fragment_my_wishes_add">新心愿</string>
+
 
 	<string-array name="pick_values">
 		<item>@string/pick_view_value_1</item>
@@ -29,6 +29,11 @@
 		<item>@string/pick_view_value_4</item>
 	</string-array>
 
-
+	<!--fragment_my_wishes-->
+	<string name="fragment_my_wishes_add">新心愿</string>
+	<string name="fragment_my_wishes_test_content1">life will be better !</string>
+	<string name="fragment_my_wishes_test_content2">you it will !</string>
+	<string name="fragment_my_wishes_test_content3">god beless you !</string>
+	<string name="fragment_my_wishes_test_content4">Do you love me ?</string>
 
 </resources>

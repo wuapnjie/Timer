@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import com.iec.dwx.timer.Activities.BaseActivity;
+import com.iec.dwx.timer.Activities.MainActivity;
 import com.iec.dwx.timer.Activities.TimeActivity;
 import com.iec.dwx.timer.Utils.CacheManager.SDiskCacheManager;
 import com.iec.dwx.timer.Utils.CacheManager.SMemoryCacheManager;
