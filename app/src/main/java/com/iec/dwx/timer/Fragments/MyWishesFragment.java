@@ -14,12 +14,16 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageSwitcher;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.ViewSwitcher;
 
+import com.iec.dwx.timer.Activities.MainActivity;
 import com.iec.dwx.timer.Activities.PublicWishes;
 import com.iec.dwx.timer.R;
 import com.iec.dwx.timer.Utils.EricViewHolder.FragmentMyWishesViewHolder;
+import com.iec.dwx.timer.Utils.ScreenSizeUtils;
 
 public class MyWishesFragment extends Fragment {
 
@@ -67,8 +71,9 @@ public class MyWishesFragment extends Fragment {
             FragmentActivity fragmentActivity=getActivity();
 
             //主界面
+            myViewHolder.setImageSwitcher((ImageSwitcher) fragmentActivity.findViewById(R.id.fragment_my_wishes_imageSwicher));
             myViewHolder.setmTv((TextView) fragmentActivity.findViewById(R.id.fragment_my_wishes_tv));
-            myViewHolder.setmImg((ImageView) fragmentActivity.findViewById(R.id.fragment_my_wishes_iv));
+           // myViewHolder.setmImg((ImageView) fragmentActivity.findViewById(R.id.fragment_my_wishes_iv));
 
             //点击侧边键初始化
             myViewHolder.setIntoOthersBtn((ImageButton) fragmentActivity.findViewById(R.id.fragment_my_wishes_Into_others_button));
@@ -128,6 +133,15 @@ public class MyWishesFragment extends Fragment {
                 startActivity(intent);
             }
         });
+
+        myViewHolder.getImageSwitcher().setFactory(new ViewSwitcher.ViewFactory() {
+            @Override
+            public View makeView() {
+                return new ImageView(getContext());
+            }
+
+        });
+        myViewHolder.getImageSwitcher().setImageResource(imges[currentPosition]);
     }
 
     //点击响应事件
@@ -146,7 +160,7 @@ public class MyWishesFragment extends Fragment {
                         3*getContext().getResources().getInteger(R.integer.fragment_my_wishes_buttons_animation_gap_time));
             }else{
                 //按钮消失
-                myAnimationButtonOutDelayStart(myViewHolder.getDeleteImgBtn(),0);
+                myAnimationButtonOutDelayStart(myViewHolder.getDeleteImgBtn(), 0);
                 myAnimationButtonOutDelayStart(myViewHolder.getAddImgBtn(),
                         getContext().getResources().getInteger(R.integer.fragment_my_wishes_buttons_animation_gap_time));
                 myAnimationButtonOutDelayStart(myViewHolder.getShareBtn(),
@@ -173,10 +187,11 @@ public class MyWishesFragment extends Fragment {
 
     //上划响应事件
     private void upMovingMehtod(){
+        myAnimationImageSwitcherUpSlideSet();
         //测试数据
         if(currentPosition<3){
             currentPosition++;
-            myViewHolder.getmImg().setImageResource(imges[currentPosition]);
+            myViewHolder.getImageSwitcher().setImageResource(imges[currentPosition]);
             myViewHolder.getmTv().setText(txts[currentPosition]);
         }
 
@@ -184,14 +199,36 @@ public class MyWishesFragment extends Fragment {
 
     //下划响应事件
     private void downMovingMethod(){
+        myAnimationImageSwitcherDownSlideSet();
        //测试数据
         if(currentPosition>0){
             currentPosition--;
-            myViewHolder.getmImg().setImageResource(imges[currentPosition]);
+            myViewHolder.getImageSwitcher().setImageResource(imges[currentPosition]);
             myViewHolder.getmTv().setText(txts[currentPosition]);
         }
     }
 
+    //图片切换动画
+    private void myAnimationImageSwitcherUpSlideSet(){
+        Animation upIn=AnimationUtils.loadAnimation(getContext(),
+                R.anim.fragment_my_wishes_imageswitcher_slide_up_in);
+        Animation upOut=AnimationUtils.loadAnimation(getContext(),
+                R.anim.fragment_my_wishes_imageswitcher_slide_up_out);
+        myViewHolder.getImageSwitcher().setInAnimation(upIn);
+        myViewHolder.getImageSwitcher().setOutAnimation(upOut);
+    }
+
+    private void myAnimationImageSwitcherDownSlideSet(){
+        Animation downIn=AnimationUtils.loadAnimation(getContext(),
+                R.anim.fragment_my_wishes_imageswitcher_slide_dowm_in);
+        Animation downOut=AnimationUtils.loadAnimation(getContext(),
+                R.anim.fragment_my_wishes_imageswitcher_slide_dowm_out);
+        myViewHolder.getImageSwitcher().setInAnimation(downIn);
+        myViewHolder.getImageSwitcher().setOutAnimation(downOut);
+    }
+
+
+    //侧边按钮启动动画
     private void myAnimationButtonInDelayStart(ImageButton imageButton,long delayMilliSecond){
          Animation buttonIn=AnimationUtils.loadAnimation(getContext(),R.anim.fragment_my_wishes_buttons_in);
         buttonIn.setStartOffset(delayMilliSecond);
