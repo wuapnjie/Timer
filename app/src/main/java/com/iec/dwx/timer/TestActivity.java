@@ -31,7 +31,7 @@ public class TestActivity extends BaseActivity {
 
         mSwipeBackLayout.setEnableGesture(false);
         mBtnTest1.setOnClickListener(v -> save());
-        mBtnTest2.setOnClickListener(v -> linkTo());
+        mBtnTest2.setOnClickListener(v -> get());
     }
 
     private void get() {

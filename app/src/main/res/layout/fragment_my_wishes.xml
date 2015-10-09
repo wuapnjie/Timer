@@ -14,8 +14,6 @@
 
     </ImageSwitcher>
     <TextView
-        android:layout_marginTop="400dp"
-        android:layout_marginLeft="100dp"
         android:id="@+id/fragment_my_wishes_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

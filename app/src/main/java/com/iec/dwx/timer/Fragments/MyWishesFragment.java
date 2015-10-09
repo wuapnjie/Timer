@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageSwitcher;
 import android.widget.ImageView;
@@ -86,6 +87,10 @@ public class MyWishesFragment extends Fragment {
             myViewHolder.changeFlag(false);
         }
 
+
+        //初始化一些根据屏幕的大小的位置
+        componentPositionInit();
+
         //监听点击事件,按道理说不需要，但是不写这个划动也会失效
         getView().setOnClickListener(new View.OnClickListener() {
             @Override
@@ -121,7 +126,27 @@ public class MyWishesFragment extends Fragment {
 
     //根据屏幕初大小始化一个部件的位置
     private void  componentPositionInit(){
-        //记得在这里控制textview的位置或者用其他方式
+        //这里控制textview的位置
+        FrameLayout.LayoutParams layoutParams=new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT
+        , ViewGroup.LayoutParams.WRAP_CONTENT);
+        layoutParams.setMargins(ScreenSizeUtils.getWidth(getContext())*1/5,
+                ScreenSizeUtils.getHeight(getContext())*3/5,0,0);
+        myViewHolder.getmTv().setLayoutParams(layoutParams);
+
+        //设置ImageSwitcher的初始化
+        myViewHolder.getImageSwitcher().setFactory(new ViewSwitcher.ViewFactory() {
+            @Override
+            public View makeView() {
+                ImageView imageView=new ImageView(getActivity());
+                imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                imageView.setLayoutParams(new ImageSwitcher.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT
+                , ViewGroup.LayoutParams.MATCH_PARENT));
+                return imageView;
+            }
+
+        });
+        myViewHolder.getImageSwitcher().setImageResource(imges[currentPosition]);
+
     }
 
     //为侧边键添加点击响应
@@ -129,19 +154,12 @@ public class MyWishesFragment extends Fragment {
         myViewHolder.getIntoOthersBtn().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(getActivity(), PublicWishes.class);
+                Intent intent = new Intent(getActivity(), PublicWishes.class);
                 startActivity(intent);
             }
         });
 
-        myViewHolder.getImageSwitcher().setFactory(new ViewSwitcher.ViewFactory() {
-            @Override
-            public View makeView() {
-                return new ImageView(getContext());
-            }
 
-        });
-        myViewHolder.getImageSwitcher().setImageResource(imges[currentPosition]);
     }
 
     //点击响应事件
