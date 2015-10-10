@@ -19,6 +19,7 @@
     <dimen name="fragment_my_wishes_right_buttons_margin_between">20dp</dimen>
 
     <integer name="fragment_my_wishes_buttons_animation_gap_time">200</integer>
+    <integer name="fragment_my_wishes_imageswithcer_animation_slide_time">1000</integer>
     <integer name="my_wishes_button_in_time">900</integer>
     <integer name="my_wishes_button_out_time">900</integer>
 

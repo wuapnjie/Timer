@@ -16,8 +16,8 @@
 		android:layout_width="wrap_content"
 		android:layout_height="match_parent"
 		android:layout_gravity="center"
-		android:clickable="true"
 		android:background="@color/activity_time_background_translucent"
+		android:clickable="true"
 		android:focusable="true">
 
 		<com.iec.dwx.timer.Views.PickView
@@ -27,4 +27,12 @@
 			android:layout_gravity="center"
 			android:layout_margin="16dp"/>
 	</FrameLayout>
+
+	<android.widget.ActionMenuView
+		android:id="@+id/menu_bar"
+		android:layout_width="match_parent"
+		android:layout_height="?actionBarSize"
+		android:background="@android:color/transparent"
+		>
+	</android.widget.ActionMenuView>
 </com.iec.dwx.timer.Views.CardFlipLayout>

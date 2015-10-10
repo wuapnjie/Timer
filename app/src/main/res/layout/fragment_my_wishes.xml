@@ -6,14 +6,14 @@
              tools:context="com.iec.dwx.timer.Fragments.MyWishesFragment">
 
 	<!-- TODO: Update blank fragment layout -->
-    <ImageView
-        android:id="@+id/fragment_my_wishes_iv"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:src="@drawable/mywishes1"/>
+    <ImageSwitcher
+        android:id="@+id/fragment_my_wishes_imageSwicher"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        >
+
+    </ImageSwitcher>
     <TextView
-        android:layout_marginTop="400dp"
-        android:layout_marginLeft="100dp"
         android:id="@+id/fragment_my_wishes_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
