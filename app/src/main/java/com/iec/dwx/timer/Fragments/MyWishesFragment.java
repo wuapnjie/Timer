@@ -2,6 +2,8 @@ package com.iec.dwx.timer.Fragments;
 
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.v4.app.Fragment;
@@ -24,6 +26,7 @@ import com.iec.dwx.timer.Activities.PublicWishes;
 import com.iec.dwx.timer.Beans.WishBean;
 import com.iec.dwx.timer.R;
 import com.iec.dwx.timer.Utils.EricViewHolder.FragmentMyWishesViewHolder;
+import com.iec.dwx.timer.Utils.PaletteGetPictureColor;
 import com.iec.dwx.timer.Utils.ScreenSizeUtils;
 
 import cn.bmob.v3.listener.SaveListener;
@@ -42,9 +45,10 @@ public class MyWishesFragment extends Fragment {
     //测试数据
     private int currentPosition=0;
     private int imges[]=new int[]{R.drawable.mywishes1,R.drawable.mywishes2,
-                                  R.drawable.mywishes3,R.drawable.mywishes4};
+                                  R.drawable.mywishes3,R.drawable.mywishes4,R.drawable.mywishes5};
     private int txts[]=new int[]{R.string.fragment_my_wishes_test_content1,R.string.fragment_my_wishes_test_content2,
-            R.string.fragment_my_wishes_test_content3,R.string.fragment_my_wishes_test_content4};
+            R.string.fragment_my_wishes_test_content3,R.string.fragment_my_wishes_test_content4,
+    R.string.fragment_my_wishes_test_content5};
     //测试数据结束
 
     public static MyWishesFragment newInstance() {
@@ -233,9 +237,12 @@ public class MyWishesFragment extends Fragment {
     private void upMovingMehtod(){
         myAnimationImageSwitcherUpSlideSet();
         //测试数据
-        if(currentPosition<3){
+        if(currentPosition<4){
             currentPosition++;
             myViewHolder.getImageSwitcher().setImageResource(imges[currentPosition]);
+            Bitmap bitmap= BitmapFactory.decodeResource(getResources(), R.drawable.mywishes5);
+            PaletteGetPictureColor.getColorFromBitmap(getResources(),bitmap,
+                    myViewHolder.getmTv());
             myViewHolder.getmTv().setText(txts[currentPosition]);
         }
 
@@ -247,6 +254,10 @@ public class MyWishesFragment extends Fragment {
        //测试数据
         if(currentPosition>0){
             currentPosition--;
+            myViewHolder.getImageSwitcher().setImageResource(imges[currentPosition]);
+            Bitmap bitmap= BitmapFactory.decodeResource(getResources(), R.drawable.mywishes5);
+            PaletteGetPictureColor.getColorFromBitmap(getResources(),bitmap,
+                    myViewHolder.getmTv());
             myViewHolder.getImageSwitcher().setImageResource(imges[currentPosition]);
             myViewHolder.getmTv().setText(txts[currentPosition]);
         }
