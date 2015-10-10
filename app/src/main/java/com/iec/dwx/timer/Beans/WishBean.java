@@ -2,13 +2,11 @@ package com.iec.dwx.timer.Beans;
 
 import android.graphics.Color;
 
-import cn.bmob.v3.Bmob;
-import cn.bmob.v3.BmobObject;
 
 /**
  * Created by Flying SnowBean on 2015/10/2.
  */
-public class WishBean extends BmobObject{
+public class WishBean extends CommonBean implements CommonBean.InfoImpl{
     private final String TAG = WishBean.class.getSimpleName();
 
     private boolean isShared=false;
@@ -54,4 +52,10 @@ public class WishBean extends BmobObject{
     public void setTextColor(Color textColor) {
         this.textColor = textColor;
     }
+
+    @Override
+    public String getInfo() {
+        return TAG + ":ID->"+getID()+",Time->" + getTime() + ",Content->" + getContent() + ",Picture->" + getPicture();
+    }
+
 }
