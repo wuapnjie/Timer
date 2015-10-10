@@ -8,10 +8,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import com.iec.dwx.timer.Activities.BaseActivity;
-import com.iec.dwx.timer.Activities.MainActivity;
 import com.iec.dwx.timer.Activities.TimeActivity;
 import com.iec.dwx.timer.Utils.CacheManager.SDiskCacheManager;
-import com.iec.dwx.timer.Utils.CacheManager.SMemoryCacheManager;
 
 import butterknife.Bind;
 
@@ -24,6 +22,8 @@ public class TestActivity extends BaseActivity {
     Button mBtnTest2;
     @Bind(R.id.iv_show)
     ImageView mIvShow;
+    @Bind(R.id.btn_test_3)
+    Button mBtnTest3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,17 +32,18 @@ public class TestActivity extends BaseActivity {
         mSwipeBackLayout.setEnableGesture(false);
         mBtnTest1.setOnClickListener(v -> save());
         mBtnTest2.setOnClickListener(v -> get());
+        mBtnTest3.setOnClickListener(v -> linkTo());
     }
 
     private void get() {
         Bitmap bitmap = SDiskCacheManager.getInstance(this).getBitmap("http:\\sdfas");
-        if (bitmap==null) System.out.println("get null");
+        if (bitmap == null) System.out.println("get null");
         mIvShow.setImageBitmap(bitmap);
     }
 
     private void save() {
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.b);
-        if (bitmap==null) System.out.println("save null");
+        if (bitmap == null) System.out.println("save null");
         SDiskCacheManager.getInstance(this).putBitmap("http:\\sdfas", bitmap);
     }
 

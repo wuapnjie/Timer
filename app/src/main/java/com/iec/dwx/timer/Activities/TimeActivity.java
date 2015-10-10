@@ -3,6 +3,9 @@ package com.iec.dwx.timer.Activities;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ActionMenuView;
+import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import com.iec.dwx.timer.R;
@@ -18,6 +21,8 @@ public class TimeActivity extends BaseActivity {
     CardFlipLayout mCardContainer;
     @Bind(R.id.pick_view)
     PickView mPickView;
+    @Bind(R.id.btn_time_now)
+    ActionMenuView mMenuBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +34,8 @@ public class TimeActivity extends BaseActivity {
 
     private void initialize() {
         mPickView.setValues(this.getResources().getStringArray(R.array.pick_values));
+
+        mMenuBar.
     }
 
     private void initListener() {

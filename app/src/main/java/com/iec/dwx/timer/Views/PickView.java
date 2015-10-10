@@ -33,7 +33,7 @@ public class PickView extends FrameLayout {
 
     private int mCheckPosition = -1;
 
-    private OnConfirmBtnClickListener mOnConfirmBtnClickListener;
+    private OnConfirmBtnClickListener mOnConfirmBtnClickListener;     //确认按钮监听
 
     public PickView(Context context) {
         super(context);
@@ -83,6 +83,10 @@ public class PickView extends FrameLayout {
         return mValues;
     }
 
+    /**
+     * 设置数据源并更新数据
+     * @param values  数据源
+     */
     public void setValues(String[] values) {
         mValues = values;
         if (mAdapter != null) mAdapter.notifyDataSetChanged();
