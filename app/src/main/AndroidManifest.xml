@@ -29,15 +29,15 @@
         <activity
             android:name=".TestActivity"
             android:theme="@style/FullScreenTheme" >
+        </activity>
+        <activity android:name=".Activities.TimeActivity">
+        </activity>
+        <activity android:name=".Activities.MainActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity android:name=".Activities.TimeActivity">
-        </activity>
-        <activity android:name=".Activities.MainActivity" >
         </activity>
         <activity android:name=".Activities.PublicWishes">
         </activity>
