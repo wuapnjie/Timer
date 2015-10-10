@@ -13,13 +13,18 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import android.widget.ImageSwitcher;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.ViewSwitcher;
 
+import com.iec.dwx.timer.Activities.MainActivity;
 import com.iec.dwx.timer.Activities.PublicWishes;
 import com.iec.dwx.timer.R;
 import com.iec.dwx.timer.Utils.EricViewHolder.FragmentMyWishesViewHolder;
+import com.iec.dwx.timer.Utils.ScreenSizeUtils;
 
 public class MyWishesFragment extends Fragment {
 
@@ -67,8 +72,9 @@ public class MyWishesFragment extends Fragment {
             FragmentActivity fragmentActivity=getActivity();
 
             //主界面
+            myViewHolder.setImageSwitcher((ImageSwitcher) fragmentActivity.findViewById(R.id.fragment_my_wishes_imageSwicher));
             myViewHolder.setmTv((TextView) fragmentActivity.findViewById(R.id.fragment_my_wishes_tv));
-            myViewHolder.setmImg((ImageView) fragmentActivity.findViewById(R.id.fragment_my_wishes_iv));
+           // myViewHolder.setmImg((ImageView) fragmentActivity.findViewById(R.id.fragment_my_wishes_iv));
 
             //点击侧边键初始化
             myViewHolder.setIntoOthersBtn((ImageButton) fragmentActivity.findViewById(R.id.fragment_my_wishes_Into_others_button));
@@ -80,6 +86,10 @@ public class MyWishesFragment extends Fragment {
             componentAddOnclickRegister();
             myViewHolder.changeFlag(false);
         }
+
+
+        //初始化一些根据屏幕的大小的位置
+        componentPositionInit();
 
         //监听点击事件,按道理说不需要，但是不写这个划动也会失效
         getView().setOnClickListener(new View.OnClickListener() {
@@ -116,7 +126,27 @@ public class MyWishesFragment extends Fragment {
 
     //根据屏幕初大小始化一个部件的位置
     private void  componentPositionInit(){
-        //记得在这里控制textview的位置或者用其他方式
+        //这里控制textview的位置
+        FrameLayout.LayoutParams layoutParams=new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT
+        , ViewGroup.LayoutParams.WRAP_CONTENT);
+        layoutParams.setMargins(ScreenSizeUtils.getWidth(getContext())*1/5,
+                ScreenSizeUtils.getHeight(getContext())*3/5,0,0);
+        myViewHolder.getmTv().setLayoutParams(layoutParams);
+
+        //设置ImageSwitcher的初始化
+        myViewHolder.getImageSwitcher().setFactory(new ViewSwitcher.ViewFactory() {
+            @Override
+            public View makeView() {
+                ImageView imageView=new ImageView(getActivity());
+                imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                imageView.setLayoutParams(new ImageSwitcher.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT
+                , ViewGroup.LayoutParams.MATCH_PARENT));
+                return imageView;
+            }
+
+        });
+        myViewHolder.getImageSwitcher().setImageResource(imges[currentPosition]);
+
     }
 
     //为侧边键添加点击响应
@@ -124,10 +154,12 @@ public class MyWishesFragment extends Fragment {
         myViewHolder.getIntoOthersBtn().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(getActivity(), PublicWishes.class);
+                Intent intent = new Intent(getActivity(), PublicWishes.class);
                 startActivity(intent);
             }
         });
+
+
     }
 
     //点击响应事件
@@ -146,7 +178,7 @@ public class MyWishesFragment extends Fragment {
                         3*getContext().getResources().getInteger(R.integer.fragment_my_wishes_buttons_animation_gap_time));
             }else{
                 //按钮消失
-                myAnimationButtonOutDelayStart(myViewHolder.getDeleteImgBtn(),0);
+                myAnimationButtonOutDelayStart(myViewHolder.getDeleteImgBtn(), 0);
                 myAnimationButtonOutDelayStart(myViewHolder.getAddImgBtn(),
                         getContext().getResources().getInteger(R.integer.fragment_my_wishes_buttons_animation_gap_time));
                 myAnimationButtonOutDelayStart(myViewHolder.getShareBtn(),
@@ -173,10 +205,11 @@ public class MyWishesFragment extends Fragment {
 
     //上划响应事件
     private void upMovingMehtod(){
+        myAnimationImageSwitcherUpSlideSet();
         //测试数据
         if(currentPosition<3){
             currentPosition++;
-            myViewHolder.getmImg().setImageResource(imges[currentPosition]);
+            myViewHolder.getImageSwitcher().setImageResource(imges[currentPosition]);
             myViewHolder.getmTv().setText(txts[currentPosition]);
         }
 
@@ -184,14 +217,36 @@ public class MyWishesFragment extends Fragment {
 
     //下划响应事件
     private void downMovingMethod(){
+        myAnimationImageSwitcherDownSlideSet();
        //测试数据
         if(currentPosition>0){
             currentPosition--;
-            myViewHolder.getmImg().setImageResource(imges[currentPosition]);
+            myViewHolder.getImageSwitcher().setImageResource(imges[currentPosition]);
             myViewHolder.getmTv().setText(txts[currentPosition]);
         }
     }
 
+    //图片切换动画
+    private void myAnimationImageSwitcherUpSlideSet(){
+        Animation upIn=AnimationUtils.loadAnimation(getContext(),
+                R.anim.fragment_my_wishes_imageswitcher_slide_up_in);
+        Animation upOut=AnimationUtils.loadAnimation(getContext(),
+                R.anim.fragment_my_wishes_imageswitcher_slide_up_out);
+        myViewHolder.getImageSwitcher().setInAnimation(upIn);
+        myViewHolder.getImageSwitcher().setOutAnimation(upOut);
+    }
+
+    private void myAnimationImageSwitcherDownSlideSet(){
+        Animation downIn=AnimationUtils.loadAnimation(getContext(),
+                R.anim.fragment_my_wishes_imageswitcher_slide_dowm_in);
+        Animation downOut=AnimationUtils.loadAnimation(getContext(),
+                R.anim.fragment_my_wishes_imageswitcher_slide_dowm_out);
+        myViewHolder.getImageSwitcher().setInAnimation(downIn);
+        myViewHolder.getImageSwitcher().setOutAnimation(downOut);
+    }
+
+
+    //侧边按钮启动动画
     private void myAnimationButtonInDelayStart(ImageButton imageButton,long delayMilliSecond){
          Animation buttonIn=AnimationUtils.loadAnimation(getContext(),R.anim.fragment_my_wishes_buttons_in);
         buttonIn.setStartOffset(delayMilliSecond);

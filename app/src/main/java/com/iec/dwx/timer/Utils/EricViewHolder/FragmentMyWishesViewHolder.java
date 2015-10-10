@@ -2,6 +2,7 @@ package com.iec.dwx.timer.Utils.EricViewHolder;
 
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageSwitcher;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -11,6 +12,7 @@ import android.widget.TextView;
 public class FragmentMyWishesViewHolder {
     private final String TAG = FragmentMyWishesViewHolder.class.getSimpleName();
     private ImageView mImg=null;
+    private ImageSwitcher imageSwitcher=null;
     private TextView mTv=null;
     private Boolean flag=null;
 
@@ -35,6 +37,10 @@ public class FragmentMyWishesViewHolder {
         return mImg;
     }
 
+    public ImageSwitcher getImageSwitcher(){
+        return imageSwitcher;
+    }
+
     public TextView getmTv() {
         return mTv;
     }
@@ -57,6 +63,11 @@ public class FragmentMyWishesViewHolder {
     }
 
     //set
+
+    public void setImageSwitcher(ImageSwitcher imageSwitcher){
+        this.imageSwitcher=imageSwitcher;
+    }
+
     public void setmImg(ImageView mImg) {
         this.mImg = mImg;
     }
