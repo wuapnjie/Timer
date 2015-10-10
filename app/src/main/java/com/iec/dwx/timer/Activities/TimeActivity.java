@@ -35,7 +35,6 @@ public class TimeActivity extends BaseActivity {
     private void initialize() {
         mPickView.setValues(this.getResources().getStringArray(R.array.pick_values));
 
-        mMenuBar.
     }
 
     private void initListener() {

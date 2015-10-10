@@ -17,7 +17,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 /**
- * 自定义的单选控件
+ * 自定义的单选控件，提供外部String[]的数据接口
  * Created by Flying SnowBean on 2015/10/6.
  */
 public class PickView extends FrameLayout {
@@ -85,7 +85,8 @@ public class PickView extends FrameLayout {
 
     /**
      * 设置数据源并更新数据
-     * @param values  数据源
+     *
+     * @param values 数据源
      */
     public void setValues(String[] values) {
         mValues = values;

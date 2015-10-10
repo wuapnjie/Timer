@@ -21,19 +21,33 @@
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:layout_gravity="center"
-		android:text="save"/>
+		android:text="add"/>
 
 	<Button
 		android:id="@+id/btn_test_2"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:layout_gravity="center"
-		android:text="get"/>
+		android:text="delete"/>
 
 	<Button
 		android:id="@+id/btn_test_3"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:layout_gravity="center"
-		android:text="link*"/>
+		android:text="getAll"/>
+
+	<Button
+		android:id="@+id/btn_test_4"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_gravity="center"
+		android:text="getOne"/>
+
+	<Button
+		android:id="@+id/btn_test_5"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_gravity="center"
+		android:text="update"/>
 </LinearLayout>
