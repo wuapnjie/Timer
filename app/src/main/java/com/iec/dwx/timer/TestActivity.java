@@ -3,7 +3,9 @@ package com.iec.dwx.timer;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.graphics.ColorUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 
@@ -13,6 +15,7 @@ import com.iec.dwx.timer.Activities.TimeActivity;
 import com.iec.dwx.timer.Beans.WishBean;
 import com.iec.dwx.timer.Utils.CacheManager.SDiskCacheManager;
 import com.iec.dwx.timer.Utils.CacheManager.SMemoryCacheManager;
+import com.iec.dwx.timer.Utils.PaletteGetPictureColor;
 
 import butterknife.Bind;
 import cn.bmob.v3.Bmob;
@@ -36,8 +39,8 @@ public class TestActivity extends BaseActivity {
 
         Bmob.initialize(this,"3a39e05d106b31b3f61a8ce842933a8a");
         mSwipeBackLayout.setEnableGesture(false);
-        mBtnTest1.setOnClickListener(v -> Bombsave());
-        mBtnTest2.setOnClickListener(v -> Bombget());
+        mBtnTest1.setOnClickListener(v -> linkTo());
+        mBtnTest2.setOnClickListener(v -> PaletteTest());
     }
 
     private void get() {
@@ -89,6 +92,15 @@ public class TestActivity extends BaseActivity {
                 System.out.println("获取失败");
             }
         });
+    }
+
+    private void PaletteTest(){
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.mywishes2);
+        if (bitmap==null) System.out.println("save null");
+        int color=PaletteGetPictureColor.getColorFromBitmap(getResources(),bitmap);
+        mBtnTest2.setBackgroundColor(color);
+        System.out.println(color);
+
     }
 
     @Override

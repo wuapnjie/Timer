@@ -1,5 +1,7 @@
 package com.iec.dwx.timer.Beans;
 
+import android.graphics.Color;
+
 import cn.bmob.v3.Bmob;
 import cn.bmob.v3.BmobObject;
 
@@ -9,9 +11,11 @@ import cn.bmob.v3.BmobObject;
 public class WishBean extends BmobObject{
     private final String TAG = WishBean.class.getSimpleName();
 
+    private boolean isShared=false;
     private String wishTime=null;
     private String wishContent=null;
     private String pictureUrl=null;
+    private Color textColor=null;
 
 
     public String getWishTime() {
@@ -39,5 +43,15 @@ public class WishBean extends BmobObject{
     }
 
 
+    public boolean isShared() {
+        return isShared;
+    }
 
+    public Color getTextColor() {
+        return textColor;
+    }
+
+    public void setTextColor(Color textColor) {
+        this.textColor = textColor;
+    }
 }

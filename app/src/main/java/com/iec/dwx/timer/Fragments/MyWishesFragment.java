@@ -3,6 +3,7 @@ package com.iec.dwx.timer.Fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
@@ -12,19 +13,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageSwitcher;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ViewSwitcher;
-
-import com.iec.dwx.timer.Activities.MainActivity;
 import com.iec.dwx.timer.Activities.PublicWishes;
+import com.iec.dwx.timer.Beans.WishBean;
 import com.iec.dwx.timer.R;
 import com.iec.dwx.timer.Utils.EricViewHolder.FragmentMyWishesViewHolder;
 import com.iec.dwx.timer.Utils.ScreenSizeUtils;
+
+import cn.bmob.v3.listener.SaveListener;
+
 
 public class MyWishesFragment extends Fragment {
 
@@ -129,9 +132,11 @@ public class MyWishesFragment extends Fragment {
         //这里控制textview的位置
         FrameLayout.LayoutParams layoutParams=new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT
         , ViewGroup.LayoutParams.WRAP_CONTENT);
-        layoutParams.setMargins(ScreenSizeUtils.getWidth(getContext())*1/5,
-                ScreenSizeUtils.getHeight(getContext())*3/5,0,0);
+        layoutParams.setMargins(ScreenSizeUtils.getWidth(getContext()) * 1 / 5,
+                ScreenSizeUtils.getHeight(getContext()) * 3 / 5, 0, 0);
         myViewHolder.getmTv().setLayoutParams(layoutParams);
+        //textview的最大宽度
+        myViewHolder.getmTv().setMaxWidth(ScreenSizeUtils.getWidth(getContext())*3/5);
 
         //设置ImageSwitcher的初始化
         myViewHolder.getImageSwitcher().setFactory(new ViewSwitcher.ViewFactory() {
@@ -156,6 +161,27 @@ public class MyWishesFragment extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), PublicWishes.class);
                 startActivity(intent);
+            }
+        });
+
+        myViewHolder.getShareBtn().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                WishBean wishBean = new WishBean();
+                wishBean.setWishTime(SystemClock.currentThreadTimeMillis() + "");
+                wishBean.setWishContent(getString(txts[currentPosition]));
+                wishBean.setPictureUrl(imges[currentPosition] + "");
+                wishBean.save(getContext(), new SaveListener() {
+                    @Override
+                    public void onSuccess() {
+                        Toast.makeText(getContext(), "分享成功", Toast.LENGTH_LONG).show();
+                    }
+
+                    @Override
+                    public void onFailure(int i, String s) {
+                        Toast.makeText(getContext(), "分享失败", Toast.LENGTH_LONG).show();
+                    }
+                });
             }
         });
 
