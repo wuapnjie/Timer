@@ -206,7 +206,7 @@ public class DBHelper extends SQLiteOpenHelper {
      */
     public void deleteBean(String tableName, int id) {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(tableName, COLUMN_TIME + " = ?", new String[]{String.valueOf(id)});
+        db.delete(tableName, COLUMN_ID + " = ?", new String[]{String.valueOf(id)});
     }
 
     /**
@@ -244,7 +244,7 @@ public class DBHelper extends SQLiteOpenHelper {
         contentValues.put(COLUMN_CONTENT, newBean.getContent());
         contentValues.put(COLUMN_PICTURE, newBean.getPicture());
 
-        int newID = db.update(tableName, contentValues, COLUMN_TIME + "=?", new String[]{String.valueOf(id)});
+        int newID = db.update(tableName, contentValues, COLUMN_ID + "=?", new String[]{String.valueOf(id)});
         db.close();
         return newID;
     }
