@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+	<item
+		android:id="@+id/menu_time_wish"
+		android:title="@string/menu_time_wish">
+	</item>
+	<item
+		android:id="@+id/menu_time_achievement"
+		android:title="@string/menu_time_achievement">
+	</item>
+	<item
+		android:id="@+id/menu_time_skill"
+		android:title="@string/menu_time_skill">
+	</item>
+	<item
+		android:id="@+id/menu_time_reset"
+		android:title="@string/menu_time_reset">
+	</item>
+	<item
+		android:id="@+id/menu_time_about"
+		android:title="@string/menu_time_about">
+	</item>
+</menu>

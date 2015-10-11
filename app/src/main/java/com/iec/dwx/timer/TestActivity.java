@@ -7,6 +7,7 @@ import android.widget.ImageView;
 
 import com.iec.dwx.timer.Activities.BaseActivity;
 import com.iec.dwx.timer.Activities.MainActivity;
+import com.iec.dwx.timer.Activities.TimeActivity;
 import com.iec.dwx.timer.Beans.CommonBean;
 import com.iec.dwx.timer.Beans.WishBean;
 import com.iec.dwx.timer.Utils.DBHelper;
@@ -31,6 +32,8 @@ public class TestActivity extends BaseActivity {
     Button mBtnTest4;
     @Bind(R.id.btn_test_5)
     Button mBtnTest5;
+    @Bind(R.id.btn_test_6)
+    Button mBtnTest6;
 
 
     @Override
@@ -61,6 +64,7 @@ public class TestActivity extends BaseActivity {
         mBtnTest3.setOnClickListener(v -> getAllBeans(DBHelper.DB_TABLE_ACHIEVEMENT));
         mBtnTest4.setOnClickListener(v -> getOneBean(DBHelper.DB_TABLE_ACHIEVEMENT, 2));
         mBtnTest5.setOnClickListener(v -> updateBean(DBHelper.DB_TABLE_ACHIEVEMENT, bean, bean2));
+        mBtnTest6.setOnClickListener(v -> linkTo());
 
     }
 
@@ -93,7 +97,7 @@ public class TestActivity extends BaseActivity {
     private void linkTo() {
 //        startActivity(new Intent(this, TimeActivity.class));
         //进入viewpager测试使用，记得修改回去
-        startActivity(new Intent(this, MainActivity.class));
+        startActivity(new Intent(this, TimeActivity.class));
     }
 
 //    private void get() {

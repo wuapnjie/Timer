@@ -50,4 +50,10 @@
 		android:layout_height="wrap_content"
 		android:layout_gravity="center"
 		android:text="update"/>
+	<Button
+		android:id="@+id/btn_test_6"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_gravity="center"
+		android:text="Link"/>
 </LinearLayout>

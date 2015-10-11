@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<color name="colorPrimary">#3F51B5</color>
-	<color name="colorPrimaryDark">#303F9F</color>
+	<color name="colorPrimary">#fff</color>
+	<color name="colorPrimaryDark">#66000000</color>
 	<color name="colorAccent">#7AC0BD</color>
 
 	<color name="black_overlay">#66000000</color>
@@ -14,6 +14,10 @@
 	<color name="card_two_head_text_color">#fff</color>
 	<color name="card_two_subhead_text_color">#dfff</color>
 	<color name="card_two_btn_text_color">#fff</color>
+
+	<color name="card_text_color">#dfff</color>
+
+	<color name="toolbar_text_color">#bd000000</color>
 
 	<color name="mywish_into_public_wish_background">#e62222</color>
 
