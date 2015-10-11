@@ -3,59 +3,9 @@
              android:layout_width="match_parent"
              android:layout_height="match_parent"
              android:background="#378265"
-             tools:context="com.iec.dwx.timer.Fragments.MyWishesFragment">
+             tools:context="com.iec.dwx.timer.Fragments.MyWishesFragment"
+             android:clickable="true">
 
 	<!-- TODO: Update blank fragment layout -->
-    <ImageSwitcher
-        android:id="@+id/fragment_my_wishes_imageSwicher"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        >
 
-    </ImageSwitcher>
-    <TextView
-        android:id="@+id/fragment_my_wishes_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="@dimen/fragment_my_wishes_tv_size"
-        android:text="@string/fragment_my_wishes_test_content1"/>
-    <LinearLayout
-        android:id="@+id/fragment_my_wishes_linearLayout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:layout_marginLeft="0dp"
-        android:orientation="vertical">
-
-        <ImageButton
-            android:id="@+id/fragment_my_wishes_delete_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/fragment_my_wishes_delate_button"
-            android:visibility="invisible"/>
-
-        <ImageButton
-            android:layout_marginTop="@dimen/fragment_my_wishes_right_buttons_margin_between"
-            android:id="@+id/fragment_my_wishes_add_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/fragment_my_wishes_add_button"
-            android:visibility="invisible"/>
-
-        <ImageButton
-            android:layout_marginTop="@dimen/fragment_my_wishes_right_buttons_margin_between"
-            android:id="@+id/fragment_my_wishes_share_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/fragment_my_wishes_share_button"
-            android:visibility="invisible"/>
-
-        <ImageButton
-            android:layout_marginTop="@dimen/fragment_my_wishes_right_buttons_margin_between"
-            android:id="@+id/fragment_my_wishes_Into_others_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/fragment_my_wishes_into_others_button"
-            android:visibility="invisible"/>
-    </LinearLayout>
 </FrameLayout>

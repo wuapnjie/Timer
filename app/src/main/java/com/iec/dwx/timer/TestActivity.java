@@ -1,19 +1,15 @@
 package com.iec.dwx.timer;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.ImageView;
 
 import com.iec.dwx.timer.Activities.BaseActivity;
 import com.iec.dwx.timer.Activities.MainActivity;
-import com.iec.dwx.timer.Activities.TimeActivity;
 import com.iec.dwx.timer.Beans.CommonBean;
 import com.iec.dwx.timer.Beans.WishBean;
 import com.iec.dwx.timer.Utils.DBHelper;
-import com.iec.dwx.timer.Utils.PaletteGetPictureColor;
 
 import java.util.List;
 

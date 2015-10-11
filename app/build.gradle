@@ -48,7 +48,7 @@ dependencies {
     compile 'com.jakewharton:disklrucache:2.0.2'
     compile 'io.reactivex:rxandroid:1.0.1'
     compile 'me.imid.swipebacklayout.lib:library:1.0.0'
-    compile 'com.android.support:palette-v7:23.+'
+    compile 'com.veinhorn.scrollgalleryview:library:1.0.3'
     compile files('libs/BmobSDK_V3.4.4_0930.jar')
     compile files('libs/Bmob_Push_V0.6beta_20150408.jar')
     compile files('libs/okhttp-2.4.0.jar')
