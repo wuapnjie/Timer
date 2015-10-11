@@ -2,7 +2,7 @@
              xmlns:tools="http://schemas.android.com/tools"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
-             android:background="#378265"
+             android:background="#FFF"
              tools:context="com.iec.dwx.timer.Fragments.MyWishesFragment"
              android:clickable="true">
 
@@ -10,5 +10,7 @@
 <ListView
     android:id="@+id/fragment_my_wishes_listview"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"></ListView>
+    android:layout_height="wrap_content"
+    android:dividerHeight="10dp"
+    android:divider="#c4c4c4"></ListView>
 </FrameLayout>
