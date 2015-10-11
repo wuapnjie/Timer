@@ -7,5 +7,8 @@
              android:clickable="true">
 
 	<!-- TODO: Update blank fragment layout -->
-
+<ListView
+    android:id="@+id/fragment_my_wishes_listview"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"></ListView>
 </FrameLayout>
