@@ -4,8 +4,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ActionMenuView;
-import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import com.iec.dwx.timer.R;

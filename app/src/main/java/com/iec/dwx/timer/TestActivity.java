@@ -7,6 +7,7 @@ import android.widget.ImageView;
 
 import com.iec.dwx.timer.Activities.BaseActivity;
 import com.iec.dwx.timer.Activities.MainActivity;
+import com.iec.dwx.timer.Activities.TimeActivity;
 import com.iec.dwx.timer.Beans.CommonBean;
 import com.iec.dwx.timer.Beans.WishBean;
 import com.iec.dwx.timer.Utils.DBHelper;
@@ -92,9 +93,9 @@ public class TestActivity extends BaseActivity {
     }
 
     private void linkTo() {
-//        startActivity(new Intent(this, TimeActivity.class));
+        startActivity(new Intent(this, TimeActivity.class));
         //进入viewpager测试使用，记得修改回去
-        startActivity(new Intent(this, MainActivity.class));
+//        startActivity(new Intent(this, MainActivity.class));
     }
 
 //    private void get() {
