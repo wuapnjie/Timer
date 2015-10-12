@@ -42,6 +42,44 @@
 			android:text="@string/card_two_subhead"
 			android:textColor="@color/card_two_subhead_text_color"
 			android:textSize="@dimen/card_subhead_size"/>
+		<View
+			android:layout_width="match_parent"
+			android:layout_height="20dp"/>
+		<TextView
+			android:paddingTop="4dp"
+			android:paddingBottom="4dp"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:paddingLeft="@dimen/card_subhead_padding_left"
+			android:text="在教室"
+			android:textColor="@color/card_text_color"/>
+
+		<TextView
+			android:paddingTop="4dp"
+			android:paddingBottom="4dp"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:paddingLeft="@dimen/card_subhead_padding_left"
+			android:text="在食堂"
+			android:textColor="@color/card_text_color"/>
+
+		<TextView
+			android:paddingTop="4dp"
+			android:paddingBottom="4dp"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:paddingLeft="@dimen/card_subhead_padding_left"
+			android:text="在操场"
+			android:textColor="@color/card_text_color"/>
+
+		<TextView
+			android:paddingTop="4dp"
+			android:paddingBottom="4dp"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:paddingLeft="@dimen/card_subhead_padding_left"
+			android:text="在教室"
+			android:textColor="@color/card_text_color"/>
 
 	</LinearLayout>
 

@@ -12,8 +12,10 @@ public class WishBean extends CommonBean implements CommonBean.InfoImpl{
     private boolean isShared=false;
     private String wishTime=null;
     private String wishContent=null;
+
+    //由于现在不需要图片，所以这里可以用来记录是否分享过
     private String pictureUrl=null;
-    private Color textColor=null;
+
 
 
     public String getWishTime() {
@@ -43,14 +45,6 @@ public class WishBean extends CommonBean implements CommonBean.InfoImpl{
 
     public boolean isShared() {
         return isShared;
-    }
-
-    public Color getTextColor() {
-        return textColor;
-    }
-
-    public void setTextColor(Color textColor) {
-        this.textColor = textColor;
     }
 
     @Override

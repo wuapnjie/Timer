@@ -28,11 +28,11 @@
 			android:layout_margin="16dp"/>
 	</FrameLayout>
 
-	<android.widget.ActionMenuView
+	<android.support.v7.widget.Toolbar
 		android:id="@+id/menu_bar"
 		android:layout_width="match_parent"
 		android:layout_height="?actionBarSize"
 		android:background="@android:color/transparent"
 		>
-	</android.widget.ActionMenuView>
+	</android.support.v7.widget.Toolbar>
 </com.iec.dwx.timer.Views.CardFlipLayout>

@@ -8,7 +8,6 @@ import android.support.v4.view.ViewPager;
 import android.util.Log;
 
 import com.iec.dwx.timer.Animate.PageTransformer;
-import com.iec.dwx.timer.BuildConfig;
 import com.iec.dwx.timer.Fragments.AchievementFragment;
 import com.iec.dwx.timer.Fragments.MyWishesFragment;
 import com.iec.dwx.timer.Fragments.SkillFragment;
@@ -18,6 +17,7 @@ import butterknife.Bind;
 import me.imid.swipebacklayout.lib.SwipeBackLayout;
 
 public class MainActivity extends BaseActivity implements SwipeBackLayout.SwipeListener {
+    public static final String INTENT_KEY_PAGE = "page";
 
     @Bind(R.id.vp_main)
     ViewPager mViewPager;
@@ -26,6 +26,12 @@ public class MainActivity extends BaseActivity implements SwipeBackLayout.SwipeL
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         init();
+        choosePage();
+    }
+
+    private void choosePage() {
+        int flag = getIntent().getIntExtra(INTENT_KEY_PAGE, 0);
+        mViewPager.setCurrentItem(flag);
     }
 
     private void init() {
@@ -34,7 +40,7 @@ public class MainActivity extends BaseActivity implements SwipeBackLayout.SwipeL
 
         PageAdapter adapter = new PageAdapter(getSupportFragmentManager());
         mViewPager.setAdapter(adapter);
-        mViewPager.setPageTransformer(false, new PageTransformer());
+//        mViewPager.setPageTransformer(false, new PageTransformer());
     }
 
     @Override

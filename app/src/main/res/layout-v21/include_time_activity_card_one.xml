@@ -40,6 +40,46 @@
 			android:paddingLeft="@dimen/card_subhead_padding_left"
 			android:text="@string/card_one_subhead"
 			android:textSize="@dimen/card_subhead_size"/>
+
+		<View
+			android:layout_width="match_parent"
+			android:layout_height="20dp"/>
+
+		<TextView
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:paddingBottom="4dp"
+			android:paddingLeft="@dimen/card_subhead_padding_left"
+			android:paddingTop="4dp"
+			android:text="在教室"
+			/>
+
+		<TextView
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:paddingBottom="4dp"
+			android:paddingLeft="@dimen/card_subhead_padding_left"
+			android:paddingTop="4dp"
+			android:text="在食堂"
+			/>
+
+		<TextView
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:paddingBottom="4dp"
+			android:paddingLeft="@dimen/card_subhead_padding_left"
+			android:paddingTop="4dp"
+			android:text="在操场"
+			/>
+
+		<TextView
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:paddingBottom="4dp"
+			android:paddingLeft="@dimen/card_subhead_padding_left"
+			android:paddingTop="4dp"
+			android:text="在寝室"
+			/>
 	</LinearLayout>
 
 	<FrameLayout
