@@ -6,7 +6,6 @@
 		<item name="colorPrimary">@color/colorPrimary</item>
 		<item name="colorPrimaryDark">@color/colorPrimaryDark</item>
 		<item name="colorAccent">@color/colorAccent</item>
-		<item name="android:listDivider">@drawable/my_wishes_divider</item>
 	</style>
 
 	<style name="FullScreenTheme" parent="Theme.AppCompat.Light.NoActionBar">
