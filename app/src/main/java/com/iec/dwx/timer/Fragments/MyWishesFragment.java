@@ -1,6 +1,9 @@
 package com.iec.dwx.timer.Fragments;
 
 
+import android.graphics.Color;
+import android.graphics.DashPathEffect;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,6 +18,7 @@ import android.widget.TextView;
 
 import com.iec.dwx.timer.Animate.MyWishDividerItemDecoration;
 import com.iec.dwx.timer.R;
+import com.yqritc.recyclerviewflexibledivider.HorizontalDividerItemDecoration;
 
 import org.w3c.dom.Text;
 
@@ -45,9 +49,16 @@ public class MyWishesFragment extends Fragment implements Toolbar.OnMenuItemClic
             mManager=new LinearLayoutManager(getActivity());
             ((RecyclerView) rootview.findViewById(R.id.rv_my_wishes)).setLayoutManager(mManager);
             ((RecyclerView) rootview.findViewById(R.id.rv_my_wishes)).setAdapter(mAdapter);
-        ((RecyclerView) rootview.findViewById(R.id.rv_my_wishes)).addItemDecoration(new MyWishDividerItemDecoration(
-                getActivity(),MyWishDividerItemDecoration.VERTICAL_LIST
-        ));
+//        ((RecyclerView) rootview.findViewById(R.id.rv_my_wishes)).addItemDecoration(new MyWishDividerItemDecoration(
+//                getActivity(),MyWishDividerItemDecoration.VERTICAL_LIST
+//        ));
+        Paint paint = new Paint();
+        paint.setStrokeWidth(10);
+        paint.setColor(Color.parseColor("#47646363"));
+        paint.setAntiAlias(true);
+        paint.setPathEffect(new DashPathEffect(new float[]{25.0f, 25.0f}, 0));
+        ((RecyclerView) rootview.findViewById(R.id.rv_my_wishes)).addItemDecoration(
+                new HorizontalDividerItemDecoration.Builder(getContext()).paint(paint).build());
         return rootview;
     }
 

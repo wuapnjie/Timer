@@ -12,12 +12,14 @@ import android.support.v7.widget.RecyclerView.State;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
 
+import com.iec.dwx.timer.R;
+
 /**
  * Created by Administrator on 2015/10/14 0014.
  */
 public class OtherWishDividerItemDecoration extends RecyclerView.ItemDecoration {
     private final String TAG = OtherWishDividerItemDecoration.class.getSimpleName();
-    private static final int[] ATTRS = new int[] { android.R.attr.listDivider };
+    private static final int[] ATTRS = new int[] {android.R.attr.listDivider};
     private Drawable mDivider;
 
     public OtherWishDividerItemDecoration(Context context)
