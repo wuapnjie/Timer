@@ -18,8 +18,8 @@ import com.iec.dwx.timer.R;
 
 public class MyWishesFragment extends Fragment implements Toolbar.OnMenuItemClickListener {
 
-    private MyWishesAdapter mAdapter=null;
-    private RecyclerView.LayoutManager mManager=null;
+    private MyWishesAdapter mAdapter;
+    private RecyclerView.LayoutManager mManager;
 
     public static MyWishesFragment newInstance() {
         return new MyWishesFragment();
@@ -36,16 +36,15 @@ public class MyWishesFragment extends Fragment implements Toolbar.OnMenuItemClic
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootview=inflater.inflate(R.layout.fragment_my_wishes, container, false);
-        if(savedInstanceState == null){
+        View rootView=inflater.inflate(R.layout.fragment_my_wishes, container, false);
+
             mAdapter=new MyWishesAdapter();
             mManager=new LinearLayoutManager(getActivity());
-            ((RecyclerView) rootview.findViewById(R.id.rv_my_wishes)).setLayoutManager(mManager);
-            ((RecyclerView) rootview.findViewById(R.id.rv_my_wishes)).setAdapter(mAdapter);
-            ((RecyclerView) rootview.findViewById(R.id.rv_my_wishes)).addItemDecoration(new DividerItemDecoration(getContext(),
-                    DividerItemDecoration.VERTICAL_LIST));
-        }
-        return rootview;
+            ((RecyclerView) rootView.findViewById(R.id.rv_my_wishes)).setLayoutManager(mManager);
+            ((RecyclerView) rootView.findViewById(R.id.rv_my_wishes)).setAdapter(mAdapter);
+//            ((RecyclerView) rootview.findViewById(R.id.rv_my_wishes)).addItemDecoration(new DividerItemDecoration(getContext(),
+//                    DividerItemDecoration.VERTICAL_LIST));
+        return rootView;
     }
 
     @Override
@@ -76,29 +75,24 @@ public class MyWishesFragment extends Fragment implements Toolbar.OnMenuItemClic
 
         @Override
         public void onBindViewHolder(WishesViewHolder holder, int position) {
-
+//            holder.mTime.setText("2013");
+            holder.mContent.setText("myWishes");
         }
 
         @Override
         public int getItemCount() {
             //记得修改
-            return 9;
+            return 30;
         }
     }
 
     public static class WishesViewHolder extends RecyclerView.ViewHolder{
-        TextView mContent=null;
-        TextView mTime=null;
+        TextView mContent;
+//        TextView mTime;
         public WishesViewHolder(View itemView) {
             super(itemView);
             mContent= (TextView) itemView.findViewById(R.id.my_wishes_text);
-            mTime= (TextView) itemView.findViewById(R.id.my_wishes_time);
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                }
-            });
+//            mTime= (TextView) itemView.findViewById(R.id.my_wishes_time);
         }
     }
 }

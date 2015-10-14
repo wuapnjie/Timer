@@ -12,11 +12,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.iec.dwx.timer.R;
-import com.iec.dwx.timer.Utils.ScreenSizeUtils;
 
 public class AchievementFragment extends Fragment implements Toolbar.OnMenuItemClickListener {
 
