@@ -94,8 +94,8 @@ public class TestActivity extends BaseActivity {
 
     private void linkTo() {
 
-//        startActivity(new Intent(this, MainActivity.class));
-        startActivity(new Intent(this, TimeActivity.class));
+        startActivity(new Intent(this, MainActivity.class));
+//        startActivity(new Intent(this, TimeActivity.class));
     }
 
 //    private void get() {

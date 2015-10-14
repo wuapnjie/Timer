@@ -5,7 +5,7 @@
       tools:context=".MainActivity">
 	<item
 		android:id="@+id/menu_my_wishes_share"
-		android:icon="@drawable/ic_play_arrow_black_24dp"
+		android:icon="@drawable/ic_wb_cloudy_black_24dp"
 		android:title=""
 		app:showAsAction="always"
 		>

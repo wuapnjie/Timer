@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.iec.dwx.timer.Animate.MyWishDividerItemDecoration;
 import com.iec.dwx.timer.R;
 
 import org.w3c.dom.Text;
@@ -39,12 +40,14 @@ public class MyWishesFragment extends Fragment implements Toolbar.OnMenuItemClic
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootview=inflater.inflate(R.layout.fragment_my_wishes, container, false);
-        if(savedInstanceState == null){
+
             mAdapter=new MyWishesAdapter();
             mManager=new LinearLayoutManager(getActivity());
             ((RecyclerView) rootview.findViewById(R.id.rv_my_wishes)).setLayoutManager(mManager);
             ((RecyclerView) rootview.findViewById(R.id.rv_my_wishes)).setAdapter(mAdapter);
-        }
+        ((RecyclerView) rootview.findViewById(R.id.rv_my_wishes)).addItemDecoration(new MyWishDividerItemDecoration(
+                getActivity(),MyWishDividerItemDecoration.VERTICAL_LIST
+        ));
         return rootview;
     }
 
@@ -74,7 +77,8 @@ public class MyWishesFragment extends Fragment implements Toolbar.OnMenuItemClic
 
         @Override
         public void onBindViewHolder(WishesViewHolder holder, int position) {
-
+            holder.mTime.setText("2013");
+            holder.mContent.setText("mywihes");
         }
 
         @Override
