@@ -10,7 +10,6 @@ import android.util.Log;
 import com.iec.dwx.timer.Animate.PageTransformer;
 import com.iec.dwx.timer.Fragments.AchievementFragment;
 import com.iec.dwx.timer.Fragments.MyWishesFragment;
-import com.iec.dwx.timer.Fragments.OtherWishesFragment;
 import com.iec.dwx.timer.Fragments.SkillFragment;
 import com.iec.dwx.timer.R;
 
@@ -41,7 +40,7 @@ public class MainActivity extends BaseActivity implements SwipeBackLayout.SwipeL
 
         PageAdapter adapter = new PageAdapter(getSupportFragmentManager());
         mViewPager.setAdapter(adapter);
-        mViewPager.setPageTransformer(false, new PageTransformer());
+//        mViewPager.setPageTransformer(false, new PageTransformer());
     }
 
     @Override
@@ -79,7 +78,6 @@ public class MainActivity extends BaseActivity implements SwipeBackLayout.SwipeL
         public Fragment getItem(int position) {
             if (position == 0) {
                 return MyWishesFragment.newInstance();
-//                return OtherWishesFragment.newInstance();
             } else if (position == 1) {
                 return AchievementFragment.newInstance();
             } else {
