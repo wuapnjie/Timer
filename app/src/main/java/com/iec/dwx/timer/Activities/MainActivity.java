@@ -10,6 +10,7 @@ import android.util.Log;
 import com.iec.dwx.timer.Animate.PageTransformer;
 import com.iec.dwx.timer.Fragments.AchievementFragment;
 import com.iec.dwx.timer.Fragments.MyWishesFragment;
+import com.iec.dwx.timer.Fragments.OtherWishesFragment;
 import com.iec.dwx.timer.Fragments.SkillFragment;
 import com.iec.dwx.timer.R;
 
@@ -77,7 +78,8 @@ public class MainActivity extends BaseActivity implements SwipeBackLayout.SwipeL
         @Override
         public Fragment getItem(int position) {
             if (position == 0) {
-                return MyWishesFragment.newInstance();
+//                return MyWishesFragment.newInstance();
+                return OtherWishesFragment.newInstance();
             } else if (position == 1) {
                 return AchievementFragment.newInstance();
             } else {
