@@ -27,6 +27,7 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.PhotoViewHol
     private final String TAG = PhotoAdapter.class.getSimpleName();
     private Context mCtx;
     private List<String> data;
+    private OnPhotoClickListener mOnPhotoClickListener;
 
     public PhotoAdapter(Context ctx) {
         mCtx = ctx;
@@ -37,6 +38,10 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.PhotoViewHol
         notifyDataSetChanged();
     }
 
+    public void setOnPhotoClickListener(OnPhotoClickListener onPhotoClickListener) {
+        mOnPhotoClickListener = onPhotoClickListener;
+    }
+
     @Override
     public PhotoViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(mCtx).inflate(R.layout.photo_item, parent, false);
@@ -45,7 +50,11 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.PhotoViewHol
 
     @Override
     public void onBindViewHolder(PhotoViewHolder holder, int position) {
-        holder.mContainer.setLayoutParams(new ViewGroup.LayoutParams(ScreenSizeUtils.getWidth(mCtx)/3,ScreenSizeUtils.getWidth(mCtx)/3));
+        holder.mContainer.setLayoutParams(new ViewGroup.LayoutParams(ScreenSizeUtils.getWidth(mCtx) / 3, ScreenSizeUtils.getWidth(mCtx) / 3));
+        holder.mContainer.setOnClickListener(v -> {
+            if (mOnPhotoClickListener != null)
+                mOnPhotoClickListener.onPhotoClick(v, position, data.get(position));
+        });
         Observable.just(data.get(position))
                 .map(s -> {
                     if (SMemoryCacheManager.getInstance().getBitmap(s) != null)
@@ -75,5 +84,9 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.PhotoViewHol
             mImageView = (ImageView) itemView.findViewById(R.id.iv_photo);
             mContainer = (FrameLayout) itemView.findViewById(R.id.photo_container);
         }
+    }
+
+    public interface OnPhotoClickListener {
+        void onPhotoClick(View v, int position, String arg);
     }
 }

@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.iec.dwx.timer.Activities.EditAchievementActivity;
 import com.iec.dwx.timer.Activities.PickPhotoActivity;
 import com.iec.dwx.timer.R;
 
@@ -63,10 +64,15 @@ public class AchievementFragment extends Fragment implements Toolbar.OnMenuItemC
             case R.id.menu_achievement_play:
                 break;
             case R.id.menu_achievement_add:
-                linkToPickPhoto();
+//                linkToPickPhoto();
+                intent2Add();
                 break;
         }
         return false;
+    }
+
+    private void intent2Add() {
+        startActivity(new Intent(getActivity(), EditAchievementActivity.class));
     }
 
     private void linkToPickPhoto() {

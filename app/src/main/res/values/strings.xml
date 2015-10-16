@@ -43,4 +43,5 @@
 	<string name="menu_time_about">关于我们</string>
 
 	<string name="toolbar_pick_photo_title">请选择一个相册</string>
+	<string name="toolbar_edit_achievement_title">成就上传</string>
 </resources>
