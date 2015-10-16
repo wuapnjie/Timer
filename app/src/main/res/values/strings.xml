@@ -41,4 +41,6 @@
 	<string name="menu_time_skill">我的技能</string>
 	<string name="menu_time_reset">重新设置</string>
 	<string name="menu_time_about">关于我们</string>
+
+	<string name="toolbar_pick_photo_title">请选择一个相册</string>
 </resources>

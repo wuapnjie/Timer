@@ -184,7 +184,7 @@ public class ClockView extends View {
         final Drawable minute = mPointMinute;
         int w = minute.getIntrinsicWidth();
         int h = minute.getIntrinsicHeight();
-        Log.d(TAG, "minute_point:" + "width->" + w + ",height->" + h);
+//        Log.d(TAG, "minute_point:" + "width->" + w + ",height->" + h);
         minute.setBounds((mWidth - w) / 2, (mHeight - h) / 2, (mWidth + w) / 2, (mHeight + h) / 2);
 
         canvas.save();
@@ -197,7 +197,7 @@ public class ClockView extends View {
         final Drawable hour = mPointHour;
         int w = hour.getIntrinsicWidth();
         int h = hour.getIntrinsicHeight();
-        Log.d(TAG, "hour_point:" + "width->" + w + ",height->" + h);
+//        Log.d(TAG, "hour_point:" + "width->" + w + ",height->" + h);
         hour.setBounds((mWidth - w) / 2, (mHeight - h) / 2, (mWidth + w) / 2, (mHeight + h) / 2);
 
         canvas.save();
@@ -210,7 +210,7 @@ public class ClockView extends View {
         final Drawable inner = mInnerCircle;
         int w = inner.getIntrinsicWidth();
         int h = inner.getIntrinsicHeight();
-        Log.d(TAG, "inner:" + "width->" + w + ",height->" + h);
+//        Log.d(TAG, "inner:" + "width->" + w + ",height->" + h);
         inner.setBounds((mWidth - w) / 2, (mHeight - h) / 2, (mWidth + w) / 2, (mHeight + h) / 2);
         inner.draw(canvas);
     }
@@ -219,7 +219,7 @@ public class ClockView extends View {
         final Drawable outer = mOuterCircle;
         int w = outer.getIntrinsicWidth();
         int h = outer.getIntrinsicHeight();
-        Log.d(TAG, "outer:" + "width->" + w + ",height->" + h);
+//        Log.d(TAG, "outer:" + "width->" + w + ",height->" + h);
         outer.setBounds((mWidth - w) / 2, (mHeight - h) / 2, (mWidth + w) / 2, (mHeight + h) / 2);
         outer.draw(canvas);
     }
@@ -228,7 +228,7 @@ public class ClockView extends View {
         final Drawable dial = mDial;
         int w = dial.getIntrinsicWidth();
         int h = dial.getIntrinsicHeight();
-        Log.d(TAG, "dial:" + "width->" + w + ",height->" + h + ",scale->" + mScale);
+//        Log.d(TAG, "dial:" + "width->" + w + ",height->" + h + ",scale->" + mScale);
         dial.setBounds((mWidth - w) / 2, (mHeight - h) / 2, (mWidth + w) / 2, (mHeight + h) / 2);
         canvas.save();
         canvas.scale(mScale, mScale, mWidth * 0.5f, mHeight * 0.5f);

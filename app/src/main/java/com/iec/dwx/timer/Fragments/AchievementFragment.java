@@ -1,6 +1,7 @@
 package com.iec.dwx.timer.Fragments;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
@@ -12,11 +13,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.iec.dwx.timer.Activities.PickPhotoActivity;
 import com.iec.dwx.timer.R;
-import com.iec.dwx.timer.Utils.ScreenSizeUtils;
 
 public class AchievementFragment extends Fragment implements Toolbar.OnMenuItemClickListener {
 
@@ -54,14 +54,23 @@ public class AchievementFragment extends Fragment implements Toolbar.OnMenuItemC
         if (getView() == null) return;
         ((Toolbar) getView().findViewById(R.id.toolbar_achievement)).inflateMenu(R.menu.menu_achievement);
         ((Toolbar) getView().findViewById(R.id.toolbar_achievement)).setOnMenuItemClickListener(this);
+        ((Toolbar) getView().findViewById(R.id.toolbar_achievement)).setNavigationOnClickListener(v -> getActivity().onBackPressed());
     }
 
     @Override
     public boolean onMenuItemClick(MenuItem item) {
         switch (item.getItemId()) {
-
+            case R.id.menu_achievement_play:
+                break;
+            case R.id.menu_achievement_add:
+                linkToPickPhoto();
+                break;
         }
         return false;
+    }
+
+    private void linkToPickPhoto() {
+        startActivity(new Intent(getActivity(), PickPhotoActivity.class));
     }
 
     public class AchievementAdapter extends RecyclerView.Adapter<AchievementViewHolder> {

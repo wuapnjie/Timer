@@ -6,10 +6,10 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import com.iec.dwx.timer.Activities.BaseActivity;
-import com.iec.dwx.timer.Activities.MainActivity;
 import com.iec.dwx.timer.Activities.TimeActivity;
 import com.iec.dwx.timer.Beans.CommonBean;
 import com.iec.dwx.timer.Beans.WishBean;
+import com.iec.dwx.timer.Content.PhotoAlbumManager;
 import com.iec.dwx.timer.Utils.DBHelper;
 
 import java.util.List;
@@ -57,13 +57,20 @@ public class TestActivity extends BaseActivity {
         bean2.setTime("2015-10-11");
         bean2.setPicture("hello.jpg");
 //        mBtnTest1.setOnClickListener(v -> testFormatTime());
-        mBtnTest1.setOnClickListener(v -> addBean(DBHelper.DB_TABLE_ACHIEVEMENT, bean));
+        mBtnTest1.setOnClickListener(v -> test());
         mBtnTest2.setOnClickListener(v -> deleteBean(DBHelper.DB_TABLE_ACHIEVEMENT, bean));
         mBtnTest3.setOnClickListener(v -> getAllBeans(DBHelper.DB_TABLE_ACHIEVEMENT));
         mBtnTest4.setOnClickListener(v -> getOneBean(DBHelper.DB_TABLE_ACHIEVEMENT, 2));
         mBtnTest5.setOnClickListener(v -> updateBean(DBHelper.DB_TABLE_ACHIEVEMENT, bean, bean2));
         mBtnTest6.setOnClickListener(v -> linkTo());
 
+    }
+
+    private void test() {
+        PhotoAlbumManager manager = PhotoAlbumManager.initial(this);
+        manager.getBucket();
+        manager.test();
+        manager.getThumbnail();
     }
 
     private void updateBean(String tableName, CommonBean oldBean, CommonBean newBean) {
