@@ -9,11 +9,10 @@ import android.graphics.Color;
 public class WishBean extends CommonBean implements CommonBean.InfoImpl{
     private final String TAG = WishBean.class.getSimpleName();
 
-    private boolean isShared=false;
     private String wishTime=null;
     private String wishContent=null;
 
-    //由于现在不需要图片，所以这里可以用来记录是否分享过
+    //由于现在不需要图片，所以这里可以用来记录是否分享过,0表示未分享过,1表示分享过
     private String pictureUrl=null;
 
 
@@ -40,11 +39,6 @@ public class WishBean extends CommonBean implements CommonBean.InfoImpl{
 
     public void setPictureUrl(String pictureUrl) {
         this.pictureUrl = pictureUrl;
-    }
-
-
-    public boolean isShared() {
-        return isShared;
     }
 
     @Override
