@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.iec.dwx.timer.Activities.MyWishDetails;
 import com.iec.dwx.timer.Activities.OtherWishes;
@@ -83,12 +84,28 @@ public class MyWishesFragment extends Fragment implements Toolbar.OnMenuItemClic
         if (getView() == null) return;
         ((Toolbar) getView().findViewById(R.id.toolbar_my_wishes)).inflateMenu(R.menu.menu_my_wishes);
         ((Toolbar) getView().findViewById(R.id.toolbar_my_wishes)).setOnMenuItemClickListener(this);
+        getView().findViewById(R.id.my_wishes_add_btn_sure).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                add_view.setVisibility(View.GONE);
+                recyclerView.setBackgroundColor(000);
+                Toast.makeText(getContext(), "已保存", Toast.LENGTH_LONG).show();
+            }
+        });
+        getView().findViewById(R.id.my_wishes_add_btn_cencel).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                add_view.setVisibility(View.GONE);
+                recyclerView.setBackgroundColor(000);
+                Toast.makeText(getContext(), "已", Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     @Override
     public boolean onMenuItemClick(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.menu_my_wishes_share:
+            case R.id.menu_my_wishes_others:
                 startActivity(new Intent(getActivity(), OtherWishes.class));
                 break;
             case R.id.menu_my_wishes_add:

@@ -42,7 +42,7 @@ public class OtherWishesFragment extends Fragment{
         mlayoutManager=new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL);
         ((RecyclerView) rootView.findViewById(R.id.rv_other_wishes)).setLayoutManager(mlayoutManager);
         ((RecyclerView) rootView.findViewById(R.id.rv_other_wishes)).setAdapter(madapter);
-        ((RecyclerView) rootView.findViewById(R.id.rv_other_wishes)).addItemDecoration(new OtherWishDividerItemDecoration(getContext()));
+       // ((RecyclerView) rootView.findViewById(R.id.rv_other_wishes)).addItemDecoration(new OtherWishDividerItemDecoration(getContext()));
 
         return rootView;
     }
