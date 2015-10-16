@@ -78,8 +78,7 @@ public class MainActivity extends BaseActivity implements SwipeBackLayout.SwipeL
         @Override
         public Fragment getItem(int position) {
             if (position == 0) {
-//                return MyWishesFragment.newInstance();
-                return OtherWishesFragment.newInstance();
+                return MyWishesFragment.newInstance();
             } else if (position == 1) {
                 return AchievementFragment.newInstance();
             } else {

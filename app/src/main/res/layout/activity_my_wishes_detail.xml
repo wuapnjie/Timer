@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
@@ -7,8 +8,6 @@
     android:background="#FFF"
     tools:context="com.iec.dwx.timer.Fragments.MyWishesFragment"
     android:clickable="true">
-
-	<!-- TODO: Update blank fragment layout -->
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -20,23 +19,39 @@
             android:layout_height="?actionBarSize"
             app:subtitleTextColor="@color/toolbar_text_color"
             app:layout_scrollFlags="scroll|enterAlways"
-            app:subtitle="@string/menu_time_wish"/>
+            app:subtitle="我的心愿详情"/>
     </android.support.design.widget.AppBarLayout>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv_my_wishes"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-    </android.support.v7.widget.RecyclerView>
-    <include
-        android:id="@+id/add_view"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        layout="@layout/fragment_my_wishes_add_view"
-        android:layout_gravity="center"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:orientation="vertical">
+    <android.support.v4.view.ViewPager
+        android:id="@+id/detail_viewPager"
+        android:layout_height="0dp"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        ></include>
+        android:layout_weight="0.9"
+        />
+    <LinearLayout
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.1"
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/detail_share_btn"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.5"
+            android:text="分享"/>
+        <Button
+            android:id="@+id/detail_delete_btn"
+            android:layout_width="0dp"
+            android:layout_weight="0.5"
+            android:layout_height="match_parent"
+            android:text="删除"/>
+    </LinearLayout>
+    </LinearLayout>
 </android.support.design.widget.CoordinatorLayout>

@@ -39,7 +39,9 @@
         </activity>
         <activity android:name=".Activities.MainActivity" >
         </activity>
-        <activity android:name=".Activities.PublicWishes">
+        <activity android:name=".Activities.OtherWishes">
+        </activity>
+        <activity android:name=".Activities.MyWishDetails">
         </activity>
     </application>
 

@@ -12,8 +12,6 @@ import android.support.v7.widget.RecyclerView.State;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
 
-import com.iec.dwx.timer.R;
-
 /**
  * Created by Administrator on 2015/10/14 0014.
  */
@@ -27,6 +25,7 @@ public class OtherWishDividerItemDecoration extends RecyclerView.ItemDecoration 
         final TypedArray a = context.obtainStyledAttributes(ATTRS);
         mDivider = a.getDrawable(0);
         a.recycle();
+
     }
 
     @Override

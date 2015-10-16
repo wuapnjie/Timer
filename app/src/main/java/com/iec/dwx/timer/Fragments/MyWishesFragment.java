@@ -1,6 +1,7 @@
 package com.iec.dwx.timer.Fragments;
 
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.DashPathEffect;
 import android.graphics.Paint;
@@ -16,6 +17,8 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.iec.dwx.timer.Activities.MyWishDetails;
+import com.iec.dwx.timer.Activities.OtherWishes;
 import com.iec.dwx.timer.Animate.MyWishDividerItemDecoration;
 import com.iec.dwx.timer.R;
 import com.yqritc.recyclerviewflexibledivider.HorizontalDividerItemDecoration;
@@ -27,6 +30,8 @@ public class MyWishesFragment extends Fragment implements Toolbar.OnMenuItemClic
 
     private MyWishesAdapter mAdapter=null;
     private RecyclerView.LayoutManager mManager=null;
+    private LinearLayout add_view=null;
+    private RecyclerView recyclerView=null;
 
     public static MyWishesFragment newInstance() {
         return new MyWishesFragment();
@@ -44,11 +49,21 @@ public class MyWishesFragment extends Fragment implements Toolbar.OnMenuItemClic
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootview=inflater.inflate(R.layout.fragment_my_wishes, container, false);
+        recyclerView=(RecyclerView) rootview.findViewById(R.id.rv_my_wishes);
+        add_view= (LinearLayout) rootview.findViewById(R.id.add_view);
+        add_view.setVisibility(View.GONE);
 
             mAdapter=new MyWishesAdapter();
+            mAdapter.setOnItemClickListener(new OnRecyclerViewItemClickListener() {
+                @Override
+               public void onItemClick(View view, int position) {
+                 System.out.println("itemClick" + position);
+                 startActivity(new Intent(getActivity(), MyWishDetails.class));
+                         }
+            });
             mManager=new LinearLayoutManager(getActivity());
-            ((RecyclerView) rootview.findViewById(R.id.rv_my_wishes)).setLayoutManager(mManager);
-            ((RecyclerView) rootview.findViewById(R.id.rv_my_wishes)).setAdapter(mAdapter);
+            recyclerView.setLayoutManager(mManager);
+            recyclerView.setAdapter(mAdapter);
 //        ((RecyclerView) rootview.findViewById(R.id.rv_my_wishes)).addItemDecoration(new MyWishDividerItemDecoration(
 //                getActivity(),MyWishDividerItemDecoration.VERTICAL_LIST
 //        ));
@@ -73,12 +88,24 @@ public class MyWishesFragment extends Fragment implements Toolbar.OnMenuItemClic
     @Override
     public boolean onMenuItemClick(MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.menu_my_wishes_share:
+                startActivity(new Intent(getActivity(), OtherWishes.class));
+                break;
+            case R.id.menu_my_wishes_add:
+                add_view.setVisibility(View.VISIBLE);
+                recyclerView.setBackgroundResource(R.color.black_overlay);
 
         }
         return false;
     }
 
     private class MyWishesAdapter extends RecyclerView.Adapter<WishesViewHolder>{
+        private OnRecyclerViewItemClickListener mOnItemClickListener=null;
+
+        public void setOnItemClickListener(OnRecyclerViewItemClickListener listener) {
+            mOnItemClickListener = listener;
+        }
+
 
         @Override
         public WishesViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -90,6 +117,14 @@ public class MyWishesFragment extends Fragment implements Toolbar.OnMenuItemClic
         public void onBindViewHolder(WishesViewHolder holder, int position) {
             holder.mTime.setText("2013");
             holder.mContent.setText("mywihes");
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (mOnItemClickListener != null) {
+                        mOnItemClickListener.onItemClick(v, position);
+                    }
+                }
+            });
         }
 
         @Override
@@ -107,5 +142,9 @@ public class MyWishesFragment extends Fragment implements Toolbar.OnMenuItemClic
             mContent= (TextView) itemView.findViewById(R.id.my_wishes_text);
             mTime= (TextView) itemView.findViewById(R.id.my_wishes_time);
         }
+    }
+
+    public interface OnRecyclerViewItemClickListener{
+        void onItemClick(View view , int position);
     }
 }
