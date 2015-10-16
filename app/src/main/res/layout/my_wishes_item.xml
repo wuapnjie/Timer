@@ -12,7 +12,6 @@
         android:id="@+id/my_wishes_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="aaaaa"
         android:textColor="#000"/>
     <LinearLayout
         android:layout_width="match_parent"
@@ -23,8 +22,7 @@
             android:id="@+id/my_wishes_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="#000"
-            android:hint="2011"/>
+            android:textColor="#000"/>
     </LinearLayout>
 
 </LinearLayout>

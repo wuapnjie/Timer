@@ -10,6 +10,8 @@ import android.widget.TextView;
 import com.iec.dwx.timer.Animate.OtherWishDividerItemDecoration;
 import com.iec.dwx.timer.R;
 
+import cn.bmob.v3.Bmob;
+
 /**
  * Created by Administrator on 2015/10/5 0005.
  */
@@ -23,8 +25,9 @@ public class OtherWishes extends BaseActivity{
     private String mString[]=new String[]{"aaaa","bbbbbbbbbbbbbb","ccccccccccccccccccccc","d"};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        overridePendingTransition(R.anim.other_wishes_activity_in,R.anim.my_wishes_activity_out);
+        overridePendingTransition(R.anim.other_wishes_activity_in, R.anim.my_wishes_activity_out);
         super.onCreate(savedInstanceState);
+        Bmob.initialize(this, "3a39e05d106b31b3f61a8ce842933a8a");
         mRecyclerView= (RecyclerView) findViewById(R.id.rv_other_wishes);
         madapter=new Adapter();
 
