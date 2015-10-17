@@ -1,7 +1,21 @@
 package com.iec.dwx.timer.Utils;
 
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.ThumbnailUtils;
+import android.net.Uri;
+import android.os.Environment;
+
+import com.iec.dwx.timer.R;
+
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Created by Flying SnowBean on 2015/10/15.
@@ -40,5 +54,31 @@ public class ImageUtils {
 
         return BitmapFactory.decodeFile(path, options);
 
+    }
+
+    public static File createFile(Context context) {
+        File mediaStorageDir = new File(
+                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),
+                context.getString(R.string.app_name)
+        );
+
+        if (!mediaStorageDir.exists()) {
+            if (!mediaStorageDir.mkdirs()) {
+                return null;
+            }
+        }
+
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        File mediaFile = new File(
+                mediaStorageDir.getPath() + File.separator + "IMG_" + timeStamp + ".jpg"
+        );
+
+        // Mediascanner need to scan for the image saved
+        Intent mediaScannerIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+        Uri fileContentUri = Uri.fromFile(mediaFile);
+        mediaScannerIntent.setData(fileContentUri);
+        context.sendBroadcast(mediaScannerIntent);
+
+        return mediaFile;
     }
 }

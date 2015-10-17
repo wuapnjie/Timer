@@ -25,8 +25,6 @@ public class TestActivity extends BaseActivity {
     Button mBtnTest1;
     @Bind(R.id.btn_test_2)
     Button mBtnTest2;
-    @Bind(R.id.iv_show)
-    ImageView mIvShow;
     @Bind(R.id.btn_test_3)
     Button mBtnTest3;
     @Bind(R.id.btn_test_4)
@@ -57,7 +55,7 @@ public class TestActivity extends BaseActivity {
         bean2.setTime("2015-10-11");
         bean2.setPicture("hello.jpg");
 //        mBtnTest1.setOnClickListener(v -> testFormatTime());
-        mBtnTest1.setOnClickListener(v -> test());
+        mBtnTest1.setOnClickListener(v -> addBean(DBHelper.DB_TABLE_ACHIEVEMENT, bean));
         mBtnTest2.setOnClickListener(v -> deleteBean(DBHelper.DB_TABLE_ACHIEVEMENT, bean));
         mBtnTest3.setOnClickListener(v -> getAllBeans(DBHelper.DB_TABLE_ACHIEVEMENT));
         mBtnTest4.setOnClickListener(v -> getOneBean(DBHelper.DB_TABLE_ACHIEVEMENT, 2));

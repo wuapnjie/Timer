@@ -11,10 +11,7 @@
 	android:paddingTop="@dimen/activity_vertical_margin"
 	tools:context=".TestActivity">
 
-	<ImageView
-		android:id="@+id/iv_show"
-		android:layout_width="match_parent"
-		android:layout_height="300dp"/>
+
 
 	<Button
 		android:id="@+id/btn_test_1"

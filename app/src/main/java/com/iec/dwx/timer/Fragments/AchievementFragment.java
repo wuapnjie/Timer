@@ -13,11 +13,24 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.iec.dwx.timer.Activities.EditAchievementActivity;
 import com.iec.dwx.timer.Activities.PickPhotoActivity;
+import com.iec.dwx.timer.Beans.CommonBean;
 import com.iec.dwx.timer.R;
+import com.iec.dwx.timer.Utils.CacheManager.SMemoryCacheManager;
+import com.iec.dwx.timer.Utils.DBHelper;
+import com.iec.dwx.timer.Utils.ImageUtils;
+import com.iec.dwx.timer.Utils.ScreenSizeUtils;
+import com.iec.dwx.timer.Utils.Utils;
+
+import java.util.List;
+
+import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 public class AchievementFragment extends Fragment implements Toolbar.OnMenuItemClickListener {
 
@@ -40,12 +53,10 @@ public class AchievementFragment extends Fragment implements Toolbar.OnMenuItemC
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_achievement, container, false);
-        if (savedInstanceState == null) {
-            mAdapter = new AchievementAdapter();
-            mManager = new LinearLayoutManager(getActivity());
-            ((RecyclerView) rootView.findViewById(R.id.rv_achievement)).setLayoutManager(mManager);
-            ((RecyclerView) rootView.findViewById(R.id.rv_achievement)).setAdapter(mAdapter);
-        }
+        mAdapter = new AchievementAdapter();
+        mManager = new LinearLayoutManager(getActivity());
+        ((RecyclerView) rootView.findViewById(R.id.rv_achievement)).setLayoutManager(mManager);
+        ((RecyclerView) rootView.findViewById(R.id.rv_achievement)).setAdapter(mAdapter);
         return rootView;
     }
 
@@ -56,6 +67,18 @@ public class AchievementFragment extends Fragment implements Toolbar.OnMenuItemC
         ((Toolbar) getView().findViewById(R.id.toolbar_achievement)).inflateMenu(R.menu.menu_achievement);
         ((Toolbar) getView().findViewById(R.id.toolbar_achievement)).setOnMenuItemClickListener(this);
         ((Toolbar) getView().findViewById(R.id.toolbar_achievement)).setNavigationOnClickListener(v -> getActivity().onBackPressed());
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Observable.just(DBHelper.DB_TABLE_ACHIEVEMENT)
+                .map(s -> DBHelper.getInstance(getActivity()).getAllBeans(s))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(commonBeans -> {
+                    mAdapter.obtainData(commonBeans);
+                });
     }
 
     @Override
@@ -80,6 +103,12 @@ public class AchievementFragment extends Fragment implements Toolbar.OnMenuItemC
     }
 
     public class AchievementAdapter extends RecyclerView.Adapter<AchievementViewHolder> {
+        private List<CommonBean> mData;
+
+        public void obtainData(List<CommonBean> data) {
+            this.mData = data;
+            notifyDataSetChanged();
+        }
 
         @Override
         public AchievementViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -89,11 +118,26 @@ public class AchievementFragment extends Fragment implements Toolbar.OnMenuItemC
 
         @Override
         public void onBindViewHolder(AchievementViewHolder holder, int position) {
+            holder.mImageView.setLayoutParams(new LinearLayout.LayoutParams(ScreenSizeUtils.getWidth(getActivity()),ScreenSizeUtils.getWidth(getActivity())));
+            holder.mTextView.setText(mData.get(position).getContent());
+            Observable.just(mData.get(position).getPicture())
+                    .map(s -> {
+                        if (SMemoryCacheManager.getInstance().getBitmap(s) != null)
+                            return SMemoryCacheManager.getInstance().getBitmap(s);
+                        else
+                            return ImageUtils.decodeFromFile(s, Utils.dp2px(100), Utils.dp2px(100));
+                    })
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(bitmap -> {
+                        holder.mImageView.setImageBitmap(bitmap);
+                        SMemoryCacheManager.getInstance().putBitmap(mData.get(position).getPicture(), bitmap);
+                    });
         }
 
         @Override
         public int getItemCount() {
-            return 10;
+            return mData == null ? 0 : mData.size();
         }
     }
 
