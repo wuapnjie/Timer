@@ -12,6 +12,7 @@
 	<include layout="@layout/include_time_activity_card_one"/>
 
 	<FrameLayout
+		android:visibility="gone"
 		android:id="@+id/pick_container"
 		android:layout_width="wrap_content"
 		android:layout_height="match_parent"

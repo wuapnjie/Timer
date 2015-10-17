@@ -78,6 +78,8 @@ public class AchievementFragment extends Fragment implements Toolbar.OnMenuItemC
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(commonBeans -> {
                     mAdapter.obtainData(commonBeans);
+                    mAdapter.setOnAchievementLongClickListener((v, position) -> {
+                    });
                 });
     }
 
@@ -94,6 +96,9 @@ public class AchievementFragment extends Fragment implements Toolbar.OnMenuItemC
         return false;
     }
 
+    /**
+     * 跳转至添加成就
+     */
     private void intent2Add() {
         startActivity(new Intent(getActivity(), EditAchievementActivity.class));
     }
@@ -104,10 +109,15 @@ public class AchievementFragment extends Fragment implements Toolbar.OnMenuItemC
 
     public class AchievementAdapter extends RecyclerView.Adapter<AchievementViewHolder> {
         private List<CommonBean> mData;
+        private OnAchievementLongClickListener mOnAchievementLongClickListener;
 
         public void obtainData(List<CommonBean> data) {
             this.mData = data;
             notifyDataSetChanged();
+        }
+
+        public void setOnAchievementLongClickListener(OnAchievementLongClickListener onAchievementLongClickListener) {
+            mOnAchievementLongClickListener = onAchievementLongClickListener;
         }
 
         @Override
@@ -118,8 +128,25 @@ public class AchievementFragment extends Fragment implements Toolbar.OnMenuItemC
 
         @Override
         public void onBindViewHolder(AchievementViewHolder holder, int position) {
-            holder.mImageView.setLayoutParams(new LinearLayout.LayoutParams(ScreenSizeUtils.getWidth(getActivity()),ScreenSizeUtils.getWidth(getActivity())));
-            holder.mTextView.setText(mData.get(position).getContent());
+            holder.mImageView.setLayoutParams(new LinearLayout.LayoutParams(ScreenSizeUtils.getWidth(getActivity()), ScreenSizeUtils.getWidth(getActivity())));
+            //设置文字
+            holder.mTextContent.setText(mData.get(position).getContent());
+            holder.mTextTime.setText(mData.get(position).getTime());
+
+            //设置长按事件
+            holder.mContainer.setOnLongClickListener(v -> {
+                if (mOnAchievementLongClickListener != null)
+                    mOnAchievementLongClickListener.onAchievementClick(v, position);
+                holder.mShader.setVisibility(View.VISIBLE);
+                return true;
+            });
+
+            holder.mContainer.setOnClickListener(v -> {
+                if (holder.mShader.getVisibility() == View.VISIBLE) {
+                    holder.mShader.setVisibility(View.GONE);
+                }
+            });
+            //设置图画
             Observable.just(mData.get(position).getPicture())
                     .map(s -> {
                         if (SMemoryCacheManager.getInstance().getBitmap(s) != null)
@@ -142,15 +169,23 @@ public class AchievementFragment extends Fragment implements Toolbar.OnMenuItemC
     }
 
     public static class AchievementViewHolder extends RecyclerView.ViewHolder {
-        TextView mTextView;
+        TextView mTextTime;
+        TextView mTextContent;
         ImageView mImageView;
         CardView mContainer;
+        View mShader;
 
         public AchievementViewHolder(View itemView) {
             super(itemView);
-            mTextView = (TextView) itemView.findViewById(R.id.tv_achievement_head);
+            mTextTime = (TextView) itemView.findViewById(R.id.tv_achievement_time);
+            mTextContent = (TextView) itemView.findViewById(R.id.tv_achievement_head);
             mImageView = (ImageView) itemView.findViewById(R.id.iv_achievement_photo);
             mContainer = (CardView) itemView.findViewById(R.id.achievement_container);
+            mShader = itemView.findViewById(R.id.achievement_shader);
         }
+    }
+
+    public interface OnAchievementLongClickListener {
+        void onAchievementClick(View v, int position);
     }
 }

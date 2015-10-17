@@ -6,6 +6,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import com.iec.dwx.timer.Activities.BaseActivity;
+import com.iec.dwx.timer.Activities.MainActivity;
 import com.iec.dwx.timer.Activities.TimeActivity;
 import com.iec.dwx.timer.Beans.CommonBean;
 import com.iec.dwx.timer.Beans.WishBean;
@@ -41,9 +42,6 @@ public class TestActivity extends BaseActivity {
 
         Bmob.initialize(this, "3a39e05d106b31b3f61a8ce842933a8a");
         mSwipeBackLayout.setEnableGesture(false);
-//        mBtnTest1.setOnClickListener(v -> linkTo());
-//        mBtnTest2.setOnClickListener(v -> PaletteTest());
-
 
         WishBean bean = new WishBean();
         bean.setContent("我想长大");
@@ -54,6 +52,7 @@ public class TestActivity extends BaseActivity {
         bean2.setContent("我要吃屎");
         bean2.setTime("2015-10-11");
         bean2.setPicture("hello.jpg");
+
 //        mBtnTest1.setOnClickListener(v -> testFormatTime());
         mBtnTest1.setOnClickListener(v -> addBean(DBHelper.DB_TABLE_ACHIEVEMENT, bean));
         mBtnTest2.setOnClickListener(v -> deleteBean(DBHelper.DB_TABLE_ACHIEVEMENT, bean));
@@ -99,8 +98,8 @@ public class TestActivity extends BaseActivity {
 
     private void linkTo() {
 
-//        startActivity(new Intent(this, MainActivity.class));
         startActivity(new Intent(this, TimeActivity.class));
+//        startActivity(new Intent(this, TimeActivity.class));
     }
 
 //    private void get() {

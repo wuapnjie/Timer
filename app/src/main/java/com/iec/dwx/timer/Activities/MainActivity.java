@@ -10,6 +10,7 @@ import android.util.Log;
 import com.iec.dwx.timer.Animate.PageTransformer;
 import com.iec.dwx.timer.Fragments.AchievementFragment;
 import com.iec.dwx.timer.Fragments.MyWishesFragment;
+import com.iec.dwx.timer.Fragments.OtherWishesFragment;
 import com.iec.dwx.timer.Fragments.SkillFragment;
 import com.iec.dwx.timer.R;
 

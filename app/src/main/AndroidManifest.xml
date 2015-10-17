@@ -37,11 +37,14 @@
         </activity>
         <activity android:name=".Activities.MainActivity" >
         </activity>
-        <activity android:name=".Activities.PublicWishes" >
-        </activity>
         <activity android:name=".Activities.PickPhotoActivity" >
         </activity>
         <activity android:name=".Activities.EditAchievementActivity" >
+        </activity>
+        <activity android:name=".Activities.MyWishDetails" >
+        </activity>
+        <activity android:name=".Activities.OtherWishes" />
+        <activity android:name=".Activities.ShowAchievementActivity" >
         </activity>
     </application>
 

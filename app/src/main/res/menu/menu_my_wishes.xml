@@ -4,17 +4,15 @@
       xmlns:tools="http://schemas.android.com/tools"
       tools:context=".MainActivity">
 	<item
-		android:id="@+id/menu_achievement_play"
-		android:icon="@drawable/ic_play_arrow_black_24dp"
-		android:title="@string/menu_achievement_add"
-		app:showAsAction="ifRoom"
-		>
-	</item>
-	<item
-		android:id="@+id/menu_achievement_add"
+		android:id="@+id/menu_my_wishes_add"
 		android:icon="@drawable/ic_add_black_24dp"
-		android:title="@string/menu_achievement_play"
+		android:title=""
 		app:showAsAction="always"
-		>
-	</item>
+		/>
+	<item
+		android:id="@+id/menu_my_wishes_others"
+		android:icon="@drawable/ic_cloud_black_24dp"
+		android:title=""
+		app:showAsAction="always"
+		/>
 </menu>

@@ -1,7 +1,5 @@
 package com.iec.dwx.timer.Beans;
 
-import android.graphics.Color;
-
 
 /**
  * Created by Flying SnowBean on 2015/10/2.
@@ -9,44 +7,7 @@ import android.graphics.Color;
 public class WishBean extends CommonBean implements CommonBean.InfoImpl{
     private final String TAG = WishBean.class.getSimpleName();
 
-    private boolean isShared=false;
-    private String wishTime=null;
-    private String wishContent=null;
-
-    //由于现在不需要图片，所以这里可以用来记录是否分享过
-    private String pictureUrl=null;
-
-
-
-    public String getWishTime() {
-        return wishTime;
-    }
-
-    public void setWishTime(String wishTime) {
-        this.wishTime = wishTime;
-    }
-
-    public String getWishContent() {
-        return wishContent;
-    }
-
-    public void setWishContent(String wishContent) {
-        this.wishContent = wishContent;
-    }
-
-    public String getPictureUrl() {
-        return pictureUrl;
-    }
-
-    public void setPictureUrl(String pictureUrl) {
-        this.pictureUrl = pictureUrl;
-    }
-
-
-    public boolean isShared() {
-        return isShared;
-    }
-
+    //这里的mPicture是用来存取是否分享过得信息
     @Override
     public String getInfo() {
         return TAG + ":ID->"+getID()+",Time->" + getTime() + ",Content->" + getContent() + ",Picture->" + getPicture();

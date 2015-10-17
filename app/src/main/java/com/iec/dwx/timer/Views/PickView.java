@@ -69,6 +69,7 @@ public class PickView extends FrameLayout {
         }
     }
 
+
     public void setOnConfirmBtnClickListener(OnConfirmBtnClickListener onConfirmBtnClickListener) {
         mOnConfirmBtnClickListener = onConfirmBtnClickListener;
     }
@@ -77,6 +78,10 @@ public class PickView extends FrameLayout {
         if (mCheckPosition != -1)
             return mValues[mCheckPosition];
         else return VALUE_EMPTY;
+    }
+
+    public int getCheckPosition() {
+        return mCheckPosition;
     }
 
     public String[] getValues() {

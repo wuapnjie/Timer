@@ -1,13 +1,33 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:tools="http://schemas.android.com/tools"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             tools:context="com.iec.dwx.timer.Fragments.OtherWishesFragment">
+<android.support.design.widget.CoordinatorLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	android:background="#FFF"
+	tools:context="com.iec.dwx.timer.Fragments.MyWishesFragment"
+	android:clickable="true">
 
 	<!-- TODO: Update blank fragment layout -->
-	<TextView
+	<android.support.design.widget.AppBarLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content">
+
+		<android.support.v7.widget.Toolbar
+			android:id="@+id/toolbar_other_wishes"
+			android:layout_width="match_parent"
+			app:navigationIcon="@drawable/ic_arrow_back_black_24dp"
+			android:layout_height="?actionBarSize"
+			app:subtitleTextColor="@color/toolbar_text_color"
+			app:layout_scrollFlags="scroll|enterAlways"
+			app:subtitle="云端心愿"/>
+	</android.support.design.widget.AppBarLayout>
+
+	<android.support.v7.widget.RecyclerView
+		android:id="@+id/rv_other_wishes"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
-		android:text="@string/hello_blank_fragment"/>
+		app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-</FrameLayout>
+	</android.support.v7.widget.RecyclerView>
+</android.support.design.widget.CoordinatorLayout>

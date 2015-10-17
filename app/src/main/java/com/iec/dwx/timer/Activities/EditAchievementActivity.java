@@ -1,10 +1,10 @@
 package com.iec.dwx.timer.Activities;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.Toolbar;
 import android.view.inputmethod.InputMethodManager;
@@ -25,7 +25,10 @@ import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-public class EditAchievementActivity extends AppCompatActivity {
+/**
+ * 编辑上传Achievement的Activity
+ */
+public class EditAchievementActivity extends BaseActivity {
     public static final int REQUEST_CAPTURE = 0;
     public static final int REQUEST_PICK = 1;
 
@@ -41,9 +44,18 @@ public class EditAchievementActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_achievement);
         initial();
         initListener();
+    }
+
+    @Override
+    protected int getEdgeSize() {
+        return 0;
+    }
+
+    @Override
+    protected int getLayoutID() {
+        return R.layout.activity_edit_achievement;
     }
 
     private void initial() {
@@ -69,6 +81,7 @@ public class EditAchievementActivity extends AppCompatActivity {
         (findViewById(R.id.iv_pick_photo)).setOnClickListener(v -> showPickOrTake());
 
         mPopupMenu.setOnMenuItemClickListener(item -> {
+            ((InputMethodManager) getSystemService(INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(mEditText.getWindowToken(),0);
             switch (item.getItemId()) {
                 case R.id.menu_pick_photo:
                     toPick();
@@ -83,7 +96,7 @@ public class EditAchievementActivity extends AppCompatActivity {
 
     private void toPick() {
         Intent intent = new Intent();
-        intent.setAction(Intent.ACTION_GET_CONTENT);
+        intent.setAction(Intent.ACTION_PICK);
         intent.setType("image/*");
         startActivityForResult(intent, REQUEST_PICK);
     }
@@ -93,6 +106,8 @@ public class EditAchievementActivity extends AppCompatActivity {
         intent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
         File file = ImageUtils.createFile(this);
         mPath = file.getAbsolutePath();
+
+        System.out.println(mPath);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(file));
         startActivityForResult(intent, REQUEST_CAPTURE);
     }
@@ -100,7 +115,6 @@ public class EditAchievementActivity extends AppCompatActivity {
     private void showPickOrTake() {
         mPopupMenu.show();
         isPopupMenuShow = true;
-        Toast.makeText(this, "pop", Toast.LENGTH_SHORT).show();
     }
 
     private void update() {
@@ -131,20 +145,28 @@ public class EditAchievementActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode != Activity.RESULT_OK) return;
         switch (requestCode) {
             case REQUEST_PICK:
                 Uri uri = data.getData();
                 Observable.just(uri)
-                        .map(uri1 -> getContentResolver().query(uri1, null, null, null, null))
+                        .map(uri1 ->
+                        {
+                            System.out.println(uri1.getPath());
+                            return getContentResolver().query(uri1, new String[]{MediaStore.Images.Media.DATA}, null, null, null);
+                        })
                         .map(cursor -> {
                             if (cursor.moveToFirst())
-                                mPath = cursor.getString(1);
+                                mPath = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA));
+                            System.out.println(mPath);
+                            cursor.close();
                             return mPath;
                         })
                         .map(s -> ImageUtils.decodeFromFile(s, 200, 200))
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(bitmap -> ((ImageView) findViewById(R.id.iv_pick_photo)).setImageBitmap(bitmap));
+
                 break;
             case REQUEST_CAPTURE:
                 Observable.just(mPath)
