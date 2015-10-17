@@ -26,8 +26,6 @@ public class TestActivity extends BaseActivity {
     Button mBtnTest1;
     @Bind(R.id.btn_test_2)
     Button mBtnTest2;
-    @Bind(R.id.iv_show)
-    ImageView mIvShow;
     @Bind(R.id.btn_test_3)
     Button mBtnTest3;
     @Bind(R.id.btn_test_4)
