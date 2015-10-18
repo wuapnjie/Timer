@@ -4,38 +4,40 @@ package com.iec.dwx.timer.Fragments;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
+import android.widget.Button;
+import android.widget.PopupWindow;
+import android.widget.Toast;
 
 import com.iec.dwx.timer.Activities.EditAchievementActivity;
 import com.iec.dwx.timer.Activities.PickPhotoActivity;
-import com.iec.dwx.timer.Beans.CommonBean;
+import com.iec.dwx.timer.Adapters.AchievementAdapter;
 import com.iec.dwx.timer.R;
-import com.iec.dwx.timer.Utils.CacheManager.SMemoryCacheManager;
 import com.iec.dwx.timer.Utils.DBHelper;
-import com.iec.dwx.timer.Utils.ImageUtils;
-import com.iec.dwx.timer.Utils.ScreenSizeUtils;
-import com.iec.dwx.timer.Utils.Utils;
-
-import java.util.List;
 
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 public class AchievementFragment extends Fragment implements Toolbar.OnMenuItemClickListener {
+    private final String TAG = AchievementFragment.class.getSimpleName();
+    public static final int SELECTED_NONE = -1;
 
     private RecyclerView.LayoutManager mManager;
     private AchievementAdapter mAdapter;
+    private PopupWindow mPopupWindow;
+    private RecyclerView mRecyclerView;
+
+    //被选中成就的位置,
+    private int mSelectedPosition = SELECTED_NONE;
 
     public static AchievementFragment newInstance() {
         return new AchievementFragment();
@@ -53,34 +55,148 @@ public class AchievementFragment extends Fragment implements Toolbar.OnMenuItemC
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_achievement, container, false);
-        mAdapter = new AchievementAdapter();
+        mAdapter = new AchievementAdapter(getActivity());
         mManager = new LinearLayoutManager(getActivity());
-        ((RecyclerView) rootView.findViewById(R.id.rv_achievement)).setLayoutManager(mManager);
-        ((RecyclerView) rootView.findViewById(R.id.rv_achievement)).setAdapter(mAdapter);
+        mRecyclerView = (RecyclerView) rootView.findViewById(R.id.rv_achievement);
+
+        mRecyclerView.setLayoutManager(mManager);
+        mRecyclerView.setAdapter(mAdapter);
+
         return rootView;
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        settingListener();
+
+        //初始化PopupWindow
+        Observable.just(R.layout.popup_view)
+                .map(integer -> LayoutInflater.from(getActivity()).inflate(integer, null))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(view1 -> initializePopupWindow(view1));
+    }
+
+    /**
+     * 设置监听事件
+     */
+    private void settingListener() {
         if (getView() == null) return;
+
         ((Toolbar) getView().findViewById(R.id.toolbar_achievement)).inflateMenu(R.menu.menu_achievement);
         ((Toolbar) getView().findViewById(R.id.toolbar_achievement)).setOnMenuItemClickListener(this);
         ((Toolbar) getView().findViewById(R.id.toolbar_achievement)).setNavigationOnClickListener(v -> getActivity().onBackPressed());
+
+        mRecyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                Log.d(TAG, "newState->" + newState);
+                if (newState == RecyclerView.SCROLL_STATE_DRAGGING) {
+                    if (mPopupWindow.isShowing()) {
+                        mPopupWindow.dismiss();
+                        cancelSelectedShader(mSelectedPosition);
+                        mSelectedPosition = SELECTED_NONE;
+                    }
+                }
+            }
+        });
+
+        mAdapter.setOnAchievementLongClickListener((v, position) -> {
+            mSelectedPosition = position;
+            Log.d(TAG, "after long click,the mSelectedPosition->" + mSelectedPosition);
+            showPopupWindow();
+        });
+        mAdapter.setOnAchievementClickListener((v, position) -> {
+            mSelectedPosition = SELECTED_NONE;
+            Log.d(TAG, "after click,the mSelectedPosition->" + mSelectedPosition);
+            dismissPopupWindow();
+        });
+
+    }
+
+    /**
+     * 取消Item 的 选中状态
+     */
+
+    private void cancelSelectedShader(int position) {
+        if (position != SELECTED_NONE && mManager.getChildAt(position) != null) {
+            mManager.getChildAt(position).findViewById(R.id.achievement_shader).setVisibility(View.GONE);
+        }
+    }
+
+    /**
+     * 初始化popupWindow
+     *
+     * @param view 视图
+     */
+    private void initializePopupWindow(View view) {
+        mPopupWindow = new PopupWindow(view, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        Button btnShare = (Button) view.findViewById(R.id.btn_popup_share);
+        Button btnDelete = (Button) view.findViewById(R.id.btn_popup_delete);
+
+        btnShare.setOnClickListener(v -> Toast.makeText(getActivity(), "Share", Toast.LENGTH_SHORT).show());
+        btnDelete.setOnClickListener(v -> {
+            deleteAchievement();
+            Toast.makeText(getActivity(), "Delete", Toast.LENGTH_SHORT).show();
+        });
+
+    }
+
+    /**
+     * 删除Item
+     */
+    private void deleteAchievement() {
+        if (mSelectedPosition == SELECTED_NONE) return;
+        if (mPopupWindow.isShowing()) mPopupWindow.dismiss();
+
+
+        DBHelper.getInstance(getActivity()).deleteBean(DBHelper.DB_TABLE_ACHIEVEMENT, mAdapter.getData().get(mSelectedPosition));
+
+        mAdapter.deleteItem(mSelectedPosition);
+
+        cancelSelectedShader(mSelectedPosition);
+
+        mSelectedPosition = SELECTED_NONE;
     }
 
     @Override
     public void onResume() {
         super.onResume();
+        //异步刷新数据
+        refreshData();
+    }
+
+    /**
+     * 刷新数据
+     */
+    private void refreshData() {
         Observable.just(DBHelper.DB_TABLE_ACHIEVEMENT)
                 .map(s -> DBHelper.getInstance(getActivity()).getAllBeans(s))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(commonBeans -> {
                     mAdapter.obtainData(commonBeans);
-                    mAdapter.setOnAchievementLongClickListener((v, position) -> {
-                    });
                 });
+    }
+
+    /**
+     * 使PopupWindow消失
+     */
+    private void dismissPopupWindow() {
+        if (mPopupWindow.isShowing()) {
+            mPopupWindow.dismiss();
+            cancelSelectedShader(mSelectedPosition);
+        }
+    }
+
+    /**
+     * 长按事件
+     * 显示PopupWindow
+     */
+    private void showPopupWindow() {
+        mPopupWindow.showAtLocation(getView(), Gravity.BOTTOM, 0, 0);
     }
 
     @Override
@@ -107,85 +223,5 @@ public class AchievementFragment extends Fragment implements Toolbar.OnMenuItemC
         startActivity(new Intent(getActivity(), PickPhotoActivity.class));
     }
 
-    public class AchievementAdapter extends RecyclerView.Adapter<AchievementViewHolder> {
-        private List<CommonBean> mData;
-        private OnAchievementLongClickListener mOnAchievementLongClickListener;
 
-        public void obtainData(List<CommonBean> data) {
-            this.mData = data;
-            notifyDataSetChanged();
-        }
-
-        public void setOnAchievementLongClickListener(OnAchievementLongClickListener onAchievementLongClickListener) {
-            mOnAchievementLongClickListener = onAchievementLongClickListener;
-        }
-
-        @Override
-        public AchievementViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View itemView = LayoutInflater.from(getActivity()).inflate(R.layout.achivement_item, parent, false);
-            return new AchievementViewHolder(itemView);
-        }
-
-        @Override
-        public void onBindViewHolder(AchievementViewHolder holder, int position) {
-            holder.mImageView.setLayoutParams(new LinearLayout.LayoutParams(ScreenSizeUtils.getWidth(getActivity()), ScreenSizeUtils.getWidth(getActivity())));
-            //设置文字
-            holder.mTextContent.setText(mData.get(position).getContent());
-            holder.mTextTime.setText(mData.get(position).getTime());
-
-            //设置长按事件
-            holder.mContainer.setOnLongClickListener(v -> {
-                if (mOnAchievementLongClickListener != null)
-                    mOnAchievementLongClickListener.onAchievementClick(v, position);
-                holder.mShader.setVisibility(View.VISIBLE);
-                return true;
-            });
-
-            holder.mContainer.setOnClickListener(v -> {
-                if (holder.mShader.getVisibility() == View.VISIBLE) {
-                    holder.mShader.setVisibility(View.GONE);
-                }
-            });
-            //设置图画
-            Observable.just(mData.get(position).getPicture())
-                    .map(s -> {
-                        if (SMemoryCacheManager.getInstance().getBitmap(s) != null)
-                            return SMemoryCacheManager.getInstance().getBitmap(s);
-                        else
-                            return ImageUtils.decodeFromFile(s, Utils.dp2px(100), Utils.dp2px(100));
-                    })
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(bitmap -> {
-                        holder.mImageView.setImageBitmap(bitmap);
-                        SMemoryCacheManager.getInstance().putBitmap(mData.get(position).getPicture(), bitmap);
-                    });
-        }
-
-        @Override
-        public int getItemCount() {
-            return mData == null ? 0 : mData.size();
-        }
-    }
-
-    public static class AchievementViewHolder extends RecyclerView.ViewHolder {
-        TextView mTextTime;
-        TextView mTextContent;
-        ImageView mImageView;
-        CardView mContainer;
-        View mShader;
-
-        public AchievementViewHolder(View itemView) {
-            super(itemView);
-            mTextTime = (TextView) itemView.findViewById(R.id.tv_achievement_time);
-            mTextContent = (TextView) itemView.findViewById(R.id.tv_achievement_head);
-            mImageView = (ImageView) itemView.findViewById(R.id.iv_achievement_photo);
-            mContainer = (CardView) itemView.findViewById(R.id.achievement_container);
-            mShader = itemView.findViewById(R.id.achievement_shader);
-        }
-    }
-
-    public interface OnAchievementLongClickListener {
-        void onAchievementClick(View v, int position);
-    }
 }

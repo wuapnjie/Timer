@@ -57,6 +57,7 @@ public class SMemoryCacheManager extends LruCache<String, Bitmap> {
      */
     public void putBitmap(String key, Bitmap value) {
         if (BuildConfig.DEBUG) Log.d(TAG, "Put bitmap into Mem Cache，the key is " + key);
-        this.put(key, value);
+        if (key != null && value != null)
+            this.put(key, value);
     }
 }
