@@ -1,38 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:paddingTop="24dp"
+    android:paddingLeft="24dp"
+    android:paddingRight="24dp"
+    android:paddingBottom="16dp"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white"
     android:orientation="vertical">
     <EditText
         android:id="@+id/my_wishes_add_editText"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.8"
-        android:hint="快来添加你的新愿望吧！"
+        android:layout_height="150dp"
+        android:hint="@string/my_wishes_edit_hint"
         android:gravity="left"
         android:background="#FFF"/>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.2"
+        android:layout_height="wrap_content"
+        android:gravity="end"
         android:orientation="horizontal">
         <Button
-            android:background="#FFF"
-            android:id="@+id/my_wishes_add_btn_sure"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.5"
-            android:textColor="#000"
-            android:text="Sure"/>
-        <Button
-            android:background="#FFF"
+            android:background="@android:color/transparent"
             android:id="@+id/my_wishes_add_btn_cencel"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.5"
-            android:textColor="#000"
-            android:text="Cencel"/>
+            android:layout_width="124dp"
+            android:layout_height="36dp"
+            android:textColor="@color/common_black"
+            android:text="@string/my_wish_add_view_cancel_btn"/>
+        <Button
+            android:background="@android:color/transparent"
+            android:id="@+id/my_wishes_add_btn_sure"
+            android:layout_width="124dp"
+            android:layout_height="36dp"
+            android:textColor="@color/common_black"
+            android:text="@string/my_wish_add_view_sure_btn"/>
       </LinearLayout>
 
 </LinearLayout>

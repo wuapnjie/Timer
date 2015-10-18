@@ -4,16 +4,17 @@
 	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
-	android:background="@color/card_two_background"
+	android:background="#e3000000"
 	android:orientation="vertical"
 	tools:context=".TimeActivity"
 	>
 
-	<com.iec.dwx.timer.Views.ClockView
+	<ImageView
+		android:padding="16dp"
+		android:src="@drawable/sandy_glass"
 		android:layout_width="match_parent"
 		android:layout_height="0dp"
-		android:layout_weight="1"
-		/>
+		android:layout_weight="1"/>
 
 	<LinearLayout
 		android:layout_width="match_parent"
@@ -24,6 +25,7 @@
 		android:orientation="vertical">
 
 		<TextView
+			android:id="@+id/tv_card_two_head"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:gravity="center"
@@ -46,6 +48,7 @@
 			android:layout_width="match_parent"
 			android:layout_height="20dp"/>
 		<TextView
+			android:id="@+id/tv_card_two_cell_1"
 			android:paddingTop="4dp"
 			android:paddingBottom="4dp"
 			android:layout_width="match_parent"
@@ -55,30 +58,33 @@
 			android:textColor="@color/card_text_color"/>
 
 		<TextView
+			android:id="@+id/tv_card_two_cell_2"
 			android:paddingTop="4dp"
 			android:paddingBottom="4dp"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:paddingLeft="@dimen/card_subhead_padding_left"
-			android:text="在食堂"
+			android:text="在寝室"
 			android:textColor="@color/card_text_color"/>
 
 		<TextView
+			android:id="@+id/tv_card_two_cell_3"
 			android:paddingTop="4dp"
 			android:paddingBottom="4dp"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:paddingLeft="@dimen/card_subhead_padding_left"
-			android:text="在操场"
+			android:text="在图书馆"
 			android:textColor="@color/card_text_color"/>
 
 		<TextView
+			android:id="@+id/tv_card_two_cell_4"
 			android:paddingTop="4dp"
 			android:paddingBottom="4dp"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:paddingLeft="@dimen/card_subhead_padding_left"
-			android:text="在教室"
+			android:text="在酒店"
 			android:textColor="@color/card_text_color"/>
 
 	</LinearLayout>

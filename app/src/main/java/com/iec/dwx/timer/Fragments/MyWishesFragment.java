@@ -20,6 +20,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.iec.dwx.timer.Activities.MyWishDetails;
 import com.iec.dwx.timer.Activities.OtherWishes;
 import com.iec.dwx.timer.Beans.CommonBean;
@@ -28,18 +29,19 @@ import com.iec.dwx.timer.R;
 import com.iec.dwx.timer.Utils.DBHelper;
 import com.iec.dwx.timer.Utils.Utils;
 import com.yqritc.recyclerviewflexibledivider.HorizontalDividerItemDecoration;
+
 import java.util.Date;
 import java.util.List;
 
 
 public class MyWishesFragment extends Fragment implements Toolbar.OnMenuItemClickListener {
 
-    private MyWishesAdapter mAdapter=null;
-    private RecyclerView.LayoutManager mManager=null;
-    private LinearLayout add_view=null;
-    private RecyclerView recyclerView=null;
-    private InputMethodManager imm=null;
-    private List<CommonBean> list=null;
+    private MyWishesAdapter mAdapter = null;
+    private RecyclerView.LayoutManager mManager = null;
+    private LinearLayout add_view = null;
+    private RecyclerView recyclerView = null;
+    private InputMethodManager imm = null;
+    private List<CommonBean> list = null;
 
     public static MyWishesFragment newInstance() {
         return new MyWishesFragment();
@@ -51,41 +53,41 @@ public class MyWishesFragment extends Fragment implements Toolbar.OnMenuItemClic
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         super.onCreate(savedInstanceState);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootview=inflater.inflate(R.layout.fragment_my_wishes, container, false);
-        recyclerView=(RecyclerView) rootview.findViewById(R.id.rv_my_wishes);
-        add_view= (LinearLayout) rootview.findViewById(R.id.add_view);
+        View rootview = inflater.inflate(R.layout.fragment_my_wishes, container, false);
+        recyclerView = (RecyclerView) rootview.findViewById(R.id.rv_my_wishes);
+        add_view = (LinearLayout) rootview.findViewById(R.id.add_view);
         add_view.setVisibility(View.GONE);
 
-            list=DBHelper.getInstance(getContext()).getAllBeans(DBHelper.DB_TABLE_WISH);
-            mAdapter = new MyWishesAdapter(list);
-            mAdapter.setOnItemClickListener(new OnRecyclerViewItemClickListener() {
-                @Override
-                public void onItemClick(View view, int position) {
-                    System.out.println("itemClick" + position);
-                    Intent intent=new Intent(getActivity(),MyWishDetails.class);
-                    intent.putExtra("ClickPosition",position);
-                    startActivity(intent);
-                }
-            });
-            recyclerView.setAdapter(mAdapter);
+        list = DBHelper.getInstance(getContext()).getAllBeans(DBHelper.DB_TABLE_WISH);
+        mAdapter = new MyWishesAdapter(list);
+        mAdapter.setOnItemClickListener(new OnRecyclerViewItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                System.out.println("itemClick" + position);
+                Intent intent = new Intent(getActivity(), MyWishDetails.class);
+                intent.putExtra("ClickPosition", position);
+                startActivity(intent);
+            }
+        });
+        recyclerView.setAdapter(mAdapter);
 
-            mManager=new LinearLayoutManager(getActivity());
-            recyclerView.setLayoutManager(mManager);
+        mManager = new LinearLayoutManager(getActivity());
+        recyclerView.setLayoutManager(mManager);
 
-            //item divider
-            Paint paint = new Paint();
-            paint.setStrokeWidth(10);
-            paint.setColor(Color.parseColor("#47646363"));
-            paint.setAntiAlias(true);
-            paint.setPathEffect(new DashPathEffect(new float[]{25.0f, 25.0f}, 0));
-            ((RecyclerView) rootview.findViewById(R.id.rv_my_wishes)).addItemDecoration(
+        //item divider
+        Paint paint = new Paint();
+        paint.setStrokeWidth(10);
+        paint.setColor(Color.parseColor("#47646363"));
+        paint.setAntiAlias(true);
+        paint.setPathEffect(new DashPathEffect(new float[]{25.0f, 25.0f}, 0));
+        ((RecyclerView) rootview.findViewById(R.id.rv_my_wishes)).addItemDecoration(
                 new HorizontalDividerItemDecoration.Builder(getContext()).paint(paint).build());
         return rootview;
     }
@@ -96,6 +98,7 @@ public class MyWishesFragment extends Fragment implements Toolbar.OnMenuItemClic
         if (getView() == null) return;
         ((Toolbar) getView().findViewById(R.id.toolbar_my_wishes)).inflateMenu(R.menu.menu_my_wishes);
         ((Toolbar) getView().findViewById(R.id.toolbar_my_wishes)).setOnMenuItemClickListener(this);
+        ((Toolbar) getView().findViewById(R.id.toolbar_my_wishes)).setNavigationOnClickListener(v -> getActivity().onBackPressed());
         //新建确定按钮
         getView().findViewById(R.id.my_wishes_add_btn_sure).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -120,8 +123,8 @@ public class MyWishesFragment extends Fragment implements Toolbar.OnMenuItemClic
     }
 
     //增加新数据的操作
-    private void addDataToDataBase(EditText editText){
-        WishBean wishBean=new WishBean();
+    private void addDataToDataBase(EditText editText) {
+        WishBean wishBean = new WishBean();
         wishBean.setContent(editText.getText().toString());
         editText.setText("");
         wishBean.setPicture(0 + "");
@@ -130,14 +133,14 @@ public class MyWishesFragment extends Fragment implements Toolbar.OnMenuItemClic
         DBHelper.getInstance(getActivity()).addBeanToDatabase(DBHelper.DB_TABLE_WISH, wishBean);
         //隐藏键盘
         imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
-        list=DBHelper.getInstance(getContext()).getAllBeans(DBHelper.DB_TABLE_WISH);
-        mAdapter=new MyWishesAdapter(list);
+        list = DBHelper.getInstance(getContext()).getAllBeans(DBHelper.DB_TABLE_WISH);
+        mAdapter = new MyWishesAdapter(list);
         mAdapter.setOnItemClickListener(new OnRecyclerViewItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
                 System.out.println("itemClick" + position);
-                Intent intent=new Intent(getActivity(),MyWishDetails.class);
-                intent.putExtra("ClickPosition",position);
+                Intent intent = new Intent(getActivity(), MyWishDetails.class);
+                intent.putExtra("ClickPosition", position);
                 startActivity(intent);
             }
         });
@@ -159,12 +162,12 @@ public class MyWishesFragment extends Fragment implements Toolbar.OnMenuItemClic
         return false;
     }
 
-    private class MyWishesAdapter extends RecyclerView.Adapter<WishesViewHolder>{
-        private OnRecyclerViewItemClickListener mOnItemClickListener=null;
-        private List<CommonBean> mList=null;
+    private class MyWishesAdapter extends RecyclerView.Adapter<WishesViewHolder> {
+        private OnRecyclerViewItemClickListener mOnItemClickListener = null;
+        private List<CommonBean> mList = null;
 
-        public MyWishesAdapter(List list){
-            mList=list;
+        public MyWishesAdapter(List list) {
+            mList = list;
         }
 
         public void setOnItemClickListener(OnRecyclerViewItemClickListener listener) {
@@ -174,7 +177,7 @@ public class MyWishesFragment extends Fragment implements Toolbar.OnMenuItemClic
 
         @Override
         public WishesViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View itemview=LayoutInflater.from(getActivity()).inflate(R.layout.my_wishes_item,parent,false);
+            View itemview = LayoutInflater.from(getActivity()).inflate(R.layout.my_wishes_item, parent, false);
             return new WishesViewHolder(itemview);
         }
 
@@ -199,16 +202,18 @@ public class MyWishesFragment extends Fragment implements Toolbar.OnMenuItemClic
         }
     }
 
-    public class WishesViewHolder extends RecyclerView.ViewHolder{
-        TextView mContent=null;
-        TextView mTime=null;
+    public class WishesViewHolder extends RecyclerView.ViewHolder {
+        TextView mContent = null;
+        TextView mTime = null;
+
         public WishesViewHolder(View itemView) {
             super(itemView);
-            mContent= (TextView) itemView.findViewById(R.id.my_wishes_text);
-            mTime= (TextView) itemView.findViewById(R.id.my_wishes_time);
+            mContent = (TextView) itemView.findViewById(R.id.my_wishes_text);
+            mTime = (TextView) itemView.findViewById(R.id.my_wishes_time);
         }
     }
-    public interface OnRecyclerViewItemClickListener{
-        void onItemClick(View view , int position);
+
+    public interface OnRecyclerViewItemClickListener {
+        void onItemClick(View view, int position);
     }
 }

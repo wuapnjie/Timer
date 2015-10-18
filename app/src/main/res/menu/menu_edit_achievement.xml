@@ -5,16 +5,9 @@
       tools:context=".MainActivity">
 	<item
 		android:id="@+id/menu_achievement_play"
-		android:icon="@drawable/ic_play_arrow_black_24dp"
-		android:title="@string/menu_achievement_add"
+		android:icon="@drawable/ic_done_black_24dp"
+		android:title=""
 		app:showAsAction="ifRoom"
-		>
-	</item>
-	<item
-		android:id="@+id/menu_achievement_add"
-		android:icon="@drawable/ic_add_black_24dp"
-		android:title="@string/menu_achievement_play"
-		app:showAsAction="always"
 		>
 	</item>
 </menu>

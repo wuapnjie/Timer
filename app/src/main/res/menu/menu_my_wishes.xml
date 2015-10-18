@@ -5,15 +5,14 @@
       tools:context=".MainActivity">
 	<item
 		android:id="@+id/menu_my_wishes_add"
-		android:icon="@drawable/ic_add_grey_900_24dp"
+		android:icon="@drawable/ic_add_black_24dp"
 		android:title=""
 		app:showAsAction="always"
-		></item>
+		/>
 	<item
 		android:id="@+id/menu_my_wishes_others"
-		android:icon="@drawable/ic_wb_cloudy_black_24dp"
+		android:icon="@drawable/ic_cloud_black_24dp"
 		android:title=""
 		app:showAsAction="always"
-		>
-	</item>
+		/>
 </menu>

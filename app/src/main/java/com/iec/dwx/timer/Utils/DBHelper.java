@@ -41,7 +41,7 @@ public class DBHelper extends SQLiteOpenHelper {
         super(context, name, factory, version);
     }
 
-    public static DBHelper getInstance(Context context) {
+    public synchronized static DBHelper getInstance(Context context) {
         if (mInstance == null) {
             mInstance = new DBHelper(context, DB_NAME, null, Utils.getAppVersion(context));
         }
@@ -183,7 +183,6 @@ public class DBHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         int id = (int) db.insert(tableName, null, contentValues);
 
-        db.close();
         return id;
     }
 
@@ -225,7 +224,6 @@ public class DBHelper extends SQLiteOpenHelper {
         contentValues.put(COLUMN_PICTURE, newBean.getPicture());
 
         int newID = db.update(tableName, contentValues, COLUMN_TIME + "=?", new String[]{oldBean.getTime()});
-        db.close();
         return newID;
     }
 
@@ -245,7 +243,6 @@ public class DBHelper extends SQLiteOpenHelper {
         contentValues.put(COLUMN_PICTURE, newBean.getPicture());
 
         int newID = db.update(tableName, contentValues, COLUMN_ID + "=?", new String[]{String.valueOf(id)});
-        db.close();
         return newID;
     }
 }

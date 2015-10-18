@@ -24,6 +24,7 @@
 		android:orientation="vertical">
 
 		<TextView
+			android:id="@+id/tv_card_one_head"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:gravity="center"
@@ -46,39 +47,43 @@
 			android:layout_height="20dp"/>
 
 		<TextView
+			android:id="@+id/tv_card_one_cell_1"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:paddingBottom="4dp"
 			android:paddingLeft="@dimen/card_subhead_padding_left"
 			android:paddingTop="4dp"
-			android:text="在教室"
+			android:text="* %s"
 			/>
 
 		<TextView
+			android:id="@+id/tv_card_one_cell_2"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:paddingBottom="4dp"
 			android:paddingLeft="@dimen/card_subhead_padding_left"
 			android:paddingTop="4dp"
-			android:text="在食堂"
+			android:text="* %s"
 			/>
 
 		<TextView
+			android:id="@+id/tv_card_one_cell_3"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:paddingBottom="4dp"
 			android:paddingLeft="@dimen/card_subhead_padding_left"
 			android:paddingTop="4dp"
-			android:text="在操场"
+			android:text="* %s"
 			/>
 
 		<TextView
+			android:id="@+id/tv_card_one_cell_4"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:paddingBottom="4dp"
 			android:paddingLeft="@dimen/card_subhead_padding_left"
 			android:paddingTop="4dp"
-			android:text="在寝室"
+			android:text="* %s"
 			/>
 	</LinearLayout>
 
