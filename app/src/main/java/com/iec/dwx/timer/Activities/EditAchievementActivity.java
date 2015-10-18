@@ -1,12 +1,12 @@
 package com.iec.dwx.timer.Activities;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -16,6 +16,7 @@ import com.iec.dwx.timer.Beans.AchievementBean;
 import com.iec.dwx.timer.R;
 import com.iec.dwx.timer.Utils.DBHelper;
 import com.iec.dwx.timer.Utils.ImageUtils;
+import com.iec.dwx.timer.Utils.ScreenSizeUtils;
 import com.iec.dwx.timer.Utils.Utils;
 
 import java.io.File;
@@ -31,6 +32,7 @@ import rx.schedulers.Schedulers;
 public class EditAchievementActivity extends BaseActivity {
     public static final int REQUEST_CAPTURE = 0;
     public static final int REQUEST_PICK = 1;
+    public static final int REQUEST_CROP = 2;
 
     private Toolbar mToolbar;
     private EditText mEditText;
@@ -40,6 +42,7 @@ public class EditAchievementActivity extends BaseActivity {
     private boolean isPopupMenuShow = false;
 
     private String mPath;
+    private boolean hasPicture = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,7 +84,7 @@ public class EditAchievementActivity extends BaseActivity {
         (findViewById(R.id.iv_pick_photo)).setOnClickListener(v -> showPickOrTake());
 
         mPopupMenu.setOnMenuItemClickListener(item -> {
-            ((InputMethodManager) getSystemService(INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(mEditText.getWindowToken(),0);
+            ((InputMethodManager) getSystemService(INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(mEditText.getWindowToken(), 0);
             switch (item.getItemId()) {
                 case R.id.menu_pick_photo:
                     toPick();
@@ -94,6 +97,9 @@ public class EditAchievementActivity extends BaseActivity {
         });
     }
 
+    /**
+     * 从相册挑选照片
+     */
     private void toPick() {
         Intent intent = new Intent();
         intent.setAction(Intent.ACTION_PICK);
@@ -101,12 +107,15 @@ public class EditAchievementActivity extends BaseActivity {
         startActivityForResult(intent, REQUEST_PICK);
     }
 
+    /**
+     * 拍照
+     */
     private void toTake() {
         Intent intent = new Intent();
         intent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
         File file = ImageUtils.createFile(this);
-        mPath = file.getAbsolutePath();
-
+        if (file != null)
+            mPath = file.getAbsolutePath();
         System.out.println(mPath);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(file));
         startActivityForResult(intent, REQUEST_CAPTURE);
@@ -120,6 +129,8 @@ public class EditAchievementActivity extends BaseActivity {
     private void update() {
         if (mEditText.getText().toString().equals("")) {
             Toast.makeText(this, "请输入成就", Toast.LENGTH_SHORT).show();
+        } else if (!hasPicture) {
+            Toast.makeText(this, "请插入照片", Toast.LENGTH_SHORT).show();
         } else {
             AchievementBean bean = new AchievementBean();
             bean.setPicture(mPath);
@@ -145,38 +156,55 @@ public class EditAchievementActivity extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode != Activity.RESULT_OK) return;
+        if (resultCode != RESULT_OK) return;
         switch (requestCode) {
             case REQUEST_PICK:
-                Uri uri = data.getData();
-                Observable.just(uri)
-                        .map(uri1 ->
-                        {
-                            System.out.println(uri1.getPath());
-                            return getContentResolver().query(uri1, new String[]{MediaStore.Images.Media.DATA}, null, null, null);
-                        })
-                        .map(cursor -> {
-                            if (cursor.moveToFirst())
-                                mPath = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA));
-                            System.out.println(mPath);
-                            cursor.close();
-                            return mPath;
-                        })
+                Uri imageUri = data.getData();
+                Log.d(TAG, "imageUri->" + imageUri);
+                toCrop(imageUri);
+                break;
+            case REQUEST_CAPTURE:
+                Uri photoUri = Uri.fromFile(new File(mPath));
+                Log.d(TAG, "photoUri->" + photoUri);
+                toCrop(photoUri);
+                break;
+            case REQUEST_CROP:
+                hasPicture = true;
+                Observable.just(mPath)
                         .map(s -> ImageUtils.decodeFromFile(s, 200, 200))
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(bitmap -> ((ImageView) findViewById(R.id.iv_pick_photo)).setImageBitmap(bitmap));
-
-                break;
-            case REQUEST_CAPTURE:
-                Observable.just(mPath)
-                        .map(s -> ImageUtils.decodeFromFile(mPath, 200, 200))
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(bitmap -> ((ImageView) findViewById(R.id.iv_pick_photo)).setImageBitmap(bitmap));
-                break;
-            default:
+                hasPicture = true;
                 break;
         }
+
+
+    }
+
+    /**
+     * 剪裁照片
+     *
+     * @param imageUri 照片Uri
+     */
+    private void toCrop(Uri imageUri) {
+        Intent intent = new Intent("com.android.camera.action.CROP");
+        intent.setDataAndType(imageUri, "image/*");
+        intent.putExtra("aspectX", 1);
+        intent.putExtra("aspectY", 1);
+        intent.putExtra("outputX", ScreenSizeUtils.getWidth(this));
+        intent.putExtra("outputY", ScreenSizeUtils.getWidth(this));
+        intent.putExtra("scale", true);
+        intent.putExtra("scaleUpIfNeeded", true);
+
+        File file = ImageUtils.createFile(this);
+        if (file != null) {
+            mPath = file.getAbsolutePath();
+        } else {
+            mPath = imageUri.getPath();
+        }
+        Log.d(TAG, "mPath->" + mPath);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(new File(mPath)));
+        startActivityForResult(intent, REQUEST_CROP);
     }
 }

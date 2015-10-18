@@ -97,10 +97,10 @@ public class ImageUtils {
         );
 
         // Mediascanner need to scan for the image saved
-        Intent mediaScannerIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
-        Uri fileContentUri = Uri.fromFile(mediaFile);
-        mediaScannerIntent.setData(fileContentUri);
-        context.sendBroadcast(mediaScannerIntent);
+//        Intent mediaScannerIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+//        Uri fileContentUri = Uri.fromFile(mediaFile);
+//        mediaScannerIntent.setData(fileContentUri);
+//        context.sendBroadcast(mediaScannerIntent);
 
         return mediaFile;
     }
