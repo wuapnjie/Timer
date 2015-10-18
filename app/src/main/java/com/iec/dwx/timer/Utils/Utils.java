@@ -36,6 +36,11 @@ public class Utils {
         return simpleDateFormat.format(date);
     }
 
+    public static String wishFormatTime(Date date){
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.CHINA);
+        return simpleDateFormat.format(date);
+    }
+
     /**
      * 获取App版本号
      *

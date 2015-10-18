@@ -2,29 +2,36 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#bd000000"
     android:orientation="vertical">
+    <LinearLayout
+        android:layout_marginLeft="4dp"
+        android:layout_marginRight="4dp"
+        android:layout_marginBottom="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
     <TextView
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:paddingBottom="30dp"
-        android:paddingTop="10dp"
-        android:textSize="30dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:paddingBottom="8dp"
+        android:paddingTop="8dp"
+        android:textSize="24dp"
+        android:background="#FFF"
         android:id="@+id/other_wishes_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="aaaaa"
-        android:textColor="#000"/>
-    <LinearLayout
+        android:hint="aaaa"
+        android:textColor="#bd000000"/>
+    <TextView
+        android:id="@+id/other_wishes_time"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <TextView
-            android:paddingLeft="10dp"
-            android:id="@+id/other_wishes_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="#000"
-            android:hint="2011"/>
+        android:gravity="center"
+        android:textSize="16dp"
+        android:textColor="#bd000000"
+        android:background="#FFF"
+        android:hint="2011"/>
     </LinearLayout>
 
 </LinearLayout>

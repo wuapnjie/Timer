@@ -10,8 +10,8 @@
 		app:showAsAction="always"
 		></item>
 	<item
-		android:id="@+id/menu_my_wishes_detail_delete"
-		android:icon="@drawable/ic_delete_black_24dp"
+		android:id="@+id/menu_my_wishes_detail_edit"
+		android:icon="@drawable/ic_mode_edit_black_24dp"
 		android:title=""
 		app:showAsAction="always"
 		>

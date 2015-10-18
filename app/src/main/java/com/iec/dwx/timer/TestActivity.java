@@ -17,6 +17,8 @@ import java.util.List;
 
 import butterknife.Bind;
 import cn.bmob.v3.Bmob;
+import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.listener.FindListener;
 
 
 public class TestActivity extends BaseActivity {
@@ -53,7 +55,6 @@ public class TestActivity extends BaseActivity {
         bean2.setTime("2015-10-11");
         bean2.setPicture("hello.jpg");
 
-//        mBtnTest1.setOnClickListener(v -> testFormatTime());
         mBtnTest1.setOnClickListener(v -> addBean(DBHelper.DB_TABLE_ACHIEVEMENT, bean));
         mBtnTest2.setOnClickListener(v -> deleteBean(DBHelper.DB_TABLE_ACHIEVEMENT, bean));
         mBtnTest3.setOnClickListener(v -> getAllBeans(DBHelper.DB_TABLE_ACHIEVEMENT));
@@ -97,9 +98,25 @@ public class TestActivity extends BaseActivity {
     }
 
     private void linkTo() {
-
         startActivity(new Intent(this, TimeActivity.class));
-//        startActivity(new Intent(this, TimeActivity.class));
+    }
+
+    private List getBmobData(){
+        List<CommonBean> list=null;
+        BmobQuery<CommonBean> query=new BmobQuery<CommonBean>();
+        query.setLimit(20);
+        query.findObjects(this, new FindListener<CommonBean>() {
+            @Override
+            public void onSuccess(List<CommonBean> list) {
+                System.out.println("查询成功：共" + list.size() + "条数据。");
+            }
+
+            @Override
+            public void onError(int i, String s) {
+                System.out.println("查询失败：" + s);
+            }
+        });
+        return list;
     }
 
 //    private void get() {

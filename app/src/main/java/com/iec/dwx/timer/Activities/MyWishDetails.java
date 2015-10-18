@@ -1,24 +1,24 @@
 package com.iec.dwx.timer.Activities;
 
-import android.content.Intent;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.support.v7.internal.view.menu.ActionMenuItemView;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.iec.dwx.timer.Adapters.WishDetailsPagerAdapter;
 import com.iec.dwx.timer.Beans.CommonBean;
-import com.iec.dwx.timer.Beans.WishBean;
-import com.iec.dwx.timer.Fragments.MyWishesFragment;
 import com.iec.dwx.timer.R;
 import com.iec.dwx.timer.Utils.DBHelper;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import cn.bmob.v3.Bmob;
 import cn.bmob.v3.listener.SaveListener;
 
@@ -31,15 +31,22 @@ public class MyWishDetails extends BaseActivity implements Toolbar.OnMenuItemCli
     private WishDetailsPagerAdapter madapter=null;
     private List<View> viewList=new ArrayList<View>();
     private int ViewPagerSelectedItem;
+    private Boolean EditableFlag=false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Bmob.initialize(this, "3a39e05d106b31b3f61a8ce842933a8a");
         viewPager= (ViewPager) findViewById(R.id.detail_viewPager);
+
+
         madapter=new WishDetailsPagerAdapter(getViewList());
         viewPager.setAdapter(madapter);
         choosePager();
         setViewPagerOnPageChangeListener(viewPager);
+
+        ((Toolbar) findViewById(R.id.toolbar_my_wishes_details)).setNavigationOnClickListener(v -> onBackPressed());
+
     }
 
     private void setViewPagerOnPageChangeListener(ViewPager viewPager){
@@ -51,6 +58,7 @@ public class MyWishDetails extends BaseActivity implements Toolbar.OnMenuItemCli
 
             @Override
             public void onPageSelected(int position) {
+                System.out.println(position+"");
                 ViewPagerSelectedItem = position;
             }
 
@@ -62,12 +70,14 @@ public class MyWishDetails extends BaseActivity implements Toolbar.OnMenuItemCli
     }
 
     private List<View> getViewList(){
+        viewList.clear();
         List<CommonBean> data=DBHelper.getInstance(this).getAllBeans(DBHelper.DB_TABLE_WISH);
         View view=null;
         for(int i=0;i<data.size();i++){
             view=LayoutInflater.from(this).inflate(R.layout.detail_textview,null);
-            ((TextView)view.findViewById(R.id.my_wishes_details_content_textview)).setText(
-                    data.get(i).getContent());
+            EditText editText= (EditText) view.findViewById(R.id.my_wishes_details_content_editView);
+            editText.setText(data.get(i).getContent());
+            editText.setEnabled(false);
             ((TextView)view.findViewById(R.id.my_wishes_details_time_textview)).setText(
                     data.get(i).getTime()
             );
@@ -81,6 +91,7 @@ public class MyWishDetails extends BaseActivity implements Toolbar.OnMenuItemCli
         int flag;
         if(( flag=getIntent().getIntExtra("ClickPosition",-1))>-1){
             viewPager.setCurrentItem(flag);
+            ViewPagerSelectedItem=flag;
         }
     }
 
@@ -98,9 +109,9 @@ public class MyWishDetails extends BaseActivity implements Toolbar.OnMenuItemCli
                 System.out.println("menu_my_wishes_detail_share");
                  clickedShare();
                 break;
-            case R.id.menu_my_wishes_detail_delete:
+            case R.id.menu_my_wishes_detail_edit:
                 System.out.println("menu_my_wishes_detail_delete");
-                clickedDelete();
+                clickedEdit();
                 break;
         }
         return false;
@@ -130,16 +141,26 @@ public class MyWishDetails extends BaseActivity implements Toolbar.OnMenuItemCli
 
     }
 
-    //删除键被点击
-    private void clickedDelete(){
+    //删除键被点击,现在被改为修改了
+    private void clickedEdit(){
         List<CommonBean> data=DBHelper.getInstance(this).getAllBeans(DBHelper.DB_TABLE_WISH);
         CommonBean commonBean=data.get(ViewPagerSelectedItem);
-        System.out.println(ViewPagerSelectedItem+"");
-        DBHelper.getInstance(this).deleteBean(DBHelper.DB_TABLE_WISH, commonBean);
-        viewPager.removeView(viewList.get(ViewPagerSelectedItem));
+        EditText editText= (EditText) viewList.get(ViewPagerSelectedItem).findViewById(R.id.my_wishes_details_content_editView);
 
-        viewPager.setAdapter(new WishDetailsPagerAdapter(getViewList()));
-        Toast.makeText(this,"已删除",Toast.LENGTH_LONG).show();
+        if(!EditableFlag){
+            editText.setEnabled(true);
+            ((ActionMenuItemView)findViewById(R.id.menu_my_wishes_detail_edit)).setIcon(getResources().getDrawable(R.drawable.ic_done_black_24dp));
+            EditableFlag=!EditableFlag;
+        }else {
+            commonBean.setContent(editText.getText().toString());
+            commonBean.setPicture(0+"");
+            DBHelper.getInstance(this).updateBean(DBHelper.DB_TABLE_WISH, commonBean.getID(), commonBean);
+            editText.setEnabled(false);
+
+            EditableFlag=!EditableFlag;
+            ((ActionMenuItemView)findViewById(R.id.menu_my_wishes_detail_edit)).setIcon(getResources().getDrawable(R.drawable.ic_mode_edit_black_24dp));
+            Toast.makeText(this,"修改成功",Toast.LENGTH_LONG).show();
+        }
     }
 
     @Override

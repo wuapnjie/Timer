@@ -4,6 +4,8 @@ import android.support.v4.view.PagerAdapter;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.iec.dwx.timer.Beans.CommonBean;
+
 import java.util.List;
 
 /**
@@ -22,6 +24,15 @@ public class WishDetailsPagerAdapter extends PagerAdapter {
         container.removeView(mListViews.get(position));//删除页卡
     }
 
+    @Override
+    public boolean isViewFromObject(View view, Object object) {
+        return view == object;
+    }
+
+    @Override
+    public int getItemPosition(Object object) {
+        return super.getItemPosition(object);
+    }
 
     @Override
     public Object instantiateItem(ViewGroup container, int position) {  //这个方法用来实例化页卡
@@ -34,9 +45,6 @@ public class WishDetailsPagerAdapter extends PagerAdapter {
         return  mListViews.size();//返回页卡的数量
     }
 
-    @Override
-    public boolean isViewFromObject(View arg0, Object arg1) {
-        return arg0==arg1;//官方提示这样写
-    }
+
 }
 

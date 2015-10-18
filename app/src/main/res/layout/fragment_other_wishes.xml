@@ -20,7 +20,7 @@
 			android:layout_height="?actionBarSize"
 			app:subtitleTextColor="@color/toolbar_text_color"
 			app:layout_scrollFlags="scroll|enterAlways"
-			app:subtitle="云端心愿"/>
+			app:subtitle="来自银河的心愿"/>
 	</android.support.design.widget.AppBarLayout>
 
 	<android.support.v7.widget.RecyclerView

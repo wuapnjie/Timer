@@ -20,7 +20,6 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.iec.dwx.timer.Activities.MyWishDetails;
 import com.iec.dwx.timer.Activities.OtherWishes;
 import com.iec.dwx.timer.Beans.CommonBean;
@@ -29,7 +28,6 @@ import com.iec.dwx.timer.R;
 import com.iec.dwx.timer.Utils.DBHelper;
 import com.iec.dwx.timer.Utils.Utils;
 import com.yqritc.recyclerviewflexibledivider.HorizontalDividerItemDecoration;
-
 import java.util.Date;
 import java.util.List;
 
@@ -64,19 +62,6 @@ public class MyWishesFragment extends Fragment implements Toolbar.OnMenuItemClic
         recyclerView = (RecyclerView) rootview.findViewById(R.id.rv_my_wishes);
         add_view = (LinearLayout) rootview.findViewById(R.id.add_view);
         add_view.setVisibility(View.GONE);
-
-        list = DBHelper.getInstance(getContext()).getAllBeans(DBHelper.DB_TABLE_WISH);
-        mAdapter = new MyWishesAdapter(list);
-        mAdapter.setOnItemClickListener(new OnRecyclerViewItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                System.out.println("itemClick" + position);
-                Intent intent = new Intent(getActivity(), MyWishDetails.class);
-                intent.putExtra("ClickPosition", position);
-                startActivity(intent);
-            }
-        });
-        recyclerView.setAdapter(mAdapter);
 
         mManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(mManager);
@@ -124,11 +109,12 @@ public class MyWishesFragment extends Fragment implements Toolbar.OnMenuItemClic
 
     //增加新数据的操作
     private void addDataToDataBase(EditText editText) {
+        if(!editText.getText().equals("")){
         WishBean wishBean = new WishBean();
         wishBean.setContent(editText.getText().toString());
         editText.setText("");
         wishBean.setPicture(0 + "");
-        wishBean.setTime(Utils.formatTime(new Date(System.currentTimeMillis())));
+        wishBean.setTime(Utils.wishFormatTime(new Date(System.currentTimeMillis())));
 
         DBHelper.getInstance(getActivity()).addBeanToDatabase(DBHelper.DB_TABLE_WISH, wishBean);
         //隐藏键盘
@@ -146,6 +132,26 @@ public class MyWishesFragment extends Fragment implements Toolbar.OnMenuItemClic
         });
         recyclerView.setAdapter(mAdapter);
         Toast.makeText(getContext(), "已保存", Toast.LENGTH_SHORT).show();
+        return;
+        }
+        Toast.makeText(getContext(), "保存内容不能为空", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onResume() {
+        list = DBHelper.getInstance(getContext()).getAllBeans(DBHelper.DB_TABLE_WISH);
+        mAdapter = new MyWishesAdapter(list);
+        mAdapter.setOnItemClickListener(new OnRecyclerViewItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                System.out.println("itemClick" + position);
+                Intent intent = new Intent(getActivity(), MyWishDetails.class);
+                intent.putExtra("ClickPosition", position);
+                startActivity(intent);
+            }
+        });
+        recyclerView.setAdapter(mAdapter);
+        super.onResume();
     }
 
     @Override
