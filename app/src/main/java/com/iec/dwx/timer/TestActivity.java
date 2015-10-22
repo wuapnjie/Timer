@@ -12,6 +12,7 @@ import com.iec.dwx.timer.Beans.CommonBean;
 import com.iec.dwx.timer.Beans.WishBean;
 import com.iec.dwx.timer.Content.PhotoAlbumManager;
 import com.iec.dwx.timer.Utils.DBHelper;
+import com.iec.dwx.timer.Utils.ScreenSizeUtils;
 
 import java.util.List;
 
@@ -62,6 +63,16 @@ public class TestActivity extends BaseActivity {
         mBtnTest5.setOnClickListener(v -> updateBean(DBHelper.DB_TABLE_ACHIEVEMENT, bean, bean2));
         mBtnTest6.setOnClickListener(v -> linkTo());
 
+
+        System.out.println((int)(Math.random() * ScreenSizeUtils.getHeight(this)) + "");
+//        System.out.println(Math.random()+"");
+//        System.out.println(Math.random()+"");
+//        System.out.println(Math.random()+"");
+//        System.out.println(Math.random()+"");
+//        System.out.println(Math.random()+"");
+
+
+
     }
 
     private void test() {
@@ -98,7 +109,8 @@ public class TestActivity extends BaseActivity {
     }
 
     private void linkTo() {
-        startActivity(new Intent(this, TimeActivity.class));
+//        startActivity(new Intent(this, TimeActivity.class));
+        startActivity(new Intent(this,MainActivity.class));
     }
 
     private List getBmobData(){
