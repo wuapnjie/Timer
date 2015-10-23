@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#bd000000"
+    android:background="#757575"
     android:orientation="vertical">
     <LinearLayout
         android:layout_marginLeft="4dp"
@@ -12,8 +12,8 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
     <TextView
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
         android:paddingBottom="8dp"
         android:paddingTop="8dp"
         android:textSize="24dp"
@@ -22,14 +22,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="aaaa"
-        android:textColor="#bd000000"/>
+        android:textColor="#757575"/>
     <TextView
         android:id="@+id/other_wishes_time"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:textSize="16dp"
-        android:textColor="#bd000000"
+        android:textColor="#757575"
         android:background="#FFF"
         android:hint="2011"/>
     </LinearLayout>

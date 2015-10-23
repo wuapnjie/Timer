@@ -163,7 +163,6 @@ public class MyWishesFragment extends Fragment implements Toolbar.OnMenuItemClic
             case R.id.menu_my_wishes_add:
                 add_view.setVisibility(View.VISIBLE);
                 recyclerView.setBackgroundResource(R.color.black_overlay);
-
         }
         return false;
     }
