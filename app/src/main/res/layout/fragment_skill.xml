@@ -1,14 +1,36 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:tools="http://schemas.android.com/tools"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             android:background="#a76543"
-             tools:context="com.iec.dwx.timer.Fragments.SkillFragment">
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFF"
+    android:clickable="true"
+    >
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-	<!-- TODO: Update blank fragment layout -->
-	<TextView
-		android:layout_width="match_parent"
-		android:layout_height="match_parent"
-		android:text="@string/hello_blank_fragment"/>
-
-</FrameLayout>
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar_my_skill"
+            android:layout_width="match_parent"
+            android:layout_height="?actionBarSize"
+            app:layout_scrollFlags="scroll|enterAlways"
+            app:navigationIcon="@drawable/ic_arrow_back_black_24dp"
+            app:subtitle="我的技能"
+            app:subtitleTextColor="@color/toolbar_text_color"/>
+    </android.support.design.widget.AppBarLayout>
+    <com.iec.dwx.timer.Views.ViewDragHelperLayout
+        android:id="@+id/fragment_my_skill_viewDragHelperLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+    </com.iec.dwx.timer.Views.ViewDragHelperLayout>
+    <include
+        layout="@layout/fragment_my_skill_add_view"
+        android:id="@+id/my_skill_add_view"
+        android:layout_width="280dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        />
+        />
+</android.support.design.widget.CoordinatorLayout>
