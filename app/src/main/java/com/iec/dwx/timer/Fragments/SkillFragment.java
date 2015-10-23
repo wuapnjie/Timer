@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -102,15 +103,6 @@ public class SkillFragment extends Fragment implements Toolbar.OnMenuItemClickLi
         textView.setTextColor(Color.BLACK);
         textView.setText(commonBean.getContent());
         textView.setTextSize(20);
-
-        //设置长点击
-//        textView.setOnLongClickListener(new View.OnLongClickListener() {
-//            @Override
-//            public boolean onLongClick(View v) {
-//                System.out.println("skill long cliked");
-//                return true;
-//            }
-//        });
 
         return textView;
     }
