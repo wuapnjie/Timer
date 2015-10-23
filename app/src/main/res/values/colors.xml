@@ -5,7 +5,7 @@
 	<color name="colorAccent">#7AC0BD</color>
 
 	<color name="black_overlay">#66000000</color>
-
+	<color name="gray_overlay">#66d9d9d9</color>
 	<color name="card_one_background">#bcffffff</color>
 
 	<color name="activity_time_background_translucent">#66000000</color>
