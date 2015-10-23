@@ -4,16 +4,22 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextSwitcher;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ViewSwitcher;
 
 import com.iec.dwx.timer.R;
 import com.iec.dwx.timer.Views.CardFlipLayout;
 import com.iec.dwx.timer.Views.PickView;
 
+import java.lang.ref.WeakReference;
 import java.util.Calendar;
 
 import butterknife.Bind;
@@ -21,7 +27,7 @@ import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-public class TimeActivity extends BaseActivity implements Toolbar.OnMenuItemClickListener, SharedPreferences.OnSharedPreferenceChangeListener {
+public class TimeActivity extends BaseActivity implements Toolbar.OnMenuItemClickListener, SharedPreferences.OnSharedPreferenceChangeListener, ViewSwitcher.ViewFactory {
     public static final String PREFERENCE_NAME = "TimeActivity";
     public static final String PREFERENCE_KEY_GRADE = "grade";  //SharePreferences的key，储存年级
     public static final String PREFERENCE_KEY_GRADE_EMPTY = "empty";
@@ -31,6 +37,8 @@ public class TimeActivity extends BaseActivity implements Toolbar.OnMenuItemClic
     PickView mPickView;
     @Bind(R.id.menu_bar)
     Toolbar mMenuBar;
+    @Bind(R.id.tv_card_one_head)
+    TextSwitcher mSwitcher;
 
     private String[] mValues;
 
@@ -58,6 +66,7 @@ public class TimeActivity extends BaseActivity implements Toolbar.OnMenuItemClic
         mValues = this.getResources().getStringArray(R.array.pick_values);
         mPickView.setValues(mValues);
         mMenuBar.inflateMenu(R.menu.menu_time);
+        mSwitcher.setFactory(this);
 
         Observable.just(PREFERENCE_KEY_GRADE)
                 .map(s -> getPreferences(s, PREFERENCE_KEY_GRADE_EMPTY))
@@ -166,23 +175,11 @@ public class TimeActivity extends BaseActivity implements Toolbar.OnMenuItemClic
             }
         }
         Observable.just(i)
-                .map(integer -> {
-                    Calendar calendar = Calendar.getInstance();
-                    long now = System.currentTimeMillis();
-                    int year = calendar.get(Calendar.YEAR);
-                    calendar.set(Calendar.YEAR, year - integer);
-                    calendar.set(Calendar.MONTH, Calendar.SEPTEMBER);
-                    calendar.set(Calendar.DAY_OF_MONTH, 1);
-                    calendar.set(Calendar.HOUR_OF_DAY, 0);
-                    calendar.set(Calendar.MINUTE, 0);
-                    calendar.set(Calendar.SECOND, 0);
-                    long start = calendar.getTimeInMillis();
-                    return (now - start) / 86400000f;
-                })
+                .map(integer -> calculateDay(integer))
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(day -> {
-                    ((TextView) findViewById(R.id.tv_card_one_head)).setText(String.format(this.getString(R.string.card_one_head), day));
+                    mSwitcher.setText(String.format(this.getString(R.string.card_one_head), day));
                     ((TextView) findViewById(R.id.tv_card_one_cell_1)).setText(String.format("* %s月", (day / 30)));
                     ((TextView) findViewById(R.id.tv_card_one_cell_2)).setText(String.format("* %s个日夜", day));
                     ((TextView) findViewById(R.id.tv_card_one_cell_3)).setText(String.format("* %s小时", day * 24));
@@ -194,5 +191,28 @@ public class TimeActivity extends BaseActivity implements Toolbar.OnMenuItemClic
                     ((TextView) findViewById(R.id.tv_card_two_cell_3)).setText(String.format("* 在图书馆看%s本书", (int) ((1400 - day) / 7) * 2));
                     ((TextView) findViewById(R.id.tv_card_two_cell_4)).setText(String.format("* 在食堂吃%s次饭", (int) ((1400 - day) / 1) * 3));
                 });
+
+    }
+
+    private float calculateDay(int i) {
+        Calendar calendar = Calendar.getInstance();
+        long now = System.currentTimeMillis();
+        int year = calendar.get(Calendar.YEAR);
+        calendar.set(Calendar.YEAR, year - i);
+        calendar.set(Calendar.MONTH, Calendar.SEPTEMBER);
+        calendar.set(Calendar.DAY_OF_MONTH, 1);
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        long start = calendar.getTimeInMillis();
+        return (now - start) / 86400000f;
+    }
+
+    @Override
+    public View makeView() {
+        TextView textView = new TextView(this);
+        textView.setGravity(Gravity.CENTER);
+        textView.setTextSize(20f);
+        return textView;
     }
 }

@@ -46,6 +46,8 @@
         <activity android:name=".Activities.OtherWishes" />
         <activity android:name=".Activities.ShowAchievementActivity" >
         </activity>
+        <activity android:name=".Activities.StartActivity" >
+        </activity>
     </application>
 
 </manifest>
