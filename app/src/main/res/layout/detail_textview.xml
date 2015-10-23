@@ -5,7 +5,7 @@
     android:orientation="vertical">
     <EditText
         android:id="@+id/my_wishes_details_content_editView"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"

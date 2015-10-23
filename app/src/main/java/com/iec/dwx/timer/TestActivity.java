@@ -110,8 +110,6 @@ public class TestActivity extends BaseActivity {
     }
 
     private void linkTo() {
-//        startActivity(new Intent(this, TimeActivity.class));
-//        startActivity(new Intent(this,MainActivity.class));
         startActivity(new Intent(this,StartActivity.class));
     }
 
@@ -132,52 +130,6 @@ public class TestActivity extends BaseActivity {
         });
         return list;
     }
-
-//    private void get() {
-//        Bitmap bitmap = SDiskCacheManager.getInstance(this).getBitmap("http:\\sdfas");
-//        if (bitmap == null) System.out.println("get null");
-//        mIvShow.setImageBitmap(bitmap);
-//    }
-//
-//    private void save() {
-//        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.b);
-//        if (bitmap == null) System.out.println("save null");
-//        SDiskCacheManager.getInstance(this).putBitmap("http:\\sdfas", bitmap);
-//    }
-
-
-//    private void Bombsave() {
-//        WishBean wishBean = new WishBean();
-//        wishBean.setWishTime("aaa");
-//        wishBean.setWishContent("bbb");
-//        wishBean.setPictureUrl("ccc");
-//        wishBean.save(this, new SaveListener() {
-//            @Override
-//            public void onSuccess() {
-//                System.out.println("成功上传");
-//            }
-//
-//            @Override
-//            public void onFailure(int i, String s) {
-//                System.out.println("上传失败");
-//            }
-//        });
-//    }
-//
-//    private void Bombget() {
-//        BmobQuery<WishBean> bmobQuery = new BmobQuery<WishBean>();
-//        bmobQuery.getObject(this, "7176a5396d", new GetListener<WishBean>() {
-//            @Override
-//            public void onSuccess(WishBean wishBean) {
-//                System.out.println(wishBean.getWishTime());
-//            }
-//
-//            @Override
-//            public void onFailure(int i, String s) {
-//                System.out.println("获取失败");
-//            }
-//        });
-//    }
 
     @Override
     protected int getLayoutID() {
