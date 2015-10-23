@@ -2,12 +2,10 @@ package com.iec.dwx.timer.Fragments;
 
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,25 +17,22 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.iec.dwx.timer.Activities.OtherWishes;
 import com.iec.dwx.timer.Beans.CommonBean;
 import com.iec.dwx.timer.Beans.SkillBean;
 import com.iec.dwx.timer.R;
-import com.iec.dwx.timer.Runnable.SkillTextViewMarginChangeRunnable;
 import com.iec.dwx.timer.Utils.DBHelper;
 import com.iec.dwx.timer.Utils.ScreenSizeUtils;
 import com.iec.dwx.timer.Views.ViewDragHelperLayout;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
-import java.util.concurrent.TimeoutException;
 
 public class SkillFragment extends Fragment implements Toolbar.OnMenuItemClickListener  {
     private List<TextView> viewList=new  ArrayList<TextView>();
     private LinearLayout addView=null;
     private ViewDragHelperLayout viewDragHelperLayout=null;
     private InputMethodManager imm = null;
+    private Thread td=null;
 
 
     public static SkillFragment newInstance() {
@@ -76,6 +71,8 @@ public class SkillFragment extends Fragment implements Toolbar.OnMenuItemClickLi
                 (EditText) getView().findViewById(R.id.my_skill_add_editText)));
     }
 
+
+
     @Override
     public void onResume() {
         super.onResume();
@@ -86,14 +83,8 @@ public class SkillFragment extends Fragment implements Toolbar.OnMenuItemClickLi
             viewList.add(textView);
             viewDragHelperLayout.addView(textView);
         }
-    }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        SkillTextViewMarginChangeRunnable runnable=new SkillTextViewMarginChangeRunnable(getContext(),viewList);
-        Thread td=new Thread(runnable);
-        td.run();
+
     }
 
     private TextView getTextView(CommonBean commonBean,int id){
@@ -102,6 +93,7 @@ public class SkillFragment extends Fragment implements Toolbar.OnMenuItemClickLi
         int marginTop=Integer.parseInt(commonBean.getPicture());
 
         TextView textView=new TextView(getContext());
+
         textView.setTag(R.id.tag_zero,id);
         FrameLayout.LayoutParams lp= new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT,
                 FrameLayout.LayoutParams.WRAP_CONTENT);
@@ -110,6 +102,16 @@ public class SkillFragment extends Fragment implements Toolbar.OnMenuItemClickLi
         textView.setTextColor(Color.BLACK);
         textView.setText(commonBean.getContent());
         textView.setTextSize(20);
+
+        //设置长点击
+//        textView.setOnLongClickListener(new View.OnLongClickListener() {
+//            @Override
+//            public boolean onLongClick(View v) {
+//                System.out.println("skill long cliked");
+//                return true;
+//            }
+//        });
+
         return textView;
     }
 
@@ -160,7 +162,7 @@ public class SkillFragment extends Fragment implements Toolbar.OnMenuItemClickLi
 
             addView.setVisibility(View.GONE);
             viewDragHelperLayout.setBackgroundColor(000);
-            viewDragHelperLayout.addView(getTextView((CommonBean) skillBean,id));
+            viewDragHelperLayout.addView(getTextView((CommonBean) skillBean, id));
 
             Toast.makeText(getContext(),"成功保存",Toast.LENGTH_SHORT).show();
     }
