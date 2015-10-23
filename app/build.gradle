@@ -50,6 +50,7 @@ dependencies {
     compile 'me.imid.swipebacklayout.lib:library:1.0.0'
     compile 'com.veinhorn.scrollgalleryview:library:1.0.3'
     compile 'com.yqritc:recyclerview-flexibledivider:1.2.5'
+    compile 'pl.droidsonroids.gif:android-gif-drawable:1.1.+'
     compile files('libs/BmobSDK_V3.4.4_0930.jar')
     compile files('libs/Bmob_Push_V0.6beta_20150408.jar')
     compile files('libs/okhttp-2.4.0.jar')

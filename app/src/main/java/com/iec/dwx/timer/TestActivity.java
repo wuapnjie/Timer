@@ -7,6 +7,7 @@ import android.widget.ImageView;
 
 import com.iec.dwx.timer.Activities.BaseActivity;
 import com.iec.dwx.timer.Activities.MainActivity;
+import com.iec.dwx.timer.Activities.StartActivity;
 import com.iec.dwx.timer.Activities.TimeActivity;
 import com.iec.dwx.timer.Beans.CommonBean;
 import com.iec.dwx.timer.Beans.WishBean;
@@ -109,8 +110,7 @@ public class TestActivity extends BaseActivity {
     }
 
     private void linkTo() {
-        startActivity(new Intent(this, TimeActivity.class));
-//        startActivity(new Intent(this,MainActivity.class));
+        startActivity(new Intent(this,StartActivity.class));
     }
 
     private List getBmobData(){
