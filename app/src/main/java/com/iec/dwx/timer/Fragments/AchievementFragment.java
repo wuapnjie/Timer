@@ -18,7 +18,6 @@ import android.widget.PopupWindow;
 import android.widget.Toast;
 
 import com.iec.dwx.timer.Activities.EditAchievementActivity;
-import com.iec.dwx.timer.Activities.PickPhotoActivity;
 import com.iec.dwx.timer.Adapters.AchievementAdapter;
 import com.iec.dwx.timer.R;
 import com.iec.dwx.timer.Utils.DBHelper;
@@ -218,10 +217,5 @@ public class AchievementFragment extends Fragment implements Toolbar.OnMenuItemC
     private void intent2Add() {
         startActivity(new Intent(getActivity(), EditAchievementActivity.class));
     }
-
-    private void linkToPickPhoto() {
-        startActivity(new Intent(getActivity(), PickPhotoActivity.class));
-    }
-
 
 }

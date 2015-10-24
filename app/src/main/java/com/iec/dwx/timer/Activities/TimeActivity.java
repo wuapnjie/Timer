@@ -4,10 +4,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextSwitcher;
@@ -19,7 +19,6 @@ import com.iec.dwx.timer.R;
 import com.iec.dwx.timer.Views.CardFlipLayout;
 import com.iec.dwx.timer.Views.PickView;
 
-import java.lang.ref.WeakReference;
 import java.util.Calendar;
 
 import butterknife.Bind;
@@ -214,5 +213,12 @@ public class TimeActivity extends BaseActivity implements Toolbar.OnMenuItemClic
         textView.setGravity(Gravity.CENTER);
         textView.setTextSize(20f);
         return textView;
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_time, menu);
+        return true;
     }
 }

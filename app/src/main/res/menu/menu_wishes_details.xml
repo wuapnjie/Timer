@@ -5,15 +5,14 @@
       tools:context=".MainActivity">
 	<item
 		android:id="@+id/menu_my_wishes_detail_share"
-		android:icon="@drawable/ic_backup_black_24dp"
+		android:icon="@drawable/ic_cloud_upload_black_24dp"
 		android:title=""
-		app:showAsAction="always"
-		></item>
+		app:showAsAction="ifRoom"
+		/>
 	<item
 		android:id="@+id/menu_my_wishes_detail_edit"
 		android:icon="@drawable/ic_mode_edit_black_24dp"
 		android:title=""
 		app:showAsAction="always"
-		>
-	</item>
+		/>
 </menu>

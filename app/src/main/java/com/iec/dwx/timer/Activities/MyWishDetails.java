@@ -46,7 +46,8 @@ public class MyWishDetails extends BaseActivity implements Toolbar.OnMenuItemCli
         setViewPagerOnPageChangeListener(viewPager);
 
         ((Toolbar) findViewById(R.id.toolbar_my_wishes_details)).setNavigationOnClickListener(v -> onBackPressed());
-
+        ((Toolbar)findViewById(R.id.toolbar_my_wishes_details)).inflateMenu(R.menu.menu_wishes_details);
+        ((Toolbar)findViewById(R.id.toolbar_my_wishes_details)).setOnMenuItemClickListener(this);
     }
 
     private void setViewPagerOnPageChangeListener(ViewPager viewPager){
@@ -98,8 +99,6 @@ public class MyWishDetails extends BaseActivity implements Toolbar.OnMenuItemCli
     @Override
     protected void onStart() {
         super.onStart();
-        ((Toolbar)findViewById(R.id.toolbar_my_wishes_details)).inflateMenu(R.menu.menu_wishes_details);
-        ((Toolbar)findViewById(R.id.toolbar_my_wishes_details)).setOnMenuItemClickListener(this);
     }
 
     @Override

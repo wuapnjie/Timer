@@ -7,7 +7,7 @@
 		android:id="@+id/menu_my_wishes_add"
 		android:icon="@drawable/ic_add_black_24dp"
 		android:title=""
-		app:showAsAction="always"
+		app:showAsAction="ifRoom"
 		/>
 	<item
 		android:id="@+id/menu_my_wishes_others"

@@ -94,13 +94,13 @@ public class MyWishesFragment extends Fragment implements Toolbar.OnMenuItemClic
         recyclerView.setAdapter(mAdapter);
 
         //item divider
-        Paint paint = new Paint();
-        paint.setStrokeWidth(10);
-        paint.setColor(Color.parseColor("#47646363"));
-        paint.setAntiAlias(true);
-        paint.setPathEffect(new DashPathEffect(new float[]{25.0f, 25.0f}, 0));
-        ((RecyclerView) rootview.findViewById(R.id.rv_my_wishes)).addItemDecoration(
-                new HorizontalDividerItemDecoration.Builder(getContext()).paint(paint).build());
+//        Paint paint = new Paint();
+//        paint.setStrokeWidth(10);
+//        paint.setColor(Color.parseColor("#47646363"));
+//        paint.setAntiAlias(true);
+//        paint.setPathEffect(new DashPathEffect(new float[]{25.0f, 25.0f}, 0));
+//        ((RecyclerView) rootview.findViewById(R.id.rv_my_wishes)).addItemDecoration(
+//                new HorizontalDividerItemDecoration.Builder(getContext()).paint(paint).build());
         return rootview;
     }
 
@@ -129,6 +129,8 @@ public class MyWishesFragment extends Fragment implements Toolbar.OnMenuItemClic
         ((Toolbar) getView().findViewById(R.id.toolbar_my_wishes)).inflateMenu(R.menu.menu_my_wishes);
         ((Toolbar) getView().findViewById(R.id.toolbar_my_wishes)).setOnMenuItemClickListener(this);
         ((Toolbar) getView().findViewById(R.id.toolbar_my_wishes)).setNavigationOnClickListener(v -> getActivity().onBackPressed());
+        
+        EditText editText = (EditText) getView().findViewById(R.id.my_wishes_add_editText);
 
         recyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -157,7 +159,7 @@ public class MyWishesFragment extends Fragment implements Toolbar.OnMenuItemClic
         getView().findViewById(R.id.my_wishes_add_btn_sure).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addDataToDataBase((EditText) getView().findViewById(R.id.my_wishes_add_editText));
+                addDataToDataBase(editText);
             }
         });
         //新建取消按钮
@@ -166,10 +168,10 @@ public class MyWishesFragment extends Fragment implements Toolbar.OnMenuItemClic
             public void onClick(View v) {
                 add_view.setVisibility(View.GONE);
                 recyclerView.setBackgroundColor(000);
-                ((EditText) getView().findViewById(R.id.my_wishes_add_editText)).setText("");
+                (editText).setText("");
                 Toast.makeText(getContext(), "已取消", Toast.LENGTH_SHORT).show();
                 //隐藏键盘
-                imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+                imm.hideSoftInputFromInputMethod((editText).getWindowToken(), 0);
             }
         });
     }

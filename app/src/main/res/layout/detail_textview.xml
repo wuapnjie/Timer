@@ -1,31 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
-    <EditText
-        android:id="@+id/my_wishes_details_content_editView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:paddingBottom="30dp"
-        android:paddingTop="10dp"
-        android:background="#FFF"
-        android:textSize="20dp"
-        android:textColor="#000"
-       />
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <TextView
-            android:hint="2013"
-            android:paddingLeft="10dp"
-            android:id="@+id/my_wishes_details_time_textview"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="#000"/>
-    </LinearLayout>
+<FrameLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:layout_margin="4dp"
+	android:background="#FFFFFF">
 
-</LinearLayout>
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_gravity="center"
+		android:background="#FFF"
+		android:orientation="vertical">
+
+		<EditText
+			android:id="@+id/my_wishes_details_content_editView"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:background="#FFF"
+			android:gravity="center"
+			android:hint="HELLO"
+			android:paddingBottom="30dp"
+			android:paddingLeft="10dp"
+			android:paddingRight="10dp"
+			android:paddingTop="10dp"
+			android:textColor="@color/common_black"
+			android:textSize="30sp"
+			/>
+
+
+		<TextView
+			android:id="@+id/my_wishes_details_time_textview"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:gravity="right"
+			android:hint="2013"
+			android:paddingRight="16dp"
+			android:textColor="@color/common_black"
+			android:textSize="14sp"/>
+	</LinearLayout>
+</FrameLayout>

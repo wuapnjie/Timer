@@ -7,7 +7,7 @@
 	android:layout_height="match_parent"
 	android:background="#fff"
 	android:orientation="vertical"
-	tools:context="com.iec.dwx.timer.Activities.PickPhotoActivity">
+	tools:context="com.flying.xiaopo.rxjava.PickPhotoActivity">
 
 	<android.support.design.widget.AppBarLayout
 		android:layout_width="match_parent"
