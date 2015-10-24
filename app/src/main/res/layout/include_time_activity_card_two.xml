@@ -63,6 +63,7 @@
 				android:layout_height="wrap_content"
 				android:paddingBottom="8dp"
 				android:paddingTop="8dp"
+				android:paddingLeft="8dp"
 				android:text="在教室"
 				android:textColor="@color/card_text_color"/>
 			<View
@@ -76,6 +77,7 @@
 				android:layout_height="wrap_content"
 				android:paddingBottom="8dp"
 				android:paddingTop="8dp"
+				android:paddingLeft="8dp"
 				android:text="在寝室"
 				android:textColor="@color/card_text_color"/>
 			<View
@@ -89,6 +91,7 @@
 				android:layout_height="wrap_content"
 				android:paddingBottom="8dp"
 				android:paddingTop="8dp"
+				android:paddingLeft="8dp"
 				android:text="在图书馆"
 				android:textColor="@color/card_text_color"/>
 			<View
@@ -102,6 +105,7 @@
 				android:layout_height="wrap_content"
 				android:paddingBottom="8dp"
 				android:paddingTop="8dp"
+				android:paddingLeft="8dp"
 				android:text="在酒店"
 				android:textColor="@color/card_text_color"/>
 		</LinearLayout>

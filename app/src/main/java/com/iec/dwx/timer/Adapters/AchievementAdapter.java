@@ -79,7 +79,7 @@ public class AchievementAdapter extends RecyclerView.Adapter<AchievementAdapter.
         //设置长按事件
         holder.mContainer.setOnLongClickListener(v -> {
             if (mOnAchievementLongClickListener != null)
-                mOnAchievementLongClickListener.onAchievementLongClick(v, position);
+                mOnAchievementLongClickListener.onAchievementLongClick(v, holder.getLayoutPosition());
             holder.mShader.setVisibility(View.VISIBLE);
             return true;
         });

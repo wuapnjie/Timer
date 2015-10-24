@@ -17,6 +17,8 @@ import com.iec.dwx.timer.Adapters.WishDetailsPagerAdapter;
 import com.iec.dwx.timer.Beans.CommonBean;
 import com.iec.dwx.timer.R;
 import com.iec.dwx.timer.Utils.DBHelper;
+import com.iec.dwx.timer.Utils.Utils;
+
 import java.util.ArrayList;
 import java.util.List;
 import cn.bmob.v3.Bmob;
@@ -54,7 +56,11 @@ public class MyWishDetails extends BaseActivity implements Toolbar.OnMenuItemCli
         viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
+                if (position==0){
+                    getSwipeBackLayout().setEdgeSize(Utils.dp2px(200));
+                }else {
+                    getSwipeBackLayout().setEdgeSize(0);
+                }
             }
 
             @Override

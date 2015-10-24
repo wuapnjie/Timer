@@ -6,14 +6,14 @@
 	<item
 		android:id="@+id/menu_achievement_play"
 		android:icon="@drawable/ic_play_arrow_black_24dp"
-		android:title="@string/menu_achievement_add"
+		android:title="@string/menu_achievement_play"
 		app:showAsAction="ifRoom"
 		>
 	</item>
 	<item
 		android:id="@+id/menu_achievement_add"
 		android:icon="@drawable/ic_add_black_24dp"
-		android:title="@string/menu_achievement_play"
+		android:title="@string/menu_achievement_add"
 		app:showAsAction="always"
 		>
 	</item>

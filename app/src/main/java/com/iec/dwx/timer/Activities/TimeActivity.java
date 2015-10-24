@@ -4,26 +4,30 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuInflater;
+import android.util.Log;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.iec.dwx.timer.R;
+import com.iec.dwx.timer.Utils.Utils;
 import com.iec.dwx.timer.Views.CardFlipLayout;
 import com.iec.dwx.timer.Views.PickView;
 
 import java.util.Calendar;
 
 import butterknife.Bind;
+import butterknife.ButterKnife;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-public class TimeActivity extends BaseActivity implements Toolbar.OnMenuItemClickListener, SharedPreferences.OnSharedPreferenceChangeListener {
+public class TimeActivity extends AppCompatActivity implements Toolbar.OnMenuItemClickListener, SharedPreferences.OnSharedPreferenceChangeListener {
+    private static final String TAG = TimeActivity.class.getSimpleName();
     public static final String PREFERENCE_NAME = "TimeActivity";
     public static final String PREFERENCE_KEY_GRADE = "grade";  //SharePreferences的key，储存年级
     public static final String PREFERENCE_KEY_GRADE_EMPTY = "empty";
@@ -53,6 +57,8 @@ public class TimeActivity extends BaseActivity implements Toolbar.OnMenuItemClic
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_time);
+        ButterKnife.bind(this);
         initialize();
         initListener();
 
@@ -60,8 +66,10 @@ public class TimeActivity extends BaseActivity implements Toolbar.OnMenuItemClic
 
     private void initialize() {
         mValues = this.getResources().getStringArray(R.array.pick_values);
+
         mPickView.setValues(mValues);
         mMenuBar.inflateMenu(R.menu.menu_time);
+
 
         Observable.just(PREFERENCE_KEY_GRADE)
                 .map(s -> getPreferences(s, PREFERENCE_KEY_GRADE_EMPTY))
@@ -112,20 +120,12 @@ public class TimeActivity extends BaseActivity implements Toolbar.OnMenuItemClic
     }
 
     @Override
-    protected int getEdgeSize() {
-        return 0;
-    }
-
-    @Override
-    protected int getLayoutID() {
-        return R.layout.activity_time;
-    }
-
-    @Override
     public boolean onMenuItemClick(MenuItem item) {
         Intent intent = new Intent(this, MainActivity.class);
         int flag = 0;
         switch (item.getItemId()) {
+            case R.id.menu_time_more:
+                return true;
             case R.id.menu_time_wish:
                 flag = 0;
                 break;
@@ -141,10 +141,12 @@ public class TimeActivity extends BaseActivity implements Toolbar.OnMenuItemClic
             case R.id.menu_time_about:
                 intent.setClass(this, AboutActivity.class);
                 startActivity(intent);
+                overridePendingTransition(R.anim.activity_time_enter, R.anim.activity_time_exit);
                 return true;
         }
         intent.putExtra(MainActivity.INTENT_KEY_PAGE, flag);
         startActivity(intent);
+        overridePendingTransition(R.anim.activity_time_enter, R.anim.activity_time_exit);
         return true;
     }
 
@@ -204,10 +206,25 @@ public class TimeActivity extends BaseActivity implements Toolbar.OnMenuItemClic
     }
 
 
+    private float mStart;
+
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_time, menu);
+    public boolean onTouchEvent(MotionEvent event) {
+        float end;
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                mStart = event.getX();
+                Log.d(TAG, "mStart->" + mStart);
+                break;
+            case MotionEvent.ACTION_UP:
+                end = event.getX();
+                Log.d(TAG, "end->" + end);
+                if ((mStart - end) > Utils.dp2px(100)) {
+                    startActivity(new Intent(this, MainActivity.class));
+                    overridePendingTransition(R.anim.activity_time_enter,R.anim.activity_time_exit);
+                }
+                break;
+        }
         return true;
     }
 }

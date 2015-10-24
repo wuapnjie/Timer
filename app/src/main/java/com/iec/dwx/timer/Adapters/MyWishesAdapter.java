@@ -66,7 +66,7 @@ public class MyWishesAdapter extends RecyclerView.Adapter<MyWishesAdapter.Wishes
             @Override
             public void onClick(View v) {
                 if (mOnItemClickListener != null) {
-                    mOnItemClickListener.onItemClick(v, position);
+                    mOnItemClickListener.onItemClick(v, holder.getLayoutPosition());
                 }
             }
         });
@@ -75,7 +75,7 @@ public class MyWishesAdapter extends RecyclerView.Adapter<MyWishesAdapter.Wishes
             @Override
             public boolean onLongClick(View v) {
                 if(onRecylerViewItemLongClickListener!=null){
-                    onRecylerViewItemLongClickListener.onRecylerViewItemLongClickListener(v,position);
+                    onRecylerViewItemLongClickListener.onRecylerViewItemLongClickListener(v,holder.getLayoutPosition());
                     holder.mShader.setVisibility(View.VISIBLE);
                 }
                 return true;

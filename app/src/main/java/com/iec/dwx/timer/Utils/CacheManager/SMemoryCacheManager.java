@@ -27,7 +27,7 @@ public class SMemoryCacheManager extends LruCache<String, Bitmap> {
 
     public synchronized static SMemoryCacheManager getInstance() {
         if (mInstance == null) {
-            int maxMem = (int) Runtime.getRuntime().maxMemory();
+            int maxMem = (int) Runtime.getRuntime().maxMemory()/1024;
             mInstance = new SMemoryCacheManager(maxMem / 8);
         }
         return mInstance;

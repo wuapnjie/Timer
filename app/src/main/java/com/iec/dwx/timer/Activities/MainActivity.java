@@ -113,4 +113,10 @@ public class MainActivity extends BaseActivity implements SwipeBackLayout.SwipeL
             return 3;
         }
     }
+
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.activity_time_enter, R.anim.activity_time_exit);
+    }
 }

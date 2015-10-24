@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -51,6 +52,8 @@ public class MyWishesFragment extends Fragment implements Toolbar.OnMenuItemClic
     public static final int SELECTED_NONE = -1;
     //被选中心愿的位置,
     private int mSelectedPosition = SELECTED_NONE;
+
+    private EditText mEditText;
 
     public static MyWishesFragment newInstance() {
         return new MyWishesFragment();
@@ -106,6 +109,7 @@ public class MyWishesFragment extends Fragment implements Toolbar.OnMenuItemClic
         super.onViewCreated(view, savedInstanceState);
         registerListener();
 
+        if (getView()!=null)  mEditText = (EditText) getView().findViewById(R.id.my_wishes_add_editText);
         //初始化PopupWindow
         Observable.just(R.layout.my_wishes_popup_view)
                 .map(integer -> LayoutInflater.from(getActivity()).inflate(integer, null))
@@ -288,7 +292,11 @@ public class MyWishesFragment extends Fragment implements Toolbar.OnMenuItemClic
             case R.id.menu_my_wishes_add:
                 add_view.setVisibility(View.VISIBLE);
                 add_view.setClickable(true);
-                imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.RESULT_HIDDEN);
+                if(mEditText!=null&&mEditText.requestFocus()) {
+                    imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.RESULT_HIDDEN);
+                }
+//                add_view.requestFocus();
+//                imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.RESULT_HIDDEN);
 //                recyclerView.setBackgroundResource(R.color.black_overlay);
         }
         return false;
