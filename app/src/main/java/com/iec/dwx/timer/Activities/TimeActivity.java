@@ -5,15 +5,12 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextSwitcher;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.ViewSwitcher;
 
 import com.iec.dwx.timer.R;
 import com.iec.dwx.timer.Views.CardFlipLayout;
@@ -26,7 +23,7 @@ import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-public class TimeActivity extends BaseActivity implements Toolbar.OnMenuItemClickListener, SharedPreferences.OnSharedPreferenceChangeListener, ViewSwitcher.ViewFactory {
+public class TimeActivity extends BaseActivity implements Toolbar.OnMenuItemClickListener, SharedPreferences.OnSharedPreferenceChangeListener {
     public static final String PREFERENCE_NAME = "TimeActivity";
     public static final String PREFERENCE_KEY_GRADE = "grade";  //SharePreferences的key，储存年级
     public static final String PREFERENCE_KEY_GRADE_EMPTY = "empty";
@@ -37,7 +34,7 @@ public class TimeActivity extends BaseActivity implements Toolbar.OnMenuItemClic
     @Bind(R.id.menu_bar)
     Toolbar mMenuBar;
     @Bind(R.id.tv_card_one_head)
-    TextSwitcher mSwitcher;
+    TextView mTextView;
 
     private String[] mValues;
 
@@ -65,7 +62,6 @@ public class TimeActivity extends BaseActivity implements Toolbar.OnMenuItemClic
         mValues = this.getResources().getStringArray(R.array.pick_values);
         mPickView.setValues(mValues);
         mMenuBar.inflateMenu(R.menu.menu_time);
-        mSwitcher.setFactory(this);
 
         Observable.just(PREFERENCE_KEY_GRADE)
                 .map(s -> getPreferences(s, PREFERENCE_KEY_GRADE_EMPTY))
@@ -143,8 +139,9 @@ public class TimeActivity extends BaseActivity implements Toolbar.OnMenuItemClic
                 showPick();
                 return true;
             case R.id.menu_time_about:
-
-                break;
+                intent.setClass(this, AboutActivity.class);
+                startActivity(intent);
+                return true;
         }
         intent.putExtra(MainActivity.INTENT_KEY_PAGE, flag);
         startActivity(intent);
@@ -166,7 +163,6 @@ public class TimeActivity extends BaseActivity implements Toolbar.OnMenuItemClic
     }
 
     private void calculateTime(String value) {
-        System.out.println("calculateTime");
         int i;
         for (i = 0; i < mValues.length; i++) {
             if (value.equals(mValues[i])) {
@@ -178,7 +174,7 @@ public class TimeActivity extends BaseActivity implements Toolbar.OnMenuItemClic
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(day -> {
-                    mSwitcher.setText(String.format(this.getString(R.string.card_one_head), day));
+                    mTextView.setText(String.format(this.getString(R.string.card_one_head), day));
                     ((TextView) findViewById(R.id.tv_card_one_cell_1)).setText(String.format("* %s月", (day / 30)));
                     ((TextView) findViewById(R.id.tv_card_one_cell_2)).setText(String.format("* %s个日夜", day));
                     ((TextView) findViewById(R.id.tv_card_one_cell_3)).setText(String.format("* %s小时", day * 24));
@@ -207,13 +203,6 @@ public class TimeActivity extends BaseActivity implements Toolbar.OnMenuItemClic
         return (now - start) / 86400000f;
     }
 
-    @Override
-    public View makeView() {
-        TextView textView = new TextView(this);
-        textView.setGravity(Gravity.CENTER);
-        textView.setTextSize(20f);
-        return textView;
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

@@ -26,10 +26,6 @@
 				app:subtitle="我的技能"
 				app:subtitleTextColor="@color/toolbar_text_color"/>
 
-			<View
-				android:layout_width="match_parent"
-				android:layout_height="0.1dp"
-				android:background="@color/common_black"/>
 		</android.support.design.widget.AppBarLayout>
 
 		<com.iec.dwx.timer.Views.ViewDragHelperLayout
@@ -86,7 +82,7 @@
 						android:layout_width="0dp"
 						android:layout_height="36dp"
 						android:layout_weight="1"
-						android:background="@android:color/transparent"
+						android:background="?android:attr/selectableItemBackground"
 						android:text="@string/my_wish_add_view_cancel_btn"
 						android:textColor="@color/common_black"/>
 
@@ -95,7 +91,7 @@
 						android:layout_width="0dp"
 						android:layout_height="36dp"
 						android:layout_weight="1"
-						android:background="@android:color/transparent"
+						android:background="?android:attr/selectableItemBackground"
 						android:text="@string/my_wish_add_view_sure_btn"
 						android:textColor="@color/common_black"/>
 				</LinearLayout>

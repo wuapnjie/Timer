@@ -18,9 +18,11 @@ import android.widget.PopupWindow;
 import android.widget.Toast;
 
 import com.iec.dwx.timer.Activities.EditAchievementActivity;
+import com.iec.dwx.timer.Activities.MainActivity;
 import com.iec.dwx.timer.Adapters.AchievementAdapter;
 import com.iec.dwx.timer.R;
 import com.iec.dwx.timer.Utils.DBHelper;
+import com.iec.dwx.timer.Utils.Utils;
 
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
@@ -165,6 +167,9 @@ public class AchievementFragment extends Fragment implements Toolbar.OnMenuItemC
         super.onResume();
         //异步刷新数据
         refreshData();
+
+        //取消滑动返回
+        ((MainActivity)getActivity()).getSwipeBackLayout().setEdgeSize(0);
     }
 
     /**

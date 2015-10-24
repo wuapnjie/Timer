@@ -10,15 +10,15 @@
 
 	<color name="activity_time_background_translucent">#66000000</color>
 
-	<color name="card_two_background">#bd000000</color>
+	<color name="card_two_background">#1e1e1e</color>
 	<color name="card_two_head_text_color">#fff</color>
 	<color name="card_two_subhead_text_color">#dfff</color>
 	<color name="card_two_btn_text_color">#fff</color>
 
 	<color name="card_text_color">#dfff</color>
 
-	<color name="toolbar_text_color">#bd000000</color>
-	<color name="common_black">#bd000000</color>
+	<color name="toolbar_text_color">#1e1e1e</color>
+	<color name="common_black">#1e1e1e</color>
 	<color name="mywish_into_public_wish_background">#e62222</color>
 
 </resources>

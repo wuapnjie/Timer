@@ -6,7 +6,7 @@
 	<item
 		android:id="@+id/menu_achievement_play"
 		android:icon="@drawable/ic_done_black_24dp"
-		android:title=""
+		android:title="@string/menu_edit_achievement_ok"
 		app:showAsAction="ifRoom"
 		>
 	</item>

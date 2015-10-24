@@ -6,7 +6,7 @@
 	<item
 		android:id="@+id/menu_my_skill_add"
 		android:icon="@drawable/ic_add_black_24dp"
-		android:title=""
+		android:title="@string/menu_my_skill_add"
 		app:showAsAction="always"
 		/>
 

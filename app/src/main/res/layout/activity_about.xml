@@ -5,38 +5,46 @@
 	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
-	android:background="#fff"
 	android:orientation="vertical"
-	tools:context="com.flying.xiaopo.rxjava.PickPhotoActivity">
+	tools:context="com.iec.dwx.timer.Activities.AboutActivity">
 
-	<android.support.design.widget.AppBarLayout
+	<android.support.v7.widget.CardView
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content">
 
 		<android.support.v7.widget.Toolbar
-			android:id="@+id/toolbar_pick_photo"
+			android:id="@+id/toolbar_about"
 			android:layout_width="match_parent"
 			android:layout_height="?actionBarSize"
 			app:layout_scrollFlags="scroll|enterAlways"
 			app:navigationIcon="@drawable/ic_arrow_back_black_24dp"
-			app:subtitle="@string/toolbar_pick_photo_title"
+			app:subtitle="@string/menu_time_about"
 			app:subtitleTextColor="@color/toolbar_text_color"/>
-	</android.support.design.widget.AppBarLayout>
+	</android.support.v7.widget.CardView>
 
-	<FrameLayout
+	<LinearLayout
+		android:background="#F4F5F5"
 		android:layout_width="match_parent"
-		android:layout_height="match_parent">
+		android:layout_height="0dp"
+		android:layout_weight="1"
+		android:orientation="vertical"
+		>
 
-		<android.support.v7.widget.RecyclerView
-			android:id="@+id/rv_photos"
-			android:visibility="gone"
-			android:layout_width="match_parent"
-			android:layout_height="match_parent"/>
 
-		<android.support.v7.widget.RecyclerView
-			android:id="@+id/rv_albums"
+		<ImageView
+			android:background="#F4F5F5"
+			android:id="@+id/iv_about_us"
 			android:layout_width="match_parent"
-			android:layout_height="match_parent"
-			/>
-	</FrameLayout>
+			android:layout_height="wrap_content"
+			android:scaleType="centerInside"/>
+
+		<TextView
+			android:background="#F4F5F5"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:padding="16dp"
+			android:text="@string/about_us"
+			android:textSize="20sp"/>
+	</LinearLayout>
+
 </LinearLayout>

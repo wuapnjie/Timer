@@ -30,6 +30,7 @@
 			android:layout_marginTop="16dp"
 			android:gravity="center"
 			android:padding="8dp"
+			android:textColor="@color/common_black"
 			android:text="2014-11-11\n19:12:32"
 			android:textSize="20sp"/>
 

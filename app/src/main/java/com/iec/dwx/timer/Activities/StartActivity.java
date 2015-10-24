@@ -4,9 +4,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.ImageView;
 
+import com.iec.dwx.timer.Beans.WishBean;
 import com.iec.dwx.timer.R;
+import com.iec.dwx.timer.Utils.DBHelper;
 
 import java.io.IOException;
 
@@ -16,6 +19,7 @@ import pl.droidsonroids.gif.GifDrawable;
  * 开始动画界面
  */
 public class StartActivity extends AppCompatActivity {
+    protected final String TAG = this.getClass().getSimpleName();
     GifDrawable mGifDrawable;
 
     @Override
@@ -33,17 +37,10 @@ public class StartActivity extends AppCompatActivity {
             startActivity(new Intent(this, TimeActivity.class));
             finish();
         }, 2000);
-//        Animator animator = ObjectAnimator.ofFloat(findViewById(R.id.iv_introduce), "alpha", 1f, 0.5f);
-//        animator.setDuration(2000);
-//        animator.addListener(new AnimatorListenerAdapter() {
-//            @Override
-//            public void onAnimationEnd(Animator animation) {
-//                super.onAnimationEnd(animation);
-//                startActivity(new Intent(StartActivity.this, TimeActivity.class));
-//                finish();
-//            }
-//        });
-//        animator.start();
+
+        Log.d(TAG, "wishes' size->" + DBHelper.getInstance(this).getAllBeans(DBHelper.DB_TABLE_WISH).size());
+        Log.d(TAG, "achievement' size->"+DBHelper.getInstance(this).getAllBeans(DBHelper.DB_TABLE_ACHIEVEMENT).size());
+        Log.d(TAG, "skills' size->"+DBHelper.getInstance(this).getAllBeans(DBHelper.DB_TABLE_SKILL).size());
     }
 
 }

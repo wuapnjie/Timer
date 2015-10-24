@@ -30,7 +30,7 @@ public abstract class BaseActivity extends SwipeBackActivity {
 
         mSwipeBackLayout.setEdgeSize(getEdgeSize());
 
-        mSwipeBackLayout.setEdgeTrackingEnabled(SwipeBackLayout.EDGE_LEFT | SwipeBackLayout.EDGE_RIGHT);
+        mSwipeBackLayout.setEdgeTrackingEnabled(SwipeBackLayout.EDGE_LEFT);
     }
 
     /**

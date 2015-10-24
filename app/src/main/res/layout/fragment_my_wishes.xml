@@ -1,42 +1,112 @@
-<android.support.design.widget.CoordinatorLayout
+<FrameLayout
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:app="http://schemas.android.com/apk/res-auto"
 	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
-	android:layout_height="match_parent"
-	android:background="#FFF"
-	android:clickable="true"
-	tools:context="com.iec.dwx.timer.Fragments.MyWishesFragment">
+	android:layout_height="match_parent">
 
-	<!-- TODO: Update blank fragment layout -->
-	<android.support.design.widget.AppBarLayout
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content">
-
-		<android.support.v7.widget.Toolbar
-			android:id="@+id/toolbar_my_wishes"
-			android:layout_width="match_parent"
-			android:layout_height="?actionBarSize"
-			app:layout_scrollFlags="scroll|enterAlways"
-			app:navigationIcon="@drawable/ic_arrow_back_black_24dp"
-			app:subtitle="@string/menu_time_wish"
-			app:subtitleTextColor="@color/toolbar_text_color"/>
-	</android.support.design.widget.AppBarLayout>
-
-	<android.support.v7.widget.RecyclerView
-		android:id="@+id/rv_my_wishes"
+	<LinearLayout
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
-		app:layout_behavior="@string/appbar_scrolling_view_behavior">
+		android:background="#FFF"
+		android:clickable="true"
+		android:orientation="vertical"
+		tools:context="com.iec.dwx.timer.Fragments.MyWishesFragment">
 
-	</android.support.v7.widget.RecyclerView>
+		<!-- TODO: Update blank fragment layout -->
+		<android.support.design.widget.AppBarLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content">
+
+			<android.support.v7.widget.Toolbar
+				android:id="@+id/toolbar_my_wishes"
+				android:layout_width="match_parent"
+				android:layout_height="?actionBarSize"
+				app:layout_scrollFlags="scroll|enterAlways"
+				app:navigationIcon="@drawable/ic_arrow_back_black_24dp"
+				app:subtitle="@string/menu_time_wish"
+				app:subtitleTextColor="@color/toolbar_text_color"/>
+
+			<View
+				android:layout_width="match_parent"
+				android:layout_height="0.1dp"
+				android:background="@color/common_black"/>
+		</android.support.design.widget.AppBarLayout>
+
+		<FrameLayout
+			android:layout_width="match_parent"
+			android:layout_height="match_parent">
+
+			<android.support.v7.widget.RecyclerView
+				android:id="@+id/rv_my_wishes"
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				>
+
+			</android.support.v7.widget.RecyclerView>
 
 
-	<include
+		</FrameLayout>
+	</LinearLayout>
+
+	<FrameLayout
 		android:id="@+id/add_view"
-		layout="@layout/fragment_my_wishes_add_view"
-		android:layout_width="280dp"
-		android:layout_height="wrap_content"
-		android:layout_gravity="center"
-		/>
-</android.support.design.widget.CoordinatorLayout>
+		xmlns:android="http://schemas.android.com/apk/res/android"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:background="@color/black_overlay">
+
+		<android.support.v7.widget.CardView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_gravity="center">
+
+			<LinearLayout
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:background="@drawable/fragment_my_wishes_add_view_style"
+				android:orientation="vertical"
+				android:paddingBottom="16dp"
+				android:paddingLeft="24dp"
+				android:paddingRight="24dp"
+				android:paddingTop="24dp">
+
+				<EditText
+					android:id="@+id/my_wishes_add_editText"
+					android:layout_width="match_parent"
+					android:layout_height="150dp"
+					android:background="#FFF"
+					android:gravity="left"
+					android:hint="@string/my_wishes_edit_hint"/>
+
+				<LinearLayout
+					style="@android:style/ButtonBar"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:background="#fff"
+					android:focusable="true"
+					android:gravity="end"
+					android:orientation="horizontal">
+
+					<Button
+						android:id="@+id/my_wishes_add_btn_cencel"
+						android:layout_width="0dp"
+						android:layout_height="36dp"
+						android:layout_weight="1"
+						android:background="?android:attr/selectableItemBackground"
+						android:text="@string/my_wish_add_view_cancel_btn"
+						android:textColor="@color/common_black"/>
+
+					<Button
+						android:id="@+id/my_wishes_add_btn_sure"
+						android:layout_width="0dp"
+						android:layout_height="36dp"
+						android:layout_weight="1"
+						android:background="?android:attr/selectableItemBackground"
+						android:text="@string/my_wish_add_view_sure_btn"
+						android:textColor="@color/common_black"/>
+				</LinearLayout>
+			</LinearLayout>
+		</android.support.v7.widget.CardView>
+	</FrameLayout>
+</FrameLayout>

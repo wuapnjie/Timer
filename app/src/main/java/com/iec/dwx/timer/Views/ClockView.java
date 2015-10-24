@@ -12,6 +12,7 @@ import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
+import android.os.Message;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
@@ -20,6 +21,7 @@ import android.view.animation.AccelerateInterpolator;
 
 import com.iec.dwx.timer.R;
 
+import java.lang.ref.WeakReference;
 import java.util.Calendar;
 import java.util.TimeZone;
 
@@ -39,22 +41,23 @@ public class ClockView extends View {
 
     private int mMinute;
     private int mHour;
+    private int mSecond;
 
     private Drawable mDial;
     private Drawable mInnerCircle;
-    private Drawable mOuterCircle;
     private Drawable mPointHour;
     private Drawable mPointMinute;
+    private Drawable mPointSecond;
 
     private int mWidth;
     private int mHeight;
 
-    private final Handler mHandler = new Handler();
 
     private boolean mAttached;
 
     private float mScale = 2;
 
+    private ClockHandler mHandler;
     //监听时间变化的广播接收者，时间改变，改变时钟指针
     private final BroadcastReceiver mIntentReceiver = new BroadcastReceiver() {
         @Override
@@ -70,6 +73,7 @@ public class ClockView extends View {
             mCalendar = Calendar.getInstance();
             mHour = mCalendar.get(Calendar.HOUR);
             mMinute = mCalendar.get(Calendar.MINUTE);
+            mSecond = mCalendar.get(Calendar.SECOND);
             invalidate();
         }
     };
@@ -103,10 +107,18 @@ public class ClockView extends View {
 
     private void startPointAnim() {
         Animator minuteAnim = ObjectAnimator.ofInt(this, "minute", 0, mCalendar.get(Calendar.MINUTE)).setDuration(800);
-        Animator hourAnim = ObjectAnimator.ofInt(this, "hour", 0, mCalendar.get(Calendar.HOUR)).setDuration(600);
+        Animator hourAnim = ObjectAnimator.ofInt(this, "hour", 0, mCalendar.get(Calendar.HOUR)).setDuration(800);
+        Animator secondAnim = ObjectAnimator.ofInt(this, "second", 0, mCalendar.get(Calendar.SECOND)).setDuration(800);
         AnimatorSet set = new AnimatorSet();
-        set.playTogether(minuteAnim, hourAnim);
+        set.playTogether(minuteAnim, hourAnim, secondAnim);
         set.setInterpolator(new AccelerateInterpolator());
+        set.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                refreshSecond();
+            }
+        });
         set.start();
     }
 
@@ -121,11 +133,13 @@ public class ClockView extends View {
         final Resources res = context.getResources();
         mDial = res.getDrawable(R.drawable.dial);
         mInnerCircle = res.getDrawable(R.drawable.inner_circle);
-        mOuterCircle = res.getDrawable(R.drawable.outer_circle);
         mPointHour = res.getDrawable(R.drawable.point_hour);
         mPointMinute = res.getDrawable(R.drawable.point_minute);
+        mPointSecond = res.getDrawable(R.drawable.point_second);
 
         mCalendar = Calendar.getInstance();
+
+        mHandler = new ClockHandler(this);
     }
 
     @Override
@@ -173,12 +187,27 @@ public class ClockView extends View {
             drawDial(canvas);
         } else if (mState == STATE_OUTER_ANIM) {
             drawDial(canvas);
-            drawOuterCircle(canvas);
             drawPointHour(canvas);
             drawPointMinute(canvas);
+            drawPointSecond(canvas);
             drawInnerCircle(canvas);
         }
     }
+
+
+    private void drawPointSecond(Canvas canvas) {
+        final Drawable second = mPointSecond;
+        int w = second.getIntrinsicWidth();
+        int h = second.getIntrinsicHeight();
+        second.setBounds((mWidth - w) / 2, (mHeight - h) / 2, (mWidth + w) / 2, (mHeight + h) / 2);
+
+        canvas.save();
+//        Log.d(TAG, "mSecond->" + mSecond);
+        canvas.rotate(mSecond / 60.0f * 360.0f, mWidth / 2, mHeight / 2);
+        second.draw(canvas);
+        canvas.restore();
+    }
+
 
     private void drawPointMinute(Canvas canvas) {
         final Drawable minute = mPointMinute;
@@ -201,7 +230,7 @@ public class ClockView extends View {
         hour.setBounds((mWidth - w) / 2, (mHeight - h) / 2, (mWidth + w) / 2, (mHeight + h) / 2);
 
         canvas.save();
-        canvas.rotate(mHour / 12.0f * 360.0f - 90f, mWidth / 2, mHeight / 2);
+        canvas.rotate(mHour / 12.0f * 360.0f, mWidth / 2, mHeight / 2);
         hour.draw(canvas);
         canvas.restore();
     }
@@ -213,15 +242,6 @@ public class ClockView extends View {
 //        Log.d(TAG, "inner:" + "width->" + w + ",height->" + h);
         inner.setBounds((mWidth - w) / 2, (mHeight - h) / 2, (mWidth + w) / 2, (mHeight + h) / 2);
         inner.draw(canvas);
-    }
-
-    private void drawOuterCircle(Canvas canvas) {
-        final Drawable outer = mOuterCircle;
-        int w = outer.getIntrinsicWidth();
-        int h = outer.getIntrinsicHeight();
-//        Log.d(TAG, "outer:" + "width->" + w + ",height->" + h);
-        outer.setBounds((mWidth - w) / 2, (mHeight - h) / 2, (mWidth + w) / 2, (mHeight + h) / 2);
-        outer.draw(canvas);
     }
 
     private void drawDial(Canvas canvas) {
@@ -248,5 +268,34 @@ public class ClockView extends View {
     public void setMinute(int minute) {
         mMinute = minute;
         invalidate();
+    }
+
+    public void setSecond(int second) {
+        mSecond = second;
+        invalidate();
+    }
+
+    private void refreshSecond() {
+        mHandler.sendEmptyMessageDelayed(0, 1000);
+        mCalendar = Calendar.getInstance();
+        mHour = mCalendar.get(Calendar.HOUR);
+        mMinute = mCalendar.get(Calendar.MINUTE);
+        mSecond = mCalendar.get(Calendar.SECOND);
+        invalidate();
+    }
+
+    private static class ClockHandler extends Handler {
+        private WeakReference<ClockView> mClockViewWeakReference;
+
+        public ClockHandler(ClockView clockView) {
+            mClockViewWeakReference = new WeakReference<>(clockView);
+        }
+
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            if (mClockViewWeakReference.get() != null)
+                mClockViewWeakReference.get().refreshSecond();
+        }
     }
 }

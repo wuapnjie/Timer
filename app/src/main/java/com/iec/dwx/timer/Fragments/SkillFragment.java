@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -17,11 +18,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.iec.dwx.timer.Activities.MainActivity;
 import com.iec.dwx.timer.Beans.CommonBean;
 import com.iec.dwx.timer.Beans.SkillBean;
 import com.iec.dwx.timer.R;
 import com.iec.dwx.timer.Utils.DBHelper;
 import com.iec.dwx.timer.Utils.ScreenSizeUtils;
+import com.iec.dwx.timer.Utils.Utils;
 import com.iec.dwx.timer.Views.ViewDragHelperLayout;
 
 import java.util.ArrayList;
@@ -29,7 +32,7 @@ import java.util.List;
 
 public class SkillFragment extends Fragment implements Toolbar.OnMenuItemClickListener {
     private List<TextView> viewList = new ArrayList<TextView>();
-    private LinearLayout addView = null;
+    private FrameLayout addView = null;
     private ViewDragHelperLayout viewDragHelperLayout = null;
     private InputMethodManager imm = null;
     private Thread td = null;
@@ -53,7 +56,7 @@ public class SkillFragment extends Fragment implements Toolbar.OnMenuItemClickLi
                              Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.fragment_skill, container, false);
-        addView = (LinearLayout) rootView.findViewById(R.id.my_skill_add_view);
+        addView = (FrameLayout) rootView.findViewById(R.id.my_skill_add_view);
         addView.setVisibility(View.GONE);
         viewDragHelperLayout = (ViewDragHelperLayout) rootView.findViewById(R.id.fragment_my_skill_viewDragHelperLayout);
         return rootView;
@@ -72,7 +75,8 @@ public class SkillFragment extends Fragment implements Toolbar.OnMenuItemClickLi
                 (EditText) getView().findViewById(R.id.my_skill_add_editText)));
 
         List<CommonBean> Data = DBHelper.getInstance(getContext()).getAllBeans(DBHelper.DB_TABLE_SKILL);
-        TextView textView = null;
+
+        TextView textView;
         for (CommonBean commonBean : Data) {
             textView = getTextView(commonBean, commonBean.getID());
             viewList.add(textView);
@@ -84,6 +88,9 @@ public class SkillFragment extends Fragment implements Toolbar.OnMenuItemClickLi
     @Override
     public void onResume() {
         super.onResume();
+
+        //取消滑动返回
+        ((MainActivity)getActivity()).getSwipeBackLayout().setEdgeSize(0);
     }
 
     private TextView getTextView(CommonBean commonBean, int id) {
@@ -120,7 +127,7 @@ public class SkillFragment extends Fragment implements Toolbar.OnMenuItemClickLi
             case R.id.menu_my_skill_add:
                 addView.setVisibility(View.VISIBLE);
                 imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,InputMethodManager.RESULT_HIDDEN);
-                viewDragHelperLayout.setBackgroundResource(R.color.black_overlay);
+//                viewDragHelperLayout.setBackgroundResource(R.color.black_overlay);
                 break;
         }
         return false;
@@ -139,7 +146,7 @@ public class SkillFragment extends Fragment implements Toolbar.OnMenuItemClickLi
     private void onAddButtonCancelOnClicked(EditText editText) {
         editText.setText("");
         addView.setVisibility(View.GONE);
-        viewDragHelperLayout.setBackgroundColor(000);
+//        viewDragHelperLayout.setBackgroundColor(Color.parseColor("#000000"));
         imm.hideSoftInputFromWindow(editText.getWindowToken(),0);
         System.out.println("取消保存");
     }
@@ -156,13 +163,13 @@ public class SkillFragment extends Fragment implements Toolbar.OnMenuItemClickLi
         skillBean.setMarginTop(margintop);
         editText.setText("");
 
-        imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+        imm.hideSoftInputFromWindow(editText.getWindowToken(),0);
 
         int id = DBHelper.getInstance(getContext()).addBeanToDatabase(DBHelper.DB_TABLE_SKILL, skillBean);
 
         addView.setVisibility(View.GONE);
-        viewDragHelperLayout.setBackgroundColor(000);
-        viewDragHelperLayout.addView(getTextView((CommonBean) skillBean, id));
+        //viewDragHelperLayout.setBackgroundColor(Color.parseColor("#000000"));
+        viewDragHelperLayout.addView(getTextView(skillBean, id));
 
         Toast.makeText(getContext(), "成功保存", Toast.LENGTH_SHORT).show();
     }

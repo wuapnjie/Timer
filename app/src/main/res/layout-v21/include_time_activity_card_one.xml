@@ -23,7 +23,8 @@
 		android:layout_weight="1"
 		android:orientation="vertical">
 
-		<TextSwitcher
+		<TextView
+			android:textColor="@color/common_black"
 			android:id="@+id/tv_card_one_head"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
@@ -36,6 +37,7 @@
 			android:layout_height="20dp"/>
 
 		<TextView
+			android:textColor="@color/common_black"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:paddingLeft="@dimen/card_subhead_padding_left"
@@ -55,6 +57,7 @@
 			android:orientation="vertical">
 
 			<TextView
+				android:textColor="@color/common_black"
 				android:id="@+id/tv_card_one_cell_1"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
@@ -69,6 +72,7 @@
 				android:background="@color/common_black"/>
 
 			<TextView
+				android:textColor="@color/common_black"
 				android:id="@+id/tv_card_one_cell_2"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
@@ -83,6 +87,7 @@
 				android:background="@color/common_black"/>
 
 			<TextView
+				android:textColor="@color/common_black"
 				android:id="@+id/tv_card_one_cell_3"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
@@ -97,6 +102,7 @@
 				android:background="@color/common_black"/>
 
 			<TextView
+				android:textColor="@color/common_black"
 				android:id="@+id/tv_card_one_cell_4"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"

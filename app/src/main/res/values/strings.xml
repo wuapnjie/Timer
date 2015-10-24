@@ -1,5 +1,5 @@
 <resources>
-	<string name="app_name">Timer</string>
+	<string name="app_name">Time</string>
 
 	<!-- TODO: Remove or change this placeholder text -->
 	<string name="hello_blank_fragment">Hello blank fragment</string>
@@ -55,9 +55,14 @@
 	<string name="menu_achievement_add">添加成就</string>
 	<string name="menu_achievement_play">展示成就</string>
 
+	<string name="menu_edit_achievement_ok">确认</string>
+
+	<string name="menu_my_skill_add">添加技能</string>
+
 	<string name="popup_window_btn_share">分享</string>
 	<string name="popup_widow_btn_delete">删除</string>
 
+	<string name="about_us">\t\t\t\t\t\t我们是一群仍在热情学习Android开发的小白开发者们，我们仍会对这个App进行优化升级，敬请期待！若有任何意见，请发送至475384637@qq.com。</string>
 
 
 

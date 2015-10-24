@@ -3,9 +3,6 @@ package com.iec.dwx.timer.Fragments;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.DashPathEffect;
-import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -20,10 +17,11 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
+import android.widget.FrameLayout;
 import android.widget.PopupWindow;
 import android.widget.Toast;
 
+import com.iec.dwx.timer.Activities.MainActivity;
 import com.iec.dwx.timer.Activities.MyWishDetails;
 import com.iec.dwx.timer.Activities.OtherWishes;
 import com.iec.dwx.timer.Adapters.MyWishesAdapter;
@@ -32,7 +30,6 @@ import com.iec.dwx.timer.Beans.WishBean;
 import com.iec.dwx.timer.R;
 import com.iec.dwx.timer.Utils.DBHelper;
 import com.iec.dwx.timer.Utils.Utils;
-import com.yqritc.recyclerviewflexibledivider.HorizontalDividerItemDecoration;
 
 import java.util.Date;
 import java.util.List;
@@ -46,7 +43,7 @@ public class MyWishesFragment extends Fragment implements Toolbar.OnMenuItemClic
 
     private MyWishesAdapter mAdapter = null;
     private RecyclerView.LayoutManager mManager = null;
-    private LinearLayout add_view = null;
+    private FrameLayout add_view = null;
     private RecyclerView recyclerView = null;
     private PopupWindow mPopupWindow;
     private InputMethodManager imm = null;
@@ -74,7 +71,7 @@ public class MyWishesFragment extends Fragment implements Toolbar.OnMenuItemClic
                              Bundle savedInstanceState) {
         View rootview = inflater.inflate(R.layout.fragment_my_wishes, container, false);
         recyclerView = (RecyclerView) rootview.findViewById(R.id.rv_my_wishes);
-        add_view = (LinearLayout) rootview.findViewById(R.id.add_view);
+        add_view = (FrameLayout) rootview.findViewById(R.id.add_view);
         add_view.setVisibility(View.GONE);
 
         mManager = new LinearLayoutManager(getActivity());
@@ -121,6 +118,8 @@ public class MyWishesFragment extends Fragment implements Toolbar.OnMenuItemClic
     @Override
     public void onResume() {
         refreshData();
+        //设置滑动返回
+        ((MainActivity)getActivity()).getSwipeBackLayout().setEdgeSize(Utils.dp2px(200));
         super.onResume();
     }
 
@@ -160,6 +159,8 @@ public class MyWishesFragment extends Fragment implements Toolbar.OnMenuItemClic
             @Override
             public void onClick(View v) {
                 addDataToDataBase(editText);
+                //隐藏键盘
+                imm.hideSoftInputFromInputMethod(v.getWindowToken(), 0);
             }
         });
         //新建取消按钮
@@ -167,11 +168,11 @@ public class MyWishesFragment extends Fragment implements Toolbar.OnMenuItemClic
             @Override
             public void onClick(View v) {
                 add_view.setVisibility(View.GONE);
-                recyclerView.setBackgroundColor(000);
+//                recyclerView.setBackgroundColor(000);
                 (editText).setText("");
                 Toast.makeText(getContext(), "已取消", Toast.LENGTH_SHORT).show();
                 //隐藏键盘
-                imm.hideSoftInputFromInputMethod((editText).getWindowToken(), 0);
+                imm.hideSoftInputFromInputMethod(v.getWindowToken(), 0);
             }
         });
     }
@@ -253,9 +254,9 @@ public class MyWishesFragment extends Fragment implements Toolbar.OnMenuItemClic
         DBHelper.getInstance(getActivity()).addBeanToDatabase(DBHelper.DB_TABLE_WISH, wishBean);
 
             add_view.setVisibility(View.GONE);
-            recyclerView.setBackgroundColor(000);
+//            recyclerView.setBackgroundColor(000);
         //隐藏键盘
-        imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+        imm.hideSoftInputFromInputMethod(editText.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
         list = DBHelper.getInstance(getContext()).getAllBeans(DBHelper.DB_TABLE_WISH);
         mAdapter = new MyWishesAdapter(list,getContext());
         mAdapter.setOnItemClickListener(new MyWishesAdapter.OnRecyclerViewItemClickListener() {
@@ -286,7 +287,9 @@ public class MyWishesFragment extends Fragment implements Toolbar.OnMenuItemClic
                 break;
             case R.id.menu_my_wishes_add:
                 add_view.setVisibility(View.VISIBLE);
-                recyclerView.setBackgroundResource(R.color.black_overlay);
+                add_view.setClickable(true);
+                imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.RESULT_HIDDEN);
+//                recyclerView.setBackgroundResource(R.color.black_overlay);
         }
         return false;
     }

@@ -13,6 +13,7 @@ import com.iec.dwx.timer.Fragments.MyWishesFragment;
 import com.iec.dwx.timer.Fragments.OtherWishesFragment;
 import com.iec.dwx.timer.Fragments.SkillFragment;
 import com.iec.dwx.timer.R;
+import com.iec.dwx.timer.Utils.Utils;
 
 import butterknife.Bind;
 import me.imid.swipebacklayout.lib.SwipeBackLayout;
@@ -41,6 +42,27 @@ public class MainActivity extends BaseActivity implements SwipeBackLayout.SwipeL
 
         PageAdapter adapter = new PageAdapter(getSupportFragmentManager());
         mViewPager.setAdapter(adapter);
+
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                Log.d(TAG,"position->"+position);
+                if (position==0){
+                    getSwipeBackLayout().setEdgeSize(Utils.dp2px(200));
+                }else {
+                    getSwipeBackLayout().setEdgeSize(0);
+                }
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
 //        mViewPager.setPageTransformer(false, new PageTransformer());
     }
 
