@@ -14,7 +14,6 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -81,7 +80,7 @@ public class MyWishesFragment extends Fragment implements Toolbar.OnMenuItemClic
         recyclerView.setLayoutManager(mManager);
 
         list = DBHelper.getInstance(getContext()).getAllBeans(DBHelper.DB_TABLE_WISH);
-        mAdapter = new MyWishesAdapter(list,getContext());
+        mAdapter = new MyWishesAdapter(list, getContext());
         mAdapter.setOnItemClickListener(new MyWishesAdapter.OnRecyclerViewItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
@@ -109,7 +108,8 @@ public class MyWishesFragment extends Fragment implements Toolbar.OnMenuItemClic
         super.onViewCreated(view, savedInstanceState);
         registerListener();
 
-        if (getView()!=null)  mEditText = (EditText) getView().findViewById(R.id.my_wishes_add_editText);
+        if (getView() != null)
+            mEditText = (EditText) getView().findViewById(R.id.my_wishes_add_editText);
         //初始化PopupWindow
         Observable.just(R.layout.my_wishes_popup_view)
                 .map(integer -> LayoutInflater.from(getActivity()).inflate(integer, null))
@@ -123,16 +123,16 @@ public class MyWishesFragment extends Fragment implements Toolbar.OnMenuItemClic
     public void onResume() {
         refreshData();
         //设置滑动返回
-        ((MainActivity)getActivity()).getSwipeBackLayout().setEdgeSize(Utils.dp2px(200));
+        ((MainActivity) getActivity()).getSwipeBackLayout().setEdgeSize(Utils.dp2px(200));
         super.onResume();
     }
 
-    public void registerListener(){
+    public void registerListener() {
         if (getView() == null) return;
         ((Toolbar) getView().findViewById(R.id.toolbar_my_wishes)).inflateMenu(R.menu.menu_my_wishes);
         ((Toolbar) getView().findViewById(R.id.toolbar_my_wishes)).setOnMenuItemClickListener(this);
         ((Toolbar) getView().findViewById(R.id.toolbar_my_wishes)).setNavigationOnClickListener(v -> getActivity().onBackPressed());
-        
+
         EditText editText = (EditText) getView().findViewById(R.id.my_wishes_add_editText);
 
         recyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -164,7 +164,7 @@ public class MyWishesFragment extends Fragment implements Toolbar.OnMenuItemClic
             public void onClick(View v) {
                 addDataToDataBase(editText);
                 //隐藏键盘
-                imm.hideSoftInputFromInputMethod(v.getWindowToken(), 0);
+                imm.hideSoftInputFromInputMethod(editText.getWindowToken(), 0);
             }
         });
         //新建取消按钮
@@ -176,7 +176,7 @@ public class MyWishesFragment extends Fragment implements Toolbar.OnMenuItemClic
                 (editText).setText("");
                 Toast.makeText(getContext(), "已取消", Toast.LENGTH_SHORT).show();
                 //隐藏键盘
-                imm.hideSoftInputFromInputMethod(v.getWindowToken(), 0);
+                imm.hideSoftInputFromInputMethod(editText.getWindowToken(), 0);
             }
         });
     }
@@ -225,8 +225,18 @@ public class MyWishesFragment extends Fragment implements Toolbar.OnMenuItemClic
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(commonBeans -> {
+                    if (commonBeans == null || commonBeans.size() == 0) {
+                        WishBean bean = new WishBean();
+                        bean.setContent("快来许下你第一个心愿\n----致亲爱的你");
+                        bean.setTime(Utils.formatTime(new Date()));
+                        bean.setPicture("null");
+                        DBHelper.getInstance(getActivity()).addBeanToDatabase(DBHelper.DB_TABLE_WISH, bean);
+                        if (commonBeans != null)
+                            commonBeans.add(bean);
+                    }
                     mAdapter.obtainData(commonBeans);
                 });
+
     }
 
     /**
@@ -243,44 +253,45 @@ public class MyWishesFragment extends Fragment implements Toolbar.OnMenuItemClic
 
         cancelSelectedShader(mSelectedPosition);
 
+        refreshData();
+
         mSelectedPosition = SELECTED_NONE;
     }
 
     //增加新数据的操作
     private void addDataToDataBase(EditText editText) {
-        if(!editText.getText().toString().equals("")){
-        WishBean wishBean = new WishBean();
-        wishBean.setContent(editText.getText().toString());
-        editText.setText("");
-        wishBean.setPicture(0 + "");
-        wishBean.setTime(Utils.wishFormatTime(new Date(System.currentTimeMillis())));
+        if (!editText.getText().toString().equals("")) {
+            WishBean wishBean = new WishBean();
+            wishBean.setContent(editText.getText().toString());
+            editText.setText("");
+            wishBean.setPicture(0 + "");
+            wishBean.setTime(Utils.wishFormatTime(new Date(System.currentTimeMillis())));
 
-        DBHelper.getInstance(getActivity()).addBeanToDatabase(DBHelper.DB_TABLE_WISH, wishBean);
+            DBHelper.getInstance(getActivity()).addBeanToDatabase(DBHelper.DB_TABLE_WISH, wishBean);
 
             add_view.setVisibility(View.GONE);
 //            recyclerView.setBackgroundColor(000);
-        //隐藏键盘
-        imm.hideSoftInputFromInputMethod(editText.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-        list = DBHelper.getInstance(getContext()).getAllBeans(DBHelper.DB_TABLE_WISH);
-        mAdapter = new MyWishesAdapter(list,getContext());
-        mAdapter.setOnItemClickListener(new MyWishesAdapter.OnRecyclerViewItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                System.out.println("itemClick" + position);
-                Intent intent = new Intent(getActivity(), MyWishDetails.class);
-                intent.putExtra("ClickPosition", position);
-                startActivity(intent);
-            }
-        });
+            //隐藏键盘
+            imm.hideSoftInputFromInputMethod(editText.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+            list = DBHelper.getInstance(getContext()).getAllBeans(DBHelper.DB_TABLE_WISH);
+            mAdapter = new MyWishesAdapter(list, getContext());
+            mAdapter.setOnItemClickListener(new MyWishesAdapter.OnRecyclerViewItemClickListener() {
+                @Override
+                public void onItemClick(View view, int position) {
+                    System.out.println("itemClick" + position);
+                    Intent intent = new Intent(getActivity(), MyWishDetails.class);
+                    intent.putExtra("ClickPosition", position);
+                    startActivity(intent);
+                }
+            });
 
-        recyclerView.setAdapter(mAdapter);
-        Toast.makeText(getContext(), "已保存", Toast.LENGTH_SHORT).show();
-        return;
+            recyclerView.setAdapter(mAdapter);
+            Toast.makeText(getContext(), "已保存", Toast.LENGTH_SHORT).show();
+            return;
         }
 
         Toast.makeText(getContext(), "保存内容不能为空", Toast.LENGTH_SHORT).show();
     }
-
 
 
     @Override
@@ -292,7 +303,7 @@ public class MyWishesFragment extends Fragment implements Toolbar.OnMenuItemClic
             case R.id.menu_my_wishes_add:
                 add_view.setVisibility(View.VISIBLE);
                 add_view.setClickable(true);
-                if(mEditText!=null&&mEditText.requestFocus()) {
+                if (mEditText != null && mEditText.requestFocus()) {
                     imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.RESULT_HIDDEN);
                 }
 //                add_view.requestFocus();

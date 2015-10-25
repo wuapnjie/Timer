@@ -27,7 +27,7 @@ public class StartActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
         try {
-            mGifDrawable = new GifDrawable(getResources(), R.drawable.running_clock);
+            mGifDrawable = new GifDrawable(getResources(), R.drawable.time_animated);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -36,11 +36,8 @@ public class StartActivity extends AppCompatActivity {
         (new Handler()).postDelayed(() -> {
             startActivity(new Intent(this, TimeActivity.class));
             finish();
-        }, 2000);
+        }, 2500);
 
-        Log.d(TAG, "wishes' size->" + DBHelper.getInstance(this).getAllBeans(DBHelper.DB_TABLE_WISH).size());
-        Log.d(TAG, "achievement' size->"+DBHelper.getInstance(this).getAllBeans(DBHelper.DB_TABLE_ACHIEVEMENT).size());
-        Log.d(TAG, "skills' size->"+DBHelper.getInstance(this).getAllBeans(DBHelper.DB_TABLE_SKILL).size());
     }
 
 }

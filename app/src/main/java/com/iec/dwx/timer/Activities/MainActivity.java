@@ -7,10 +7,8 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 
-import com.iec.dwx.timer.Animate.PageTransformer;
 import com.iec.dwx.timer.Fragments.AchievementFragment;
 import com.iec.dwx.timer.Fragments.MyWishesFragment;
-import com.iec.dwx.timer.Fragments.OtherWishesFragment;
 import com.iec.dwx.timer.Fragments.SkillFragment;
 import com.iec.dwx.timer.R;
 import com.iec.dwx.timer.Utils.Utils;
@@ -46,7 +44,6 @@ public class MainActivity extends BaseActivity implements SwipeBackLayout.SwipeL
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                Log.d(TAG,"position->"+position);
                 if (position==0){
                     getSwipeBackLayout().setEdgeSize(Utils.dp2px(200));
                 }else {
@@ -79,12 +76,10 @@ public class MainActivity extends BaseActivity implements SwipeBackLayout.SwipeL
 
     @Override
     public void onScrollStateChange(int state, float scrollPercent) {
-        Log.d(TAG, "state->" + state + "||scrollPercent->" + scrollPercent);
     }
 
     @Override
     public void onEdgeTouch(int edgeFlag) {
-        Log.d(TAG, "edgeFlag->" + edgeFlag);
     }
 
     @Override

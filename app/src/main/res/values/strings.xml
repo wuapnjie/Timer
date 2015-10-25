@@ -4,7 +4,7 @@
 	<!-- TODO: Remove or change this placeholder text -->
 	<string name="hello_blank_fragment">Hello blank fragment</string>
 
-	<string name="card_one_head">你进入校园已经  %s  天了</string>
+	<string name="card_one_head">你进入校园  %s  天了</string>
 	<string name="card_one_subhead">在这个校园，你度过啦</string>
 	<string name="card_one_btn">离  别</string>
 
@@ -58,41 +58,21 @@
 	<string name="menu_edit_achievement_ok">确认</string>
 
 	<string name="menu_my_skill_add">添加技能</string>
+	<string name="menu_my_wish_add">添加心愿</string>
+	<string name="menu_cloud_wish">云上的心愿</string>
 
 	<string name="popup_window_btn_share">分享</string>
 	<string name="popup_widow_btn_delete">删除</string>
 
 	<string name="about_us">我们是一群仍在热情学习Android开发的小白开发者们，我们仍会对这个App进行优化升级，敬请期待！若有任何意见，请发送至475384637@qq.com。</string>
 
+	<string name="achievement_empty_text">你的成就列表空空如也\n赶紧点击右上方添加按钮添加你所获的成就吧！</string>
 
+	<string name="skill_empty_text">你的技能列表空空如也\n赶紧点击右上方添加按钮添加你所获的成就吧！</string>
 
 	<item type="id" name="tag_zero">0</item>
 	<item type="id" name="tag_first">1</item>
 	<item type="id" name="tag_second">2</item>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 </resources>

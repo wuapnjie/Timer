@@ -6,6 +6,6 @@
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
 	android:scaleType="centerInside"
-	android:background="#FFFFFF"
+	android:background="#F4F5F5"
 	tools:context="com.iec.dwx.timer.Activities.StartActivity">
 </ImageView>

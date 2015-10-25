@@ -20,14 +20,36 @@
 			app:subtitleTextColor="@color/toolbar_text_color"
 			app:layout_scrollFlags="scroll|enterAlways"
 			app:subtitle="@string/menu_time_achievement"/>
+		<View
+			android:layout_width="match_parent"
+			android:layout_height="0.1dp"
+			android:background="@color/common_black"/>
 	</android.support.design.widget.AppBarLayout>
 
-	<android.support.v7.widget.RecyclerView
-		android:id="@+id/rv_achievement"
+	<FrameLayout
 		android:layout_width="match_parent"
-		android:layout_height="match_parent"
-		>
+		android:layout_height="match_parent">
 
+		<android.support.v7.widget.RecyclerView
+			android:id="@+id/rv_achievement"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			/>
 
-	</android.support.v7.widget.RecyclerView>
+		<LinearLayout
+			android:id="@+id/achievement_empty_container"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:orientation="vertical">
+			<TextView
+				android:gravity="center"
+				android:layout_marginTop="56dp"
+				android:text="@string/achievement_empty_text"
+				android:textSize="20sp"
+				android:padding="4dp"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"/>
+		</LinearLayout>
+
+	</FrameLayout>
 </LinearLayout>

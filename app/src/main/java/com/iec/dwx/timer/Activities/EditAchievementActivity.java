@@ -119,6 +119,7 @@ public class EditAchievementActivity extends BaseActivity {
         System.out.println(mPath);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(file));
         startActivityForResult(intent, REQUEST_CAPTURE);
+        overridePendingTransition(R.anim.activity_time_enter, R.anim.activity_time_exit);
     }
 
     private void showPickOrTake() {
@@ -203,8 +204,14 @@ public class EditAchievementActivity extends BaseActivity {
         } else {
             mPath = imageUri.getPath();
         }
-        Log.d(TAG, "mPath->" + mPath);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(new File(mPath)));
         startActivityForResult(intent, REQUEST_CROP);
+        overridePendingTransition(R.anim.activity_time_enter, R.anim.activity_time_exit);
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.activity_time_enter, R.anim.activity_time_exit);
     }
 }

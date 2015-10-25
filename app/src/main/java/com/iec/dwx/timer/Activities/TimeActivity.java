@@ -219,7 +219,7 @@ public class TimeActivity extends AppCompatActivity implements Toolbar.OnMenuIte
             case MotionEvent.ACTION_UP:
                 end = event.getX();
                 Log.d(TAG, "end->" + end);
-                if ((mStart - end) > Utils.dp2px(100)) {
+                if ((mStart - end) > Utils.dp2px(60)) {
                     startActivity(new Intent(this, MainActivity.class));
                     overridePendingTransition(R.anim.activity_time_enter,R.anim.activity_time_exit);
                 }

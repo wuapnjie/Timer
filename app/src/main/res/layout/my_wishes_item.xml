@@ -20,15 +20,15 @@
 		<TextView
 			android:id="@+id/my_wishes_text"
 			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:maxLines="1"
+			android:layout_height="0dp"
+			android:layout_weight="1"
 			android:paddingBottom="8dp"
 			android:paddingLeft="16dp"
 			android:paddingRight="8dp"
 			android:paddingTop="8dp"
 			android:text="Preview"
 			android:textColor="@color/common_black"
-			android:textSize="24dp"/>
+			android:textSize="18dp"/>
 
 		<LinearLayout
 			android:gravity="right"

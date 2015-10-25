@@ -7,7 +7,7 @@
     <integer name="card_flip_full_time">300</integer>
     <integer name="card_flip_half_time">150</integer>
 
-    <dimen name="card_head_size">20sp</dimen>
+    <dimen name="card_head_size">18sp</dimen>
     <dimen name="card_subhead_size">16sp</dimen>
     <dimen name="card_margin">16dp</dimen>
     <dimen name="card_subhead_padding_left">32dp</dimen>

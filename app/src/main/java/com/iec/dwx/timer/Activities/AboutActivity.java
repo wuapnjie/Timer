@@ -23,7 +23,7 @@ public class AboutActivity extends BaseActivity {
         ((Toolbar)findViewById(R.id.toolbar_about)).setNavigationOnClickListener(v -> finish());
 
         try {
-            mGifDrawable = new GifDrawable(getResources(),R.drawable.time_animated);
+            mGifDrawable = new GifDrawable(getResources(),R.drawable.running_clock);
             ((ImageView)findViewById(R.id.iv_about_us)).setImageDrawable(mGifDrawable);
         } catch (IOException e) {
             e.printStackTrace();

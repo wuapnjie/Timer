@@ -4,12 +4,12 @@
               android:layout_height="wrap_content"
               android:orientation="vertical">
 
-	<Button
-		android:id="@+id/btn_popup_share"
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:background="#FFFFFF"
-		android:text="@string/popup_window_btn_share"/>
+	<!--<Button-->
+		<!--android:id="@+id/btn_popup_share"-->
+		<!--android:layout_width="match_parent"-->
+		<!--android:layout_height="wrap_content"-->
+		<!--android:background="#FFFFFF"-->
+		<!--android:text="@string/popup_window_btn_share"/>-->
 
 	<Button
 		android:id="@+id/btn_popup_delete"

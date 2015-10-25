@@ -32,12 +32,32 @@
 				android:background="@color/common_black"/>
 		</android.support.design.widget.AppBarLayout>
 
-		<com.iec.dwx.timer.Views.ViewDragHelperLayout
-			android:id="@+id/fragment_my_skill_viewDragHelperLayout"
+		<FrameLayout
 			android:layout_width="match_parent"
-			android:layout_height="match_parent"
-			>
-		</com.iec.dwx.timer.Views.ViewDragHelperLayout>
+			android:layout_height="match_parent">
+
+			<com.iec.dwx.timer.Views.ViewDragHelperLayout
+				android:id="@+id/fragment_my_skill_viewDragHelperLayout"
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				/>
+
+			<LinearLayout
+				android:id="@+id/skill_empty_container"
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:orientation="vertical">
+
+				<TextView
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_marginTop="56dp"
+					android:gravity="center"
+					android:padding="4dp"
+					android:text="@string/skill_empty_text"
+					android:textSize="20sp"/>
+			</LinearLayout>
+		</FrameLayout>
 	</LinearLayout>
 
 	<FrameLayout

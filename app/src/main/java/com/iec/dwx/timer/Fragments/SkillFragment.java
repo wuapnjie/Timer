@@ -5,7 +5,6 @@ import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -14,7 +13,6 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,7 +22,6 @@ import com.iec.dwx.timer.Beans.SkillBean;
 import com.iec.dwx.timer.R;
 import com.iec.dwx.timer.Utils.DBHelper;
 import com.iec.dwx.timer.Utils.ScreenSizeUtils;
-import com.iec.dwx.timer.Utils.Utils;
 import com.iec.dwx.timer.Views.ViewDragHelperLayout;
 
 import java.util.ArrayList;
@@ -76,11 +73,18 @@ public class SkillFragment extends Fragment implements Toolbar.OnMenuItemClickLi
 
         List<CommonBean> Data = DBHelper.getInstance(getContext()).getAllBeans(DBHelper.DB_TABLE_SKILL);
 
-        TextView textView;
-        for (CommonBean commonBean : Data) {
-            textView = getTextView(commonBean, commonBean.getID());
-            viewList.add(textView);
-            viewDragHelperLayout.addView(textView);
+        if (getView() != null) {
+            if (Data == null || Data.size() == 0) {
+                getView().findViewById(R.id.skill_empty_container).setVisibility(View.VISIBLE);
+            }else {
+                getView().findViewById(R.id.skill_empty_container).setVisibility(View.GONE);
+                TextView textView;
+                for (CommonBean commonBean : Data) {
+                    textView = getTextView(commonBean, commonBean.getID());
+                    viewList.add(textView);
+                    viewDragHelperLayout.addView(textView);
+                }
+            }
         }
     }
 
@@ -90,7 +94,7 @@ public class SkillFragment extends Fragment implements Toolbar.OnMenuItemClickLi
         super.onResume();
 
         //取消滑动返回
-        ((MainActivity)getActivity()).getSwipeBackLayout().setEdgeSize(0);
+        ((MainActivity) getActivity()).getSwipeBackLayout().setEdgeSize(0);
     }
 
     private TextView getTextView(CommonBean commonBean, int id) {
@@ -126,7 +130,7 @@ public class SkillFragment extends Fragment implements Toolbar.OnMenuItemClickLi
         switch (item.getItemId()) {
             case R.id.menu_my_skill_add:
                 addView.setVisibility(View.VISIBLE);
-                imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,InputMethodManager.RESULT_HIDDEN);
+                imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.RESULT_HIDDEN);
 //                viewDragHelperLayout.setBackgroundResource(R.color.black_overlay);
                 break;
         }
@@ -147,7 +151,7 @@ public class SkillFragment extends Fragment implements Toolbar.OnMenuItemClickLi
         editText.setText("");
         addView.setVisibility(View.GONE);
 //        viewDragHelperLayout.setBackgroundColor(Color.parseColor("#000000"));
-        imm.hideSoftInputFromWindow(editText.getWindowToken(),0);
+        imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
         System.out.println("取消保存");
     }
 
@@ -163,7 +167,7 @@ public class SkillFragment extends Fragment implements Toolbar.OnMenuItemClickLi
         skillBean.setMarginTop(margintop);
         editText.setText("");
 
-        imm.hideSoftInputFromWindow(editText.getWindowToken(),0);
+        imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
 
         int id = DBHelper.getInstance(getContext()).addBeanToDatabase(DBHelper.DB_TABLE_SKILL, skillBean);
 

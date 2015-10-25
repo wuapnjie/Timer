@@ -22,7 +22,6 @@ import com.iec.dwx.timer.Activities.MainActivity;
 import com.iec.dwx.timer.Adapters.AchievementAdapter;
 import com.iec.dwx.timer.R;
 import com.iec.dwx.timer.Utils.DBHelper;
-import com.iec.dwx.timer.Utils.Utils;
 
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
@@ -77,6 +76,7 @@ public class AchievementFragment extends Fragment implements Toolbar.OnMenuItemC
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(view1 -> initializePopupWindow(view1));
+
     }
 
     /**
@@ -134,10 +134,8 @@ public class AchievementFragment extends Fragment implements Toolbar.OnMenuItemC
      */
     private void initializePopupWindow(View view) {
         mPopupWindow = new PopupWindow(view, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        Button btnShare = (Button) view.findViewById(R.id.btn_popup_share);
         Button btnDelete = (Button) view.findViewById(R.id.btn_popup_delete);
 
-        btnShare.setOnClickListener(v -> Toast.makeText(getActivity(), "Share", Toast.LENGTH_SHORT).show());
         btnDelete.setOnClickListener(v -> {
             deleteAchievement();
             Toast.makeText(getActivity(), "Delete", Toast.LENGTH_SHORT).show();
@@ -157,6 +155,8 @@ public class AchievementFragment extends Fragment implements Toolbar.OnMenuItemC
 
         mAdapter.deleteItem(mSelectedPosition);
 
+        refreshData();
+
         cancelSelectedShader(mSelectedPosition);
 
         mSelectedPosition = SELECTED_NONE;
@@ -169,7 +169,7 @@ public class AchievementFragment extends Fragment implements Toolbar.OnMenuItemC
         refreshData();
 
         //取消滑动返回
-        ((MainActivity)getActivity()).getSwipeBackLayout().setEdgeSize(0);
+        ((MainActivity) getActivity()).getSwipeBackLayout().setEdgeSize(0);
     }
 
     /**
@@ -182,6 +182,13 @@ public class AchievementFragment extends Fragment implements Toolbar.OnMenuItemC
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(commonBeans -> {
                     mAdapter.obtainData(commonBeans);
+                    if (getView() != null) {
+                        if (mAdapter.getItemCount() == 0) {
+                            getView().findViewById(R.id.achievement_empty_container).setVisibility(View.VISIBLE);
+                        } else {
+                            getView().findViewById(R.id.achievement_empty_container).setVisibility(View.GONE);
+                        }
+                    }
                 });
     }
 
@@ -221,6 +228,7 @@ public class AchievementFragment extends Fragment implements Toolbar.OnMenuItemC
      */
     private void intent2Add() {
         startActivity(new Intent(getActivity(), EditAchievementActivity.class));
+        getActivity().overridePendingTransition(R.anim.activity_time_enter, R.anim.activity_time_exit);
     }
 
 }

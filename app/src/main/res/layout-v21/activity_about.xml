@@ -20,10 +20,14 @@
 			app:navigationIcon="@drawable/ic_arrow_back_black_24dp"
 			app:subtitle="@string/menu_time_about"
 			app:subtitleTextColor="@color/toolbar_text_color"/>
+		<View
+			android:layout_width="match_parent"
+			android:layout_height="0.2dp"
+			android:background="@color/common_black"/>
 	</android.support.design.widget.AppBarLayout>
 
 	<LinearLayout
-		android:background="#F4F5F5"
+		android:background="#FFFFFF"
 		android:layout_width="match_parent"
 		android:layout_height="0dp"
 		android:layout_weight="1"
@@ -31,15 +35,15 @@
 		>
 
 
-		<ImageView
-			android:background="#F4F5F5"
+		<com.iec.dwx.timer.Views.SquareImageView
+			android:background="#FFFFFF"
 			android:id="@+id/iv_about_us"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:scaleType="centerInside"/>
 
 		<TextView
-			android:background="#F4F5F5"
+			android:background="#FFFFFF"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:padding="16dp"
