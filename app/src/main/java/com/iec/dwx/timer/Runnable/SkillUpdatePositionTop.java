@@ -14,16 +14,17 @@ public class SkillUpdatePositionTop implements Runnable {
     private int id;
     private int top;
 
-    public SkillUpdatePositionTop(Context context, int id, int top){
-        this.context=context;
-        this.id=id;
-        this.top=top;
+    public SkillUpdatePositionTop(Context context, int id, int top) {
+        this.context = context;
+        this.id = id;
+        this.top = top;
     }
 
     @Override
     public void run() {
-        CommonBean commonBean=DBHelper.getInstance(context).getOneBean(DBHelper.DB_TABLE_SKILL,id);
-        commonBean.setPicture(top+"");
-        DBHelper.getInstance(context).updateBean(DBHelper.DB_TABLE_SKILL,commonBean.getID(),commonBean);
+        CommonBean commonBean = DBHelper.getInstance(context).getOneBean(DBHelper.DB_TABLE_SKILL, id);
+        if (commonBean == null) return;
+        commonBean.setPicture(top + "");
+        DBHelper.getInstance(context).updateBean(DBHelper.DB_TABLE_SKILL, commonBean.getID(), commonBean);
     }
 }

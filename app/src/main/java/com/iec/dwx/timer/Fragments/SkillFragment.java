@@ -2,10 +2,12 @@ package com.iec.dwx.timer.Fragments;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,7 +18,7 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.iec.dwx.timer.Activities.MainActivity;
+import com.iec.dwx.timer.Activities.ManageSkillActivity;
 import com.iec.dwx.timer.Beans.CommonBean;
 import com.iec.dwx.timer.Beans.SkillBean;
 import com.iec.dwx.timer.R;
@@ -26,6 +28,10 @@ import com.iec.dwx.timer.Views.ViewDragHelperLayout;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 public class SkillFragment extends Fragment implements Toolbar.OnMenuItemClickListener {
     private List<TextView> viewList = new ArrayList<TextView>();
@@ -73,28 +79,49 @@ public class SkillFragment extends Fragment implements Toolbar.OnMenuItemClickLi
 
         List<CommonBean> Data = DBHelper.getInstance(getContext()).getAllBeans(DBHelper.DB_TABLE_SKILL);
 
-        if (getView() != null) {
-            if (Data == null || Data.size() == 0) {
-                getView().findViewById(R.id.skill_empty_container).setVisibility(View.VISIBLE);
-            }else {
-                getView().findViewById(R.id.skill_empty_container).setVisibility(View.GONE);
-                TextView textView;
-                for (CommonBean commonBean : Data) {
-                    textView = getTextView(commonBean, commonBean.getID());
-                    viewList.add(textView);
-                    viewDragHelperLayout.addView(textView);
-                }
-            }
-        }
+//        if (getView() != null) {
+//            //如果数据为空，则显示提示
+//            if (Data == null || Data.size() == 0) {
+//                getView().findViewById(R.id.skill_empty_container).setVisibility(View.VISIBLE);
+//            } else {
+//                getView().findViewById(R.id.skill_empty_container).setVisibility(View.GONE);
+//                TextView textView;
+//                for (CommonBean commonBean : Data) {
+//                    textView = getTextView(commonBean, commonBean.getID());
+//                    viewList.add(textView);
+//                    viewDragHelperLayout.addView(textView);
+//                }
+//            }
+//        }
     }
 
 
     @Override
     public void onResume() {
         super.onResume();
+        Observable.just(DBHelper.DB_TABLE_SKILL)
+                .map(s -> DBHelper.getInstance(getActivity()).getAllBeans(s))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(commonBeans -> {
+                    if (getView() != null) {
+                        viewDragHelperLayout.removeAllViews();
+                        //如果数据为空，则显示提示
+                        if (commonBeans == null || commonBeans.size() == 0) {
+                            getView().findViewById(R.id.skill_empty_container).setVisibility(View.VISIBLE);
+                        } else {
+                            getView().findViewById(R.id.skill_empty_container).setVisibility(View.GONE);
 
-        //取消滑动返回
-        ((MainActivity) getActivity()).getSwipeBackLayout().setEdgeSize(0);
+                            TextView textView;
+                            for (CommonBean commonBean : commonBeans) {
+                                textView = getTextView(commonBean, commonBean.getID());
+                                viewList.add(textView);
+                                viewDragHelperLayout.addView(textView);
+                            }
+                        }
+                    }
+                });
+        Log.d("haha", "onResume");
     }
 
     private TextView getTextView(CommonBean commonBean, int id) {
@@ -113,17 +140,9 @@ public class SkillFragment extends Fragment implements Toolbar.OnMenuItemClickLi
         textView.setText(commonBean.getContent());
         textView.setTextSize(24f);
 
-        //设置长点击
-//        textView.setOnLongClickListener(new View.OnLongClickListener() {
-//            @Override
-//            public boolean onLongClick(View v) {
-//                System.out.println("skill long cliked");
-//                return true;
-//            }
-//        });
-
         return textView;
     }
+
 
     @Override
     public boolean onMenuItemClick(MenuItem item) {
@@ -132,6 +151,11 @@ public class SkillFragment extends Fragment implements Toolbar.OnMenuItemClickLi
                 addView.setVisibility(View.VISIBLE);
                 imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.RESULT_HIDDEN);
 //                viewDragHelperLayout.setBackgroundResource(R.color.black_overlay);
+                break;
+            case R.id.menu_my_skill_edit:
+
+                startActivity(new Intent(getActivity(), ManageSkillActivity.class));
+                getActivity().overridePendingTransition(R.anim.activity_time_enter, R.anim.activity_time_exit);
                 break;
         }
         return false;
@@ -142,7 +166,7 @@ public class SkillFragment extends Fragment implements Toolbar.OnMenuItemClickLi
         if (editText.getText().toString().equals("")) {
             Toast.makeText(getContext(), "保存内容不能为空", Toast.LENGTH_SHORT).show();
         } else {
-            addSurebtnSaveData(editText);
+            addSureBtnSaveData(editText);
         }
     }
 
@@ -150,21 +174,20 @@ public class SkillFragment extends Fragment implements Toolbar.OnMenuItemClickLi
     private void onAddButtonCancelOnClicked(EditText editText) {
         editText.setText("");
         addView.setVisibility(View.GONE);
-//        viewDragHelperLayout.setBackgroundColor(Color.parseColor("#000000"));
         imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
         System.out.println("取消保存");
     }
 
     //存储数据
-    private void addSurebtnSaveData(EditText editText) {
+    private void addSureBtnSaveData(EditText editText) {
 
-        int marginleft = (int) ((Math.random() * ScreenSizeUtils.getWidth(getContext()) * 3 / 4) + (ScreenSizeUtils.getWidth(getContext()) / 8));
-        int margintop = (int) ((Math.random() * ScreenSizeUtils.getHeight(getContext()) * 3 / 4) + (ScreenSizeUtils.getWidth(getContext()) / 8));
+        int margin_left = (int) ((Math.random() * ScreenSizeUtils.getWidth(getContext()) * 3 / 4) + (ScreenSizeUtils.getWidth(getContext()) / 8));
+        int margin_top = (int) ((Math.random() * ScreenSizeUtils.getHeight(getContext()) * 3 / 4) + (ScreenSizeUtils.getWidth(getContext()) / 8));
 
         SkillBean skillBean = new SkillBean();
         skillBean.setContent(editText.getText().toString());
-        skillBean.setMarginLeft(marginleft);
-        skillBean.setMarginTop(margintop);
+        skillBean.setMarginLeft(margin_left);
+        skillBean.setMarginTop(margin_top);
         editText.setText("");
 
         imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
@@ -172,7 +195,12 @@ public class SkillFragment extends Fragment implements Toolbar.OnMenuItemClickLi
         int id = DBHelper.getInstance(getContext()).addBeanToDatabase(DBHelper.DB_TABLE_SKILL, skillBean);
 
         addView.setVisibility(View.GONE);
-        //viewDragHelperLayout.setBackgroundColor(Color.parseColor("#000000"));
+
+        //使技能为空时的View不可见
+        if (getView() != null && getView().findViewById(R.id.skill_empty_container).getVisibility() == View.VISIBLE) {
+            getView().findViewById(R.id.skill_empty_container).setVisibility(View.GONE);
+        }
+
         viewDragHelperLayout.addView(getTextView(skillBean, id));
 
         Toast.makeText(getContext(), "成功保存", Toast.LENGTH_SHORT).show();

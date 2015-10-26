@@ -14,16 +14,17 @@ public class SkillUpdatePositionLeft implements Runnable {
     private int id;
     private int left;
 
-    public SkillUpdatePositionLeft(Context context, int id,int left){
-        this.context=context;
-        this.id=id;
-        this.left=left;
+    public SkillUpdatePositionLeft(Context context, int id, int left) {
+        this.context = context;
+        this.id = id;
+        this.left = left;
     }
 
     @Override
     public void run() {
-        CommonBean commonBean=DBHelper.getInstance(context).getOneBean(DBHelper.DB_TABLE_SKILL,id);
-        commonBean.setTime(left+"");
-        DBHelper.getInstance(context).updateBean(DBHelper.DB_TABLE_SKILL,commonBean.getID(),commonBean);
+        CommonBean commonBean = DBHelper.getInstance(context).getOneBean(DBHelper.DB_TABLE_SKILL, id);
+        if (commonBean == null) return;
+        commonBean.setTime(left + "");
+        DBHelper.getInstance(context).updateBean(DBHelper.DB_TABLE_SKILL, commonBean.getID(), commonBean);
     }
 }
