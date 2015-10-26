@@ -168,8 +168,6 @@ public class AchievementFragment extends Fragment implements Toolbar.OnMenuItemC
         //异步刷新数据
         refreshData();
 
-        //取消滑动返回
-        ((MainActivity) getActivity()).getSwipeBackLayout().setEdgeSize(0);
     }
 
     /**

@@ -122,8 +122,6 @@ public class MyWishesFragment extends Fragment implements Toolbar.OnMenuItemClic
     @Override
     public void onResume() {
         refreshData();
-        //设置滑动返回
-        ((MainActivity) getActivity()).getSwipeBackLayout().setEdgeSize(Utils.dp2px(200));
         super.onResume();
     }
 
