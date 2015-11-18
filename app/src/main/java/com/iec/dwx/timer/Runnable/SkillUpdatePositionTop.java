@@ -3,7 +3,7 @@ package com.iec.dwx.timer.Runnable;
 import android.content.Context;
 
 import com.iec.dwx.timer.Beans.CommonBean;
-import com.iec.dwx.timer.Utils.DBHelper;
+import com.iec.dwx.timer.Utils.DataBaseHelper.DBHelper;
 
 /**
  * Created by Administrator on 2015/10/23 0023.

@@ -1,44 +1,78 @@
 package com.iec.dwx.timer.Activities;
 
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.iec.dwx.timer.Beans.CommonBean;
 import com.iec.dwx.timer.R;
+
 import java.util.List;
+
 import cn.bmob.v3.Bmob;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.listener.FindListener;
-
+import android.os.Handler;
 /**
  * Created by Administrator on 2015/10/5 0005.
  */
 public class OtherWishes extends BaseActivity {
     private final String TAG = OtherWishes.class.getSimpleName();
-    private Adapter madapter;
     private RecyclerView.LayoutManager mlayoutManager;
     private RecyclerView mRecyclerView;
-    private List<CommonBean> adapterData=null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         overridePendingTransition(R.anim.other_wishes_activity_in, R.anim.my_wishes_activity_out);
         super.onCreate(savedInstanceState);
-        Bmob.initialize(this, "3a39e05d106b31b3f61a8ce842933a8a");
-        mRecyclerView = (RecyclerView) findViewById(R.id.rv_other_wishes);
+
+        initFindView();
+        initSwipeRefreshLayout();
+
         getBmobData();
+
         mlayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(mlayoutManager);
 
         ((Toolbar) findViewById(R.id.toolbar_other_wishes)).setNavigationOnClickListener(v -> onBackPressed());
     }
 
+    /**
+     * 初始化findviewbyid还有bmob初始化
+     */
+    private void initFindView(){
+        Bmob.initialize(this, "3a39e05d106b31b3f61a8ce842933a8a");
+        mRecyclerView= (RecyclerView) findViewById(R.id.rv_other_wishes);
+    }
+
+    /**
+     * 初始化刷新组建
+     */
+    private void initSwipeRefreshLayout(){
+        SwipeRefreshLayout mSwipeRefreshLayout= (SwipeRefreshLayout) findViewById(R.id.other_wishes_swipe_refresh);
+        mSwipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light, android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        //do your fucking coding refresh here!!
+                        mSwipeRefreshLayout.setRefreshing(false);
+                    }
+                }, 5000);
+            }
+        });
+    }
 
     private void getBmobData(){
         BmobQuery<CommonBean> query=new BmobQuery<CommonBean>();
@@ -47,18 +81,18 @@ public class OtherWishes extends BaseActivity {
             @Override
             public void onSuccess(List<CommonBean> list) {
                 System.out.println("查询成功：共" + list.size() + "条数据。");
-                adapterData=list;
+                List<CommonBean> adapterData=list;
                 for(CommonBean commonBean:adapterData){
                     System.out.println(commonBean.getContent());
                 }
-                madapter=new Adapter(list);
+                Adapter madapter=new Adapter(list);
                 mRecyclerView.setAdapter(madapter);
 
             }
 
             @Override
             public void onError(int i, String s) {
-                adapterData=null;
+                Toast.makeText(OtherWishes.this,"网络异常,请检测是否联网，下拉刷新",Toast.LENGTH_LONG).show();
                 System.out.println("查询失败："+s);
             }
         });
@@ -70,9 +104,6 @@ public class OtherWishes extends BaseActivity {
         public Adapter(List Data){
             super();
             mData=Data;
-            for(CommonBean commonBean:mData){
-                Log.e("eric",commonBean.getContent());
-            }
         }
 
         @Override

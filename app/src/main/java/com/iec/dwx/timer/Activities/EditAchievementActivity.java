@@ -14,7 +14,7 @@ import android.widget.Toast;
 
 import com.iec.dwx.timer.Beans.AchievementBean;
 import com.iec.dwx.timer.R;
-import com.iec.dwx.timer.Utils.DBHelper;
+import com.iec.dwx.timer.Utils.DataBaseHelper.DBHelper;
 import com.iec.dwx.timer.Utils.ImageUtils;
 import com.iec.dwx.timer.Utils.ScreenSizeUtils;
 import com.iec.dwx.timer.Utils.Utils;

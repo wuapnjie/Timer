@@ -10,6 +10,8 @@
     tools:context="com.iec.dwx.timer.Fragments.MyWishesFragment"
     android:clickable="true">
 
+
+
     <!-- TODO: Update blank fragment layout -->
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -29,6 +31,13 @@
 		    android:background="@color/common_black"/>
     </android.support.design.widget.AppBarLayout>
 
+    <android.support.v4.widget.SwipeRefreshLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/other_wishes_swipe_refresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
     <android.support.v7.widget.RecyclerView
 	    android:background="#FFFFFF"
         android:id="@+id/rv_other_wishes"
@@ -37,4 +46,7 @@
         >
 
     </android.support.v7.widget.RecyclerView>
+
+    </android.support.v4.widget.SwipeRefreshLayout>
+
 </LinearLayout>

@@ -1,14 +1,13 @@
 package com.iec.dwx.timer.Activities;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 
 import com.iec.dwx.timer.Adapters.ManageSkillAdapter;
 import com.iec.dwx.timer.R;
-import com.iec.dwx.timer.Utils.DBHelper;
+import com.iec.dwx.timer.Utils.DataBaseHelper.DBHelper;
 import com.iec.dwx.timer.Utils.Utils;
 
 import rx.Observable;

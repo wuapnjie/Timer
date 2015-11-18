@@ -1,22 +1,19 @@
 package com.iec.dwx.timer.Activities;
 
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.internal.view.menu.ActionMenuItemView;
 import android.support.v7.widget.Toolbar;
-import android.text.Editable;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.iec.dwx.timer.Adapters.WishDetailsPagerAdapter;
 import com.iec.dwx.timer.Beans.CommonBean;
 import com.iec.dwx.timer.R;
-import com.iec.dwx.timer.Utils.DBHelper;
+import com.iec.dwx.timer.Utils.DataBaseHelper.DBHelper;
 import com.iec.dwx.timer.Utils.Utils;
 
 import java.util.ArrayList;

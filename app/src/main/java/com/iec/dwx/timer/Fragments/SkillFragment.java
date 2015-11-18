@@ -22,7 +22,7 @@ import com.iec.dwx.timer.Activities.ManageSkillActivity;
 import com.iec.dwx.timer.Beans.CommonBean;
 import com.iec.dwx.timer.Beans.SkillBean;
 import com.iec.dwx.timer.R;
-import com.iec.dwx.timer.Utils.DBHelper;
+import com.iec.dwx.timer.Utils.DataBaseHelper.DBHelper;
 import com.iec.dwx.timer.Utils.ScreenSizeUtils;
 import com.iec.dwx.timer.Views.ViewDragHelperLayout;
 
@@ -79,20 +79,6 @@ public class SkillFragment extends Fragment implements Toolbar.OnMenuItemClickLi
 
         List<CommonBean> Data = DBHelper.getInstance(getContext()).getAllBeans(DBHelper.DB_TABLE_SKILL);
 
-//        if (getView() != null) {
-//            //如果数据为空，则显示提示
-//            if (Data == null || Data.size() == 0) {
-//                getView().findViewById(R.id.skill_empty_container).setVisibility(View.VISIBLE);
-//            } else {
-//                getView().findViewById(R.id.skill_empty_container).setVisibility(View.GONE);
-//                TextView textView;
-//                for (CommonBean commonBean : Data) {
-//                    textView = getTextView(commonBean, commonBean.getID());
-//                    viewList.add(textView);
-//                    viewDragHelperLayout.addView(textView);
-//                }
-//            }
-//        }
     }
 
 
