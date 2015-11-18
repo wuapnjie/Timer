@@ -19,7 +19,7 @@ public class DataBaseSkillHelper extends SQLiteOpenHelper {
     private static DataBaseSkillHelper mInstance;
 
     //the name of database
-    private static final String DB_NAME="Time";
+    private static final String DB_NAME="TimeSkill";
 
     //the name of tables
     private static  final String DB_SKILL="skilltest";
@@ -129,20 +129,19 @@ public class DataBaseSkillHelper extends SQLiteOpenHelper {
         List<SkillBean> list=new ArrayList<SkillBean>();
         SQLiteDatabase db=this.getReadableDatabase();
         Cursor cursor=db.rawQuery("SELECT * FROM " + DB_SKILL, null);
-        while (cursor.moveToNext()){
-            SkillBean skillbean=new SkillBean();
-            skillbean.setmId(cursor.getInt(cursor.getColumnIndex(COLUMN_ID)));
-            skillbean.setmCotent(cursor.getString(cursor.getColumnIndex(COLUMN_CONTENT)));
-            skillbean.setMarginLeft(cursor.getInt(cursor.getColumnIndex(COLUMN_MARGINLEFT)));
-            skillbean.setMarginTop(cursor.getInt(cursor.getColumnIndex(COLUMN_MARGINTOP)));
+        if(cursor.moveToNext()) {
+            do {
+                SkillBean skillbean = new SkillBean();
+                skillbean.setmId(cursor.getInt(cursor.getColumnIndex(COLUMN_ID)));
+                skillbean.setmCotent(cursor.getString(cursor.getColumnIndex(COLUMN_CONTENT)));
+                skillbean.setMarginLeft(cursor.getInt(cursor.getColumnIndex(COLUMN_MARGINLEFT)));
+                skillbean.setMarginTop(cursor.getInt(cursor.getColumnIndex(COLUMN_MARGINTOP)));
 
-            list.add(skillbean);
+                list.add(skillbean);
+            } while (cursor.moveToNext());
         }
-        if(list.isEmpty()){
-            return null;
-        }else {
-            return list;
-        }
+       cursor.close();
+        return list;
     }
 
     /**

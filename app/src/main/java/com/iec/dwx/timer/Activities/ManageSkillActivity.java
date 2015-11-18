@@ -7,7 +7,7 @@ import android.support.v7.widget.Toolbar;
 
 import com.iec.dwx.timer.Adapters.ManageSkillAdapter;
 import com.iec.dwx.timer.R;
-import com.iec.dwx.timer.Utils.DataBaseHelper.DBHelper;
+import com.iec.dwx.timer.Utils.DataBaseHelper.DataBaseSkillHelper;
 import com.iec.dwx.timer.Utils.Utils;
 
 import rx.Observable;
@@ -23,11 +23,11 @@ public class ManageSkillActivity extends BaseActivity{
         super.onCreate(savedInstanceState);
         init();
 
-        Observable.just(DBHelper.DB_TABLE_SKILL)
-                .map(s->DBHelper.getInstance(this).getAllBeans(s))
+        Observable.just(null)
+                .map(s->DataBaseSkillHelper.getInstance(ManageSkillActivity.this).getAllBeans())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(commonBeans -> mAdapter.obtainData(commonBeans));
+                .subscribe(skillBeans -> mAdapter.obtainData(skillBeans));
 
     }
 

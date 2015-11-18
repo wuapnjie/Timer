@@ -9,8 +9,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.iec.dwx.timer.Beans.CommonBean;
+import com.iec.dwx.timer.Beans.SkillBean;
 import com.iec.dwx.timer.R;
 import com.iec.dwx.timer.Utils.DataBaseHelper.DBHelper;
+import com.iec.dwx.timer.Utils.DataBaseHelper.DataBaseSkillHelper;
 
 import java.util.List;
 
@@ -20,13 +22,13 @@ import java.util.List;
 public class ManageSkillAdapter extends RecyclerView.Adapter<ManageSkillAdapter.ManageSkillViewHolder> {
     private final String TAG = ManageSkillAdapter.class.getSimpleName();
     private Context mCtx;
-    private List<CommonBean> mData;
+    private List<SkillBean> mData;
 
     public ManageSkillAdapter(Context context) {
         mCtx = context;
     }
 
-    public void obtainData(List<CommonBean> data) {
+    public void obtainData(List<SkillBean> data) {
         mData = data;
         notifyDataSetChanged();
     }
@@ -39,9 +41,9 @@ public class ManageSkillAdapter extends RecyclerView.Adapter<ManageSkillAdapter.
 
     @Override
     public void onBindViewHolder(ManageSkillViewHolder holder, int position) {
-        holder.mTextView.setText(mData.get(position).getContent());
+        holder.mTextView.setText(mData.get(position).getmCotent());
         holder.mImageView.setOnClickListener(v -> {
-            DBHelper.getInstance(mCtx).deleteBean(DBHelper.DB_TABLE_SKILL, mData.get(holder.getLayoutPosition()));
+            DataBaseSkillHelper.getInstance(mCtx).deleteOneBean(mData.get(position).getmId());
             mData.remove(holder.getLayoutPosition());
             notifyItemRemoved(holder.getLayoutPosition());
         });

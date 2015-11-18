@@ -3,7 +3,9 @@ package com.iec.dwx.timer.Runnable;
 import android.content.Context;
 
 import com.iec.dwx.timer.Beans.CommonBean;
+import com.iec.dwx.timer.Beans.SkillBean;
 import com.iec.dwx.timer.Utils.DataBaseHelper.DBHelper;
+import com.iec.dwx.timer.Utils.DataBaseHelper.DataBaseSkillHelper;
 
 /**
  * Created by Administrator on 2015/10/23 0023.
@@ -22,9 +24,9 @@ public class SkillUpdatePositionTop implements Runnable {
 
     @Override
     public void run() {
-        CommonBean commonBean = DBHelper.getInstance(context).getOneBean(DBHelper.DB_TABLE_SKILL, id);
-        if (commonBean == null) return;
-        commonBean.setPicture(top + "");
-        DBHelper.getInstance(context).updateBean(DBHelper.DB_TABLE_SKILL, commonBean.getID(), commonBean);
+        SkillBean skillBean= DataBaseSkillHelper.getInstance(context).getOneBean(id);
+        if (skillBean == null) return;
+        skillBean.setMarginTop(top);
+        DataBaseSkillHelper.getInstance(context).updateOneBean(skillBean.getmId(),skillBean);
     }
 }
