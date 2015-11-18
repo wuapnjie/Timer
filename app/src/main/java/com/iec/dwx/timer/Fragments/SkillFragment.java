@@ -21,6 +21,7 @@ import android.widget.Toast;
 import com.iec.dwx.timer.Activities.ManageSkillActivity;
 import com.iec.dwx.timer.Beans.CommonBean;
 import com.iec.dwx.timer.Beans.SkillBean;
+import com.iec.dwx.timer.Beans.SkillBeanOld;
 import com.iec.dwx.timer.R;
 import com.iec.dwx.timer.Utils.DataBaseHelper.DBHelper;
 import com.iec.dwx.timer.Utils.ScreenSizeUtils;
@@ -136,7 +137,6 @@ public class SkillFragment extends Fragment implements Toolbar.OnMenuItemClickLi
             case R.id.menu_my_skill_add:
                 addView.setVisibility(View.VISIBLE);
                 imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.RESULT_HIDDEN);
-//                viewDragHelperLayout.setBackgroundResource(R.color.black_overlay);
                 break;
             case R.id.menu_my_skill_edit:
 
@@ -170,15 +170,19 @@ public class SkillFragment extends Fragment implements Toolbar.OnMenuItemClickLi
         int margin_left = (int) ((Math.random() * ScreenSizeUtils.getWidth(getContext()) * 3 / 4) + (ScreenSizeUtils.getWidth(getContext()) / 8));
         int margin_top = (int) ((Math.random() * ScreenSizeUtils.getHeight(getContext()) * 3 / 4) + (ScreenSizeUtils.getWidth(getContext()) / 8));
 
-        SkillBean skillBean = new SkillBean();
-        skillBean.setContent(editText.getText().toString());
+//        SkillBeanOld skillBeanOld = new SkillBeanOld();
+//        skillBeanOld.setContent(editText.getText().toString());
+//        skillBeanOld.setMarginLeft(margin_left);
+//        skillBeanOld.setMarginTop(margin_top);
+        SkillBean skillBean=new SkillBean();
+        skillBean.setmCotent(editText.getText().toString());
         skillBean.setMarginLeft(margin_left);
         skillBean.setMarginTop(margin_top);
         editText.setText("");
 
         imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
 
-        int id = DBHelper.getInstance(getContext()).addBeanToDatabase(DBHelper.DB_TABLE_SKILL, skillBean);
+        int id = DBHelper.getInstance(getContext()).addBeanToDatabase(DBHelper.DB_TABLE_SKILL, skillBeanOld);
 
         addView.setVisibility(View.GONE);
 
@@ -187,7 +191,7 @@ public class SkillFragment extends Fragment implements Toolbar.OnMenuItemClickLi
             getView().findViewById(R.id.skill_empty_container).setVisibility(View.GONE);
         }
 
-        viewDragHelperLayout.addView(getTextView(skillBean, id));
+        viewDragHelperLayout.addView(getTextView(skillBeanOld, id));
 
         Toast.makeText(getContext(), "成功保存", Toast.LENGTH_SHORT).show();
     }

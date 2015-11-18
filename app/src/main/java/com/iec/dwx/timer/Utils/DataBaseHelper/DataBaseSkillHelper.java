@@ -5,7 +5,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import com.iec.dwx.timer.Beans.SkillBeanNew;
+
+import com.iec.dwx.timer.Beans.SkillBean;
 import com.iec.dwx.timer.Utils.Utils;
 import java.util.ArrayList;
 import java.util.List;
@@ -62,7 +63,7 @@ public class DataBaseSkillHelper extends SQLiteOpenHelper {
      * @param skillBean
      * @return
      */
-    public int addBean(SkillBeanNew skillBean){
+    public int addBean(SkillBean skillBean){
         ContentValues contentValues=new ContentValues();
         contentValues.put(COLUMN_CONTENT,skillBean.getmCotent());
         contentValues.put(COLUMN_MARGINLEFT,skillBean.getMarginLeft());
@@ -77,19 +78,19 @@ public class DataBaseSkillHelper extends SQLiteOpenHelper {
      * @param id
      * @return
      */
-    public SkillBeanNew getOneBean(int id){
+    public SkillBean getOneBean(int id){
         SQLiteDatabase db=this.getReadableDatabase();
 
         Cursor cursor=db.rawQuery("SELECT * FROM " + DB_SKILL + " WHERE " + "id" + "=" + "'" + id + "'", null);
         if(cursor.moveToFirst()){
-            SkillBeanNew skillBeanNew=new SkillBeanNew();
-            skillBeanNew.setmId(cursor.getInt(cursor.getColumnIndex(COLUMN_ID)));
-            skillBeanNew.setmCotent(cursor.getString(cursor.getColumnIndex(COLUMN_CONTENT)));
-            skillBeanNew.setMarginLeft(cursor.getInt(cursor.getColumnIndex(COLUMN_MARGINLEFT)));
-            skillBeanNew.setMarginTop(cursor.getInt(cursor.getColumnIndex(COLUMN_MARGINTOP)));;
+            SkillBean skillBean =new SkillBean();
+            skillBean.setmId(cursor.getInt(cursor.getColumnIndex(COLUMN_ID)));
+            skillBean.setmCotent(cursor.getString(cursor.getColumnIndex(COLUMN_CONTENT)));
+            skillBean.setMarginLeft(cursor.getInt(cursor.getColumnIndex(COLUMN_MARGINLEFT)));
+            skillBean.setMarginTop(cursor.getInt(cursor.getColumnIndex(COLUMN_MARGINTOP)));;
 
             cursor.close();
-            return skillBeanNew;
+            return skillBean;
         }else{
             cursor.close();
             return null;
@@ -101,12 +102,12 @@ public class DataBaseSkillHelper extends SQLiteOpenHelper {
      * @param content
      * @return
      */
-    public SkillBeanNew getOneBean(String content){
+    public SkillBean getOneBean(String content){
         SQLiteDatabase db=this.getReadableDatabase();
         Cursor cursor=db.query(DB_SKILL, new String[]{COLUMN_ID, COLUMN_CONTENT, COLUMN_MARGINLEFT, COLUMN_MARGINTOP},
                 COLUMN_CONTENT + " =?", new String[]{content}, null, null, null);
         if(cursor.moveToFirst()){
-            SkillBeanNew skillbean=new SkillBeanNew();
+            SkillBean skillbean=new SkillBean();
             skillbean.setmId(cursor.getInt(cursor.getColumnIndex(COLUMN_ID)));
             skillbean.setmCotent(cursor.getString(cursor.getColumnIndex(COLUMN_CONTENT)));
             skillbean.setMarginLeft(cursor.getInt(cursor.getColumnIndex(COLUMN_MARGINLEFT)));
@@ -124,12 +125,12 @@ public class DataBaseSkillHelper extends SQLiteOpenHelper {
      * 返回所有的skillbean
      * @return
      */
-    public List<SkillBeanNew> getAllBeans(){
-        List<SkillBeanNew> list=new ArrayList<SkillBeanNew>();
+    public List<SkillBean> getAllBeans(){
+        List<SkillBean> list=new ArrayList<SkillBean>();
         SQLiteDatabase db=this.getReadableDatabase();
         Cursor cursor=db.rawQuery("SELECT * FROM " + DB_SKILL, null);
         while (cursor.moveToNext()){
-            SkillBeanNew skillbean=new SkillBeanNew();
+            SkillBean skillbean=new SkillBean();
             skillbean.setmId(cursor.getInt(cursor.getColumnIndex(COLUMN_ID)));
             skillbean.setmCotent(cursor.getString(cursor.getColumnIndex(COLUMN_CONTENT)));
             skillbean.setMarginLeft(cursor.getInt(cursor.getColumnIndex(COLUMN_MARGINLEFT)));
@@ -180,7 +181,7 @@ public class DataBaseSkillHelper extends SQLiteOpenHelper {
      * @param newBean
      * @return
      */
-    public Boolean updateOneBean(int id,SkillBeanNew newBean){
+    public Boolean updateOneBean(int id,SkillBean newBean){
         SQLiteDatabase db=this.getWritableDatabase();
         ContentValues contentvalues=new ContentValues();
         contentvalues.put(COLUMN_ID,id);
@@ -202,7 +203,7 @@ public class DataBaseSkillHelper extends SQLiteOpenHelper {
      * @param newBean
      * @return
      */
-    public Boolean updateOneBean(SkillBeanNew oldBean,SkillBeanNew newBean){
+    public Boolean updateOneBean(SkillBean oldBean,SkillBean newBean){
         SQLiteDatabase db=this.getWritableDatabase();
         ContentValues contentvalues=new ContentValues();
         contentvalues.put(COLUMN_CONTENT,newBean.getmCotent());

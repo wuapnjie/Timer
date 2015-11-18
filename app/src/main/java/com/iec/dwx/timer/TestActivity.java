@@ -5,7 +5,6 @@ import android.util.Log;
 
 import com.iec.dwx.timer.Activities.BaseActivity;
 import com.iec.dwx.timer.Beans.SkillBean;
-import com.iec.dwx.timer.Beans.SkillBeanNew;
 import com.iec.dwx.timer.Utils.DataBaseHelper.DataBaseSkillHelper;
 
 import java.util.List;
@@ -20,30 +19,30 @@ public class TestActivity extends BaseActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        SkillBeanNew skillBeanNew1=new SkillBeanNew();
-        skillBeanNew1.setmCotent("test1");
-        skillBeanNew1.setMarginTop(1);
-        skillBeanNew1.setMarginLeft(1);
+        SkillBean skillBean1 =new SkillBean();
+        skillBean1.setmCotent("test1");
+        skillBean1.setMarginTop(1);
+        skillBean1.setMarginLeft(1);
 
-        SkillBeanNew skillBeanNew2=new SkillBeanNew();
-        skillBeanNew2.setmCotent("test2");
-        skillBeanNew2.setMarginTop(2);
-        skillBeanNew2.setMarginLeft(2);
+        SkillBean skillBean2 =new SkillBean();
+        skillBean2.setmCotent("test2");
+        skillBean2.setMarginTop(2);
+        skillBean2.setMarginLeft(2);
 
-        addBeanTest(skillBeanNew1);
-        addBeanTest(skillBeanNew2);
+        addBeanTest(skillBean1);
+        addBeanTest(skillBean2);
 
         getAllBean();
 
-        updateBean(skillBeanNew1,skillBeanNew2);
+        updateBean(skillBean1, skillBean2);
 
         getAllBean();
 //        deleteBean(id);
-//        deleteBean(skillBeanNew1.getmCotent());
+//        deleteBean(skillBean1.getmCotent());
     }
 
-    private void addBeanTest(SkillBeanNew skillBeanNew){
-        id=DataBaseSkillHelper.getInstance(this).addBean(skillBeanNew);
+    private void addBeanTest(SkillBean skillBean){
+        id=DataBaseSkillHelper.getInstance(this).addBean(skillBean);
         Log.e(TAG, ""+id);
     }
 
@@ -56,8 +55,8 @@ public class TestActivity extends BaseActivity{
     }
 
     private void getAllBean(){
-        List<SkillBeanNew> list=DataBaseSkillHelper.getInstance(this).getAllBeans();
-        for(SkillBeanNew data:list){
+        List<SkillBean> list=DataBaseSkillHelper.getInstance(this).getAllBeans();
+        for(SkillBean data:list){
             Log.e(TAG,data.getmId()+"");
             Log.e(TAG,data.getmCotent());
             Log.e(TAG,data.getMarginLeft()+"");
@@ -66,14 +65,14 @@ public class TestActivity extends BaseActivity{
     }
 
     private void updateBean(int id){
-        SkillBeanNew skillBeanNew3=new SkillBeanNew();
-        skillBeanNew3.setmCotent("test3");
-        skillBeanNew3.setMarginTop(3);
-        skillBeanNew3.setMarginLeft(3);
-        Log.e(TAG, DataBaseSkillHelper.getInstance(this).updateOneBean(id, skillBeanNew3)+"");
+        SkillBean skillBean3 =new SkillBean();
+        skillBean3.setmCotent("test3");
+        skillBean3.setMarginTop(3);
+        skillBean3.setMarginLeft(3);
+        Log.e(TAG, DataBaseSkillHelper.getInstance(this).updateOneBean(id, skillBean3)+"");
     }
 
-    private void updateBean(SkillBeanNew oldBean,SkillBeanNew newBean){
+    private void updateBean(SkillBean oldBean,SkillBean newBean){
         Log.e(TAG,DataBaseSkillHelper.getInstance(this).updateOneBean(oldBean,newBean)+"");
     }
 

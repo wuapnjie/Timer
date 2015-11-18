@@ -25,15 +25,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme" >
 
-        <activity android:name=".TestActivity">
+        <activity android:name=".Activities.StartActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-
-        <activity android:name=".Activities.StartActivity" >
         </activity>
         <activity android:name=".Activities.TimeActivity" >
         </activity>
@@ -50,6 +46,10 @@
         </activity>
         <activity android:name=".Activities.ManageSkillActivity" >
         </activity>
+
+        <activity android:name=".TestActivity">
+        </activity>
+
     </application>
 
 </manifest>

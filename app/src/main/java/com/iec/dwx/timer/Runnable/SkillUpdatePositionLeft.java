@@ -22,6 +22,7 @@ public class SkillUpdatePositionLeft implements Runnable {
 
     @Override
     public void run() {
+
         CommonBean commonBean = DBHelper.getInstance(context).getOneBean(DBHelper.DB_TABLE_SKILL, id);
         if (commonBean == null) return;
         commonBean.setTime(left + "");
