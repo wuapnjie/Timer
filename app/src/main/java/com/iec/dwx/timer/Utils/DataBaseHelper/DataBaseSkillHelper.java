@@ -21,13 +21,13 @@ public class DataBaseSkillHelper extends SQLiteOpenHelper {
     private static final String DB_NAME="Time";
 
     //the name of tables
-    private static  final String DB_SKILL="skill";
+    private static  final String DB_SKILL="skilltest";
 
     //the name of columns
     private static final String COLUMN_ID="id";
     private static final String COLUMN_CONTENT="content";
     private static final String COLUMN_MARGINLEFT="marginLeft";
-    private static final String COLUMN_MARGINTOP ="marginRight";
+    private static final String COLUMN_MARGINTOP ="marginTop";
 
     public DataBaseSkillHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);

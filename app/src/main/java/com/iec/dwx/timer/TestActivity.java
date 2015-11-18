@@ -35,8 +35,11 @@ public class TestActivity extends BaseActivity{
 
         getAllBean();
 
-        deleteBean(id);
-        deleteBean(skillBeanNew1.getmCotent());
+        updateBean(skillBeanNew1,skillBeanNew2);
+
+        getAllBean();
+//        deleteBean(id);
+//        deleteBean(skillBeanNew1.getmCotent());
     }
 
     private void addBeanTest(SkillBeanNew skillBeanNew){
@@ -55,8 +58,23 @@ public class TestActivity extends BaseActivity{
     private void getAllBean(){
         List<SkillBeanNew> list=DataBaseSkillHelper.getInstance(this).getAllBeans();
         for(SkillBeanNew data:list){
-            Log.e(TAG,data.toString());
+            Log.e(TAG,data.getmId()+"");
+            Log.e(TAG,data.getmCotent());
+            Log.e(TAG,data.getMarginLeft()+"");
+            Log.e(TAG,data.getMarginTop()+"");
         }
+    }
+
+    private void updateBean(int id){
+        SkillBeanNew skillBeanNew3=new SkillBeanNew();
+        skillBeanNew3.setmCotent("test3");
+        skillBeanNew3.setMarginTop(3);
+        skillBeanNew3.setMarginLeft(3);
+        Log.e(TAG, DataBaseSkillHelper.getInstance(this).updateOneBean(id, skillBeanNew3)+"");
+    }
+
+    private void updateBean(SkillBeanNew oldBean,SkillBeanNew newBean){
+        Log.e(TAG,DataBaseSkillHelper.getInstance(this).updateOneBean(oldBean,newBean)+"");
     }
 
     @Override
