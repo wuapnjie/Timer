@@ -18,16 +18,23 @@ import android.widget.PopupWindow;
 import android.widget.Toast;
 
 import com.iec.dwx.timer.Activities.EditAchievementActivity;
-import com.iec.dwx.timer.Activities.MainActivity;
 import com.iec.dwx.timer.Adapters.AchievementAdapter;
 import com.iec.dwx.timer.R;
 import com.iec.dwx.timer.Utils.DBHelper;
+import com.iec.dwx.timer.Views.ShareDialog;
 
+import java.util.HashMap;
+
+import cn.sharesdk.framework.Platform;
+import cn.sharesdk.framework.PlatformActionListener;
+import cn.sharesdk.framework.ShareSDK;
+import cn.sharesdk.sina.weibo.SinaWeibo;
+import cn.sharesdk.tencent.qq.QQ;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-public class AchievementFragment extends Fragment implements Toolbar.OnMenuItemClickListener {
+public class AchievementFragment extends Fragment implements Toolbar.OnMenuItemClickListener, PlatformActionListener {
     private final String TAG = AchievementFragment.class.getSimpleName();
     public static final int SELECTED_NONE = -1;
 
@@ -49,6 +56,7 @@ public class AchievementFragment extends Fragment implements Toolbar.OnMenuItemC
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ShareSDK.initSDK(getActivity());
     }
 
     @Override
@@ -135,12 +143,63 @@ public class AchievementFragment extends Fragment implements Toolbar.OnMenuItemC
     private void initializePopupWindow(View view) {
         mPopupWindow = new PopupWindow(view, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         Button btnDelete = (Button) view.findViewById(R.id.btn_popup_delete);
+        Button btnShare = (Button) view.findViewById(R.id.btn_popup_share);
 
         btnDelete.setOnClickListener(v -> {
             deleteAchievement();
             Toast.makeText(getActivity(), "Delete", Toast.LENGTH_SHORT).show();
         });
 
+        btnShare.setOnClickListener(v -> showShare());
+
+    }
+
+    /**
+     * 显示分享界面
+     */
+    private void showShare() {
+//        OnekeyShare oks = new OnekeyShare();
+//        oks.disableSSOWhenAuthorize();
+//        oks.setDialogMode();
+//        oks.setText(mAdapter.getData().get(mSelectedPosition).getContent());
+//        oks.setImagePath(mAdapter.getData().get(mSelectedPosition).getPicture());
+//        oks.setTitle(getString(R.string.app_name));
+//        oks.setCallback(this);
+//        oks.setTitleUrl("http://sharesdk.cn");
+//        oks.show(getActivity());
+        if (mPopupWindow.isShowing()) mPopupWindow.dismiss();
+        ShareDialog shareDialog = new ShareDialog(getActivity());
+        shareDialog.setCancelButtonOnClickListener(v -> shareDialog.dismiss());
+        shareDialog.setOnItemClickListener((parent, view, position, id) -> {
+            HashMap<String, Object> item = (HashMap<String, Object>) parent.getItemAtPosition(position);
+            if (getString(R.string.platform_weibo).equals(item.get("Text"))) {
+                Toast.makeText(getActivity(), "you choose " + item.get("Text"), Toast.LENGTH_SHORT).show();
+                Platform.ShareParams shareParams = new Platform.ShareParams();
+                shareParams.setTitle("分享到新浪微博");
+                shareParams.setText(mAdapter.getData().get(mSelectedPosition).getContent());
+                shareParams.setImagePath(mAdapter.getData().get(mSelectedPosition).getPicture());
+
+                Platform weibo = ShareSDK.getPlatform(SinaWeibo.NAME);
+//                weibo.SSOSetting(true);
+                weibo.setPlatformActionListener(this);
+                weibo.share(shareParams);
+            }
+
+            if (getString(R.string.platform_qq).equals(item.get("Text"))) {
+                Toast.makeText(getActivity(), "you choose " + item.get("Text"), Toast.LENGTH_SHORT).show();
+                Platform.ShareParams shareParams = new Platform.ShareParams();
+                shareParams.setTitle("分享到QQ");
+                shareParams.setText(mAdapter.getData().get(mSelectedPosition).getContent());
+                shareParams.setImagePath(mAdapter.getData().get(mSelectedPosition).getPicture());
+                shareParams.setTitleUrl("http://www.baidu.com/");
+
+                Platform qq = ShareSDK.getPlatform(QQ.NAME);
+                qq.setPlatformActionListener(this);
+                qq.share(shareParams);
+            }
+
+
+        });
     }
 
     /**
@@ -228,5 +287,28 @@ public class AchievementFragment extends Fragment implements Toolbar.OnMenuItemC
         startActivity(new Intent(getActivity(), EditAchievementActivity.class));
         getActivity().overridePendingTransition(R.anim.activity_time_enter, R.anim.activity_time_exit);
     }
+
+    /**
+     * ShareSDK分享的回调，回调在子行程中进行
+     *
+     * @param platform 对应的平台
+     * @param i
+     * @param hashMap
+     */
+    @Override
+    public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
+        Log.d(TAG, "onComplete" + platform.getName());
+    }
+
+    @Override
+    public void onError(Platform platform, int i, Throwable throwable) {
+        Log.d(TAG, platform.getName() + "throwable->" + throwable.getMessage()+ " status->"+i);
+    }
+
+    @Override
+    public void onCancel(Platform platform, int i) {
+        Log.d(TAG, platform.getName()+" onCancel");
+    }
+
 
 }
