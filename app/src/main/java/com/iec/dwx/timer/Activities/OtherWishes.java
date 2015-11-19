@@ -27,6 +27,7 @@ public class OtherWishes extends BaseActivity {
     private final String TAG = OtherWishes.class.getSimpleName();
     private RecyclerView.LayoutManager mlayoutManager;
     private RecyclerView mRecyclerView;
+    private Adapter madapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,31 +64,49 @@ public class OtherWishes extends BaseActivity {
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        //do your fucking coding refresh here!!
-                        mSwipeRefreshLayout.setRefreshing(false);
-                    }
-                }, 5000);
+                refreshFromBmobData();
+                mSwipeRefreshLayout.setRefreshing(false);
             }
         });
     }
 
+    /**
+     * 第一次获取bmob的数据
+     */
     private void getBmobData(){
         BmobQuery<CommonBean> query=new BmobQuery<CommonBean>();
+        query.order("-mTime");
         query.setLimit(20);
         query.findObjects(this, new FindListener<CommonBean>() {
             @Override
             public void onSuccess(List<CommonBean> list) {
                 System.out.println("查询成功：共" + list.size() + "条数据。");
-                List<CommonBean> adapterData=list;
-                for(CommonBean commonBean:adapterData){
+                List<CommonBean> adapterData = list;
+                for (CommonBean commonBean : adapterData) {
                     System.out.println(commonBean.getContent());
                 }
-                Adapter madapter=new Adapter(list);
+                madapter = new Adapter(list);
                 mRecyclerView.setAdapter(madapter);
 
+            }
+
+            @Override
+            public void onError(int i, String s) {
+                Toast.makeText(OtherWishes.this, "网络异常,请检测是否联网，下拉刷新", Toast.LENGTH_LONG).show();
+                System.out.println("查询失败：" + s);
+            }
+        });
+    }
+
+    private void refreshFromBmobData(){
+        BmobQuery<CommonBean> query=new BmobQuery<CommonBean>();
+        query.order("-mTime");
+        query.setLimit(20);
+        query.findObjects(this, new FindListener<CommonBean>() {
+            @Override
+            public void onSuccess(List<CommonBean> list) {
+                System.out.println("查询成功：共" + list.size() + "条数据。");
+                madapter.refreshData(list);
             }
 
             @Override
@@ -104,6 +123,11 @@ public class OtherWishes extends BaseActivity {
         public Adapter(List Data){
             super();
             mData=Data;
+        }
+
+        public void refreshData(List data){
+            mData=data;
+            notifyDataSetChanged();
         }
 
         @Override
