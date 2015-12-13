@@ -20,8 +20,8 @@ import android.widget.Toast;
 import com.iec.dwx.timer.Activities.EditAchievementActivity;
 import com.iec.dwx.timer.Adapters.AchievementAdapter;
 import com.iec.dwx.timer.R;
-import com.iec.dwx.timer.Utils.DBHelper;
 import com.iec.dwx.timer.Views.ShareDialog;
+import com.iec.dwx.timer.Utils.DataBaseHelper.DBHelper;
 
 import java.util.HashMap;
 

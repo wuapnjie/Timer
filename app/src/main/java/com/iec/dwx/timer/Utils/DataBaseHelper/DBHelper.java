@@ -1,4 +1,4 @@
-package com.iec.dwx.timer.Utils;
+package com.iec.dwx.timer.Utils.DataBaseHelper;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import com.iec.dwx.timer.Beans.CommonBean;
+import com.iec.dwx.timer.Utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +30,6 @@ public class DBHelper extends SQLiteOpenHelper {
     //the name of tables
     public static final String DB_TABLE_ACHIEVEMENT = "Achievement";
     public static final String DB_TABLE_WISH = "Wish";
-    public static final String DB_TABLE_SKILL = "Skill";
 
     //the name of columns
     public static final String COLUMN_ID = "id";
@@ -61,15 +61,9 @@ public class DBHelper extends SQLiteOpenHelper {
                 COLUMN_TIME + " VARCHAR(50)," +
                 COLUMN_CONTENT + " TEXT," +
                 COLUMN_PICTURE + " TEXT" + " )";
-        String CREATE_SKILL_TABLE = "CREATE TABLE if not exists " + DB_TABLE_SKILL + " ( " +
-                COLUMN_ID + " INTEGER PRIMARY KEY," +
-                COLUMN_TIME + " VARCHAR(50)," +
-                COLUMN_CONTENT + " TEXT," +
-                COLUMN_PICTURE + " TEXT" + " )";
 
         db.execSQL(CREATE_WISH_TABLE);
         db.execSQL(CREATE_ACHIEVEMENT_TABLE);
-        db.execSQL(CREATE_SKILL_TABLE);
     }
 
     @Override
@@ -78,7 +72,6 @@ public class DBHelper extends SQLiteOpenHelper {
 
         db.execSQL("DROP TABLE IF EXISTS " + DB_TABLE_WISH);
         db.execSQL("DROP TABLE IF EXISTS " + DB_TABLE_ACHIEVEMENT);
-        db.execSQL("DROP TABLE IF EXISTS " + DB_TABLE_SKILL);
         onCreate(db);
     }
 

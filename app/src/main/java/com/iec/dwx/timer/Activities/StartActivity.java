@@ -4,12 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.widget.ImageView;
 
-import com.iec.dwx.timer.Beans.WishBean;
 import com.iec.dwx.timer.R;
-import com.iec.dwx.timer.Utils.DBHelper;
 
 import java.io.IOException;
 

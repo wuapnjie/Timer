@@ -27,7 +27,7 @@
 			android:paddingRight="8dp"
 			android:paddingTop="8dp"
 			android:text="Preview"
-			android:textColor="@color/common_black"
+			android:textColor="#1e1e1e"
 			android:textSize="18dp"/>
 
 		<LinearLayout

@@ -10,9 +10,10 @@
 	app:cardCornerRadius="2dp">
 
 	<LinearLayout
-		android:background="#FFFFFF"
+		android:padding="8dp"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
+		android:background="#FFFFFF"
 		android:orientation="vertical">
 
 		<TextView
@@ -21,19 +22,59 @@
 			android:layout_height="wrap_content"
 			android:background="#FFF"
 			android:hint="aaaa"
-			android:padding="8dp"
-			android:textColor="@color/common_black"
-			android:textSize="24dp"/>
+			android:paddingTop="8dp"
+			android:paddingBottom="8dp"
+			android:textSize="16sp"/>
 
 		<TextView
 			android:id="@+id/other_wishes_time"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:background="#FFF"
-			android:gravity="center"
+			android:gravity="right"
 			android:hint="2011"
-			android:textColor="@color/common_black"
-			android:textSize="16sp"/>
+			android:textSize="13sp"/>
+
+		<LinearLayout
+			android:layout_marginTop="8dp"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:orientation="horizontal">
+
+			<ImageView
+				android:clickable="true"
+				android:id="@+id/iv_like"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+			    android:background="@drawable/ic_favorite_outline_blue_grey_300_24dp"
+				/>
+
+			<ImageView
+				android:clickable="true"
+				android:layout_marginLeft="8dp"
+				android:id="@+id/iv_comments"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:background="@drawable/ic_comment_grey_300_24dp"/>
+
+			<LinearLayout
+				android:gravity="right|center_vertical"
+				android:orientation="horizontal"
+				android:layout_width="match_parent"
+				android:layout_height="match_parent">
+				<ImageView
+					android:layout_marginRight="2dp"
+					android:src="@drawable/ic_favorite_deep_purple_a400_18dp"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"/>
+				<TextView
+					android:id="@+id/tv_like_num"
+					android:gravity="center_vertical"
+					android:hint="12 likes"
+					android:layout_width="wrap_content"
+					android:layout_height="match_parent"/>
+			</LinearLayout>
+		</LinearLayout>
 	</LinearLayout>
 
 </android.support.v7.widget.CardView>

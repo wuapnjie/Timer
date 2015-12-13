@@ -83,4 +83,6 @@
 	<string name="platform_wechat_zone">微信朋友圈</string>
 	<string name="platform_qq">QQ</string>
 
+	<string name="edit_comment_hint">发表评论</string>
+
 </resources>

@@ -20,11 +20,11 @@
 			android:background="#FFF"
 			android:gravity="center"
 			android:hint="HELLO"
+			android:textColor="@color/half_black"
 			android:paddingBottom="30dp"
 			android:paddingLeft="10dp"
 			android:paddingRight="10dp"
 			android:paddingTop="10dp"
-			android:textColor="@color/common_black"
 			android:textSize="30sp"
 			/>
 
@@ -36,7 +36,6 @@
 			android:gravity="right"
 			android:hint="2013"
 			android:paddingRight="16dp"
-			android:textColor="@color/common_black"
 			android:textSize="14sp"/>
 	</LinearLayout>
 </FrameLayout>

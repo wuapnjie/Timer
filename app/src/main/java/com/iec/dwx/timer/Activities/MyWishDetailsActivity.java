@@ -1,22 +1,20 @@
 package com.iec.dwx.timer.Activities;
 
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.internal.view.menu.ActionMenuItemView;
 import android.support.v7.widget.Toolbar;
-import android.text.Editable;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.iec.dwx.timer.Adapters.WishDetailsPagerAdapter;
 import com.iec.dwx.timer.Beans.CommonBean;
+import com.iec.dwx.timer.Beans.OthersWish;
 import com.iec.dwx.timer.R;
-import com.iec.dwx.timer.Utils.DBHelper;
+import com.iec.dwx.timer.Utils.DataBaseHelper.DBHelper;
 import com.iec.dwx.timer.Utils.Utils;
 
 import java.util.ArrayList;
@@ -27,8 +25,8 @@ import cn.bmob.v3.listener.SaveListener;
 /**
  * Created by Administrator on 2015/10/16 0016.
  */
-public class MyWishDetails extends BaseActivity implements Toolbar.OnMenuItemClickListener {
-    private final String TAG = MyWishDetails.class.getSimpleName();
+public class MyWishDetailsActivity extends BaseActivity implements Toolbar.OnMenuItemClickListener {
+    private final String TAG = MyWishDetailsActivity.class.getSimpleName();
     private ViewPager viewPager=null;
     private WishDetailsPagerAdapter madapter=null;
     private List<View> viewList=new ArrayList<View>();
@@ -125,24 +123,36 @@ public class MyWishDetails extends BaseActivity implements Toolbar.OnMenuItemCli
     //分享键被点击
     private void clickedShare(){
         List<CommonBean> data=DBHelper.getInstance(this).getAllBeans(DBHelper.DB_TABLE_WISH);
-        CommonBean commonBean=data.get(ViewPagerSelectedItem);
-        if(commonBean.getPicture().equals("0")){
-            commonBean.save(this, new SaveListener() {
-               @Override
-               public void onSuccess() {
-                   commonBean.setPicture("1");
-                   DBHelper.getInstance(MyWishDetails.this).updateBean(DBHelper.DB_TABLE_WISH, commonBean.getID(), commonBean);
-                   Toast.makeText(MyWishDetails.this,"成功分享",Toast.LENGTH_SHORT).show();
-               }
+//        if(commonBean.getPicture().equals("0")){
+//            commonBean.save(this, new SaveListener() {
+//               @Override
+//               public void onSuccess() {
+//                   commonBean.setPicture("1");
+//                   DBHelper.getInstance(MyWishDetailsActivity.this).updateBean(DBHelper.DB_TABLE_WISH, commonBean.getID(), commonBean);
+//                   Toast.makeText(MyWishDetailsActivity.this,"成功分享",Toast.LENGTH_SHORT).show();
+//               }
+//
+//               @Override
+//               public void onFailure(int i, String s) {
+//                   Toast.makeText(MyWishDetailsActivity.this,"分享失败",Toast.LENGTH_SHORT).show();
+//               }
+//           });
+//        }else{
+//            Toast.makeText(MyWishDetailsActivity.this,"已经分享过了",Toast.LENGTH_SHORT).show();
+//        }
+        OthersWish othersWish = new OthersWish(data.get(ViewPagerSelectedItem).getContent(),0,0);
+        othersWish.save(this, new SaveListener() {
+            @Override
+            public void onSuccess() {
+                Toast.makeText(MyWishDetailsActivity.this,"成功分享",Toast.LENGTH_SHORT).show();
+            }
 
-               @Override
-               public void onFailure(int i, String s) {
-                   Toast.makeText(MyWishDetails.this,"分享失败",Toast.LENGTH_SHORT).show();
-               }
-           });
-        }else{
-            Toast.makeText(MyWishDetails.this,"已经分享过了",Toast.LENGTH_SHORT).show();
-        }
+            @Override
+            public void onFailure(int i, String s) {
+                Toast.makeText(MyWishDetailsActivity.this,"分享失败",Toast.LENGTH_SHORT).show();
+            }
+        });
+
 
     }
 

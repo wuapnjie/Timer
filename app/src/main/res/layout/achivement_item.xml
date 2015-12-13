@@ -5,6 +5,7 @@
 	xmlns:app="http://schemas.android.com/apk/res-auto"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
+
 	android:layout_margin="8dp"
 	app:cardCornerRadius="2dp"
 
@@ -30,7 +31,7 @@
 			android:layout_marginTop="16dp"
 			android:gravity="center"
 			android:padding="8dp"
-			android:textColor="@color/common_black"
+			android:textColor="@color/half_black"
 			android:text="2014-11-11\n19:12:32"
 			android:textSize="20sp"/>
 
