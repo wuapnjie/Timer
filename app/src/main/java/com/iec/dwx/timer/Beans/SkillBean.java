@@ -6,7 +6,6 @@ import cn.bmob.v3.BmobObject;
  * Created by Administrator on 2015/11/18 0018.
  */
 public class SkillBean extends BmobObject{
-    private final String TAG = SkillBean.class.getSimpleName();
 
     private int mId;
     private String mCotent;

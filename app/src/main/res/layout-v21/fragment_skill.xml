@@ -104,7 +104,7 @@
 						android:layout_weight="1"
 						android:background="?android:attr/selectableItemBackground"
 						android:text="@string/my_wish_add_view_cancel_btn"
-						android:textColor="@color/common_black"/>
+						/>
 
 					<Button
 						android:id="@+id/my_skill_add_btn_sure"
@@ -113,7 +113,7 @@
 						android:layout_weight="1"
 						android:background="?android:attr/selectableItemBackground"
 						android:text="@string/my_wish_add_view_sure_btn"
-						android:textColor="@color/common_black"/>
+						/>
 				</LinearLayout>
 
 			</LinearLayout>

@@ -29,7 +29,7 @@
 			android:layout_margin="16dp"/>
 	</FrameLayout>
 
-	<android.support.v7.widget.Toolbar
+	 <android.support.v7.widget.Toolbar
 		android:id="@+id/menu_bar"
 		android:layout_width="match_parent"
 		android:layout_height="?actionBarSize"

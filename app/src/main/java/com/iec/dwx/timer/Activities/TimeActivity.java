@@ -22,6 +22,7 @@ import java.util.Calendar;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import cn.bmob.v3.Bmob;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -59,8 +60,16 @@ public class TimeActivity extends AppCompatActivity implements Toolbar.OnMenuIte
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_time);
         ButterKnife.bind(this);
+        Bmob.initialize(this, "3a39e05d106b31b3f61a8ce842933a8a");
+
         initialize();
         initListener();
+
+        pullNotification();
+
+    }
+
+    private void pullNotification() {
 
     }
 
@@ -143,6 +152,11 @@ public class TimeActivity extends AppCompatActivity implements Toolbar.OnMenuIte
                 startActivity(intent);
                 overridePendingTransition(R.anim.activity_time_enter, R.anim.activity_time_exit);
                 return true;
+            case R.id.menu_time_notification:
+                intent.setClass(this, NotificationActivity.class);
+                startActivity(intent);
+                overridePendingTransition(R.anim.activity_time_enter, R.anim.activity_time_exit);
+                return true;
         }
         intent.putExtra(MainActivity.INTENT_KEY_PAGE, flag);
         startActivity(intent);
@@ -221,7 +235,7 @@ public class TimeActivity extends AppCompatActivity implements Toolbar.OnMenuIte
                 Log.d(TAG, "end->" + end);
                 if ((mStart - end) > Utils.dp2px(60)) {
                     startActivity(new Intent(this, MainActivity.class));
-                    overridePendingTransition(R.anim.activity_time_enter,R.anim.activity_time_exit);
+                    overridePendingTransition(R.anim.activity_time_enter, R.anim.activity_time_exit);
                 }
                 break;
         }

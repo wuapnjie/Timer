@@ -18,7 +18,8 @@
 	<color name="card_text_color">#dfff</color>
 
 	<color name="toolbar_text_color">#1e1e1e</color>
-	<color name="common_black">#1e1e1e</color>
+	<color name="common_black">#E0E0E0</color>
 	<color name="mywish_into_public_wish_background">#e62222</color>
 
+	<color name="half_black">#1e1e1e</color>
 </resources>

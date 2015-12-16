@@ -6,7 +6,7 @@
 	android:layout_height="match_parent"
 	android:background="@color/card_one_background"
 	android:orientation="vertical"
-	tools:context=".TimeActivity"
+	tools:context=".Activities.TimeActivity"
 	tools:showIn="@layout/activity_time">
 
 	<com.iec.dwx.timer.Views.ClockView
@@ -24,7 +24,7 @@
 		android:orientation="vertical">
 
 		<TextView
-			android:textColor="@color/common_black"
+			android:textColor="@color/half_black"
 			android:id="@+id/tv_card_one_head"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
@@ -37,7 +37,7 @@
 			android:layout_height="20dp"/>
 
 		<TextView
-			android:textColor="@color/common_black"
+			android:textColor="@color/half_black"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:paddingLeft="@dimen/card_subhead_padding_left"
@@ -57,7 +57,7 @@
 			android:orientation="vertical">
 
 			<TextView
-				android:textColor="@color/common_black"
+				android:textColor="@color/half_black"
 				android:id="@+id/tv_card_one_cell_1"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
@@ -70,10 +70,10 @@
 			<View
 				android:layout_width="match_parent"
 				android:layout_height="0.1dp"
-				android:background="@color/common_black"/>
+				android:background="@color/half_black"/>
 
 			<TextView
-				android:textColor="@color/common_black"
+				android:textColor="@color/half_black"
 				android:id="@+id/tv_card_one_cell_2"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
@@ -86,10 +86,10 @@
 			<View
 				android:layout_width="match_parent"
 				android:layout_height="0.1dp"
-				android:background="@color/common_black"/>
+				android:background="@color/half_black"/>
 
 			<TextView
-				android:textColor="@color/common_black"
+				android:textColor="@color/half_black"
 				android:id="@+id/tv_card_one_cell_3"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
@@ -102,10 +102,10 @@
 			<View
 				android:layout_width="match_parent"
 				android:layout_height="0.1dp"
-				android:background="@color/common_black"/>
+				android:background="@color/half_black"/>
 
 			<TextView
-				android:textColor="@color/common_black"
+				android:textColor="@color/half_black"
 				android:id="@+id/tv_card_one_cell_4"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
@@ -128,7 +128,7 @@
 			android:layout_gravity="center"
 			android:layout_marginBottom="14dp"
 			android:background="@drawable/btn_card_one"
-			android:textColor="@color/common_black"
+			android:textColor="@color/half_black"
 			android:gravity="center"
 			android:text="@string/card_one_btn"
 			android:textSize="@dimen/card_btn_text_size"/>

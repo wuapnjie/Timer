@@ -1,11 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-      xmlns:app="http://schemas.android.com/apk/res-auto">
+      xmlns:app="http://schemas.android.com/apk/res-auto"
+      xmlns:tools="http://schemas.android.com/tools"
+      tools:context=".Activities.TimeActivity"
+	>
+
+	<item
+		android:id="@+id/menu_time_notification"
+		android:icon="@drawable/ic_notifications_none_black_24dp"
+		android:title="@string/menu_time_notification"
+		app:showAsAction="ifRoom"
+		>
+	</item>
 	<item
 		android:id="@+id/menu_time_more"
 		android:icon="@drawable/ic_more_vert_black_24dp"
 		android:title="more"
-		app:showAsAction="always">
+		app:showAsAction="ifRoom">
 		<menu>
 			<item
 				android:id="@+id/menu_time_wish"
@@ -34,30 +45,5 @@
 			</item>
 		</menu>
 	</item>
-
-	<!--<item-->
-	<!--android:icon="@drawable/ic_lamp"-->
-	<!--android:id="@+id/menu_time_wish"-->
-	<!--android:title="@string/menu_time_wish">-->
-	<!--</item>-->
-	<!--<item-->
-	<!--android:icon="@drawable/ic_medal"-->
-	<!--android:id="@+id/menu_time_achievement"-->
-	<!--android:title="@string/menu_time_achievement">-->
-	<!--</item>-->
-	<!--<item-->
-	<!--android:icon="@drawable/ic_graduation"-->
-	<!--android:id="@+id/menu_time_skill"-->
-	<!--android:title="@string/menu_time_skill">-->
-	<!--</item>-->
-	<!--<item-->
-	<!--android:icon="@drawable/ic_setting"-->
-	<!--android:id="@+id/menu_time_reset"-->
-	<!--android:title="@string/menu_time_reset">-->
-	<!--</item>-->
-	<!--<item-->
-	<!--android:icon="@drawable/ic_about"-->
-	<!--android:id="@+id/menu_time_about"-->
-	<!--android:title="@string/menu_time_about">-->
-	<!--</item>-->
 </menu>
+
