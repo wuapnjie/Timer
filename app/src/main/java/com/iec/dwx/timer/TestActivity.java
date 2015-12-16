@@ -1,9 +1,11 @@
 package com.iec.dwx.timer;
 
 import android.os.Bundle;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -42,7 +44,9 @@ public class TestActivity extends BaseActivity{
 
         mBtnSend.setOnClickListener(v -> send());
 
+        TelephonyManager telephonyManager = (TelephonyManager) this.getSystemService(TELEPHONY_SERVICE);
 
+        Log.d(TAG, "onCreate: deviceID->"+telephonyManager.getDeviceId());
 //        SkillBean skillBean1 =new SkillBean();
 //        skillBean1.setmCotent("test1");
 //        skillBean1.setMarginTop(1);

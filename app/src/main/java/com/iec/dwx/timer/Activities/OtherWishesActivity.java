@@ -15,12 +15,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.iec.dwx.timer.Beans.OthersWish;
+import com.iec.dwx.timer.Beans.User;
 import com.iec.dwx.timer.R;
 
 import java.util.List;
 
-import cn.bmob.v3.Bmob;
 import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.BmobUser;
+import cn.bmob.v3.datatype.BmobRelation;
 import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.UpdateListener;
 
@@ -28,9 +30,11 @@ import cn.bmob.v3.listener.UpdateListener;
  * Created by Administrator on 2015/10/5 0005.
  */
 public class OtherWishesActivity extends BaseActivity {
+
     private final String TAG = OtherWishesActivity.class.getSimpleName();
-    private RecyclerView.LayoutManager mLayoutManager;
     private RecyclerView mRecyclerView;
+    private SwipeRefreshLayout mSwipeRefreshLayout;
+    private OtherWishAdapter mOtherWishAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,8 +46,8 @@ public class OtherWishesActivity extends BaseActivity {
 
         getBmobData();
 
-        mLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
-        mRecyclerView.setLayoutManager(mLayoutManager);
+        StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+        mRecyclerView.setLayoutManager(layoutManager);
 
         ((Toolbar) findViewById(R.id.toolbar_other_wishes)).setNavigationOnClickListener(v -> onBackPressed());
     }
@@ -52,44 +56,43 @@ public class OtherWishesActivity extends BaseActivity {
      * 初始化findviewbyid还有bmob初始化
      */
     private void initFindView() {
-        Bmob.initialize(this, "3a39e05d106b31b3f61a8ce842933a8a");
         mRecyclerView = (RecyclerView) findViewById(R.id.rv_other_wishes);
+        mOtherWishAdapter = new OtherWishAdapter();
+        mRecyclerView.setAdapter(mOtherWishAdapter);
     }
 
     /**
      * 初始化刷新组建
      */
     private void initSwipeRefreshLayout() {
-        SwipeRefreshLayout mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.other_wishes_swipe_refresh);
+        mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.other_wishes_swipe_refresh);
         mSwipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
                 android.R.color.holo_green_light, android.R.color.holo_orange_light,
                 android.R.color.holo_red_light);
-        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        //do your fucking coding refresh here!!
-                        mSwipeRefreshLayout.setRefreshing(false);
-                    }
-                }, 5000);
-            }
+        mSwipeRefreshLayout.setOnRefreshListener(() -> {
+            getBmobData();
+            new Handler().postDelayed(() -> {
+                //do your fucking coding refresh here!!
+                mSwipeRefreshLayout.setRefreshing(false);
+            }, 5000);
         });
+        mSwipeRefreshLayout.setRefreshing(true);
     }
 
     private void getBmobData() {
         BmobQuery<OthersWish> query = new BmobQuery<>();
         query.setLimit(20);
+        query.order("-createdAt");
         query.findObjects(this, new FindListener<OthersWish>() {
             @Override
             public void onSuccess(List<OthersWish> list) {
-                System.out.println("查询成功：共" + list.size() + "条数据。");
+//                System.out.println("查询成功：共" + list.size() + "条数据。");
                 for (OthersWish wish : list) {
                     System.out.println(wish.getContent());
                 }
-                Adapter adapter = new Adapter(list);
-                mRecyclerView.setAdapter(adapter);
+
+                mOtherWishAdapter.setData(list);
+                mSwipeRefreshLayout.setRefreshing(false);
             }
 
             @Override
@@ -100,13 +103,25 @@ public class OtherWishesActivity extends BaseActivity {
         });
     }
 
-    private class Adapter extends RecyclerView.Adapter<OtherViewHolder> {
+    private class OtherWishAdapter extends RecyclerView.Adapter<OtherViewHolder> {
 
         private List<OthersWish> mData = null;
 
-        public Adapter(List data) {
+        public OtherWishAdapter() {
+        }
+
+        public OtherWishAdapter(List<OthersWish> data) {
             super();
             mData = data;
+        }
+
+        public List<OthersWish> getData() {
+            return mData;
+        }
+
+        public void setData(List<OthersWish> data) {
+            mData = data;
+            notifyDataSetChanged();
         }
 
         @Override
@@ -122,31 +137,37 @@ public class OtherWishesActivity extends BaseActivity {
                 int[] location = new int[2];
                 holder.mContent.getLocationOnScreen(location);
                 Bundle bundle = new Bundle();
-                bundle.putSerializable("wish",wish);
-                bundle.putIntArray("location",location);
+                bundle.putSerializable("wish", wish);
+                bundle.putIntArray("location", location);
                 Intent intent = new Intent(OtherWishesActivity.this, WishCommentActivity.class);
                 intent.putExtras(bundle);
                 startActivity(intent);
-                overridePendingTransition(0,0);
+                overridePendingTransition(0, 0);
             });
 
             holder.mTime.setText(wish.getCreatedAt());
             holder.mContent.setText(wish.getContent());
-            holder.mTvLikeNum.setText(wish.getLikeNumber() + " likes");
+            holder.mTvLikeNum.setText(String.format("%d likes", wish.getLikeNumber()));
 
             holder.mIvLike.setOnClickListener(v -> {
-                wish.setLikeNumber(wish.getLikeNumber() + 1);
+                wish.increment("likeNumber");
+
+                BmobRelation relation = new BmobRelation();
+                relation.add(BmobUser.getCurrentUser(OtherWishesActivity.this, User.class));
+
+                wish.setLikes(relation);
+
                 wish.update(OtherWishesActivity.this, new UpdateListener() {
                     @Override
                     public void onSuccess() {
-                        holder.mTvLikeNum.setText(wish.getLikeNumber() + " likes");
+                        holder.mTvLikeNum.setText(String.format("%d likes", wish.getLikeNumber()));
                         holder.mIvLike.setBackgroundResource(R.drawable.ic_favorite_red_400_24dp);
                         Toast.makeText(OtherWishesActivity.this, "You liked this wish", Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
                     public void onFailure(int i, String s) {
-                        Toast.makeText(OtherWishesActivity.this, "Failured,please retry", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(OtherWishesActivity.this, "Failure,please retry", Toast.LENGTH_SHORT).show();
                     }
                 });
             });
@@ -155,18 +176,18 @@ public class OtherWishesActivity extends BaseActivity {
                 int[] location = new int[2];
                 holder.mIvComment.getLocationOnScreen(location);
                 Bundle bundle = new Bundle();
-                bundle.putSerializable("wish",wish);
-                bundle.putIntArray("location",location);
+                bundle.putSerializable("wish", wish);
+                bundle.putIntArray("location", location);
                 Intent intent = new Intent(OtherWishesActivity.this, WishCommentActivity.class);
                 intent.putExtras(bundle);
                 startActivity(intent);
-                overridePendingTransition(0,0);
+                overridePendingTransition(0, 0);
             });
         }
 
         @Override
         public int getItemCount() {
-            return mData.size();
+            return mData==null?0:mData.size();
         }
     }
 

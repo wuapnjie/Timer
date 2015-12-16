@@ -1,7 +1,6 @@
 package com.iec.dwx.timer.Beans;
 
 import cn.bmob.v3.BmobObject;
-import cn.bmob.v3.datatype.BmobPointer;
 
 /**
  * Created by Flying SnowBean on 2015/12/13.
@@ -9,14 +8,24 @@ import cn.bmob.v3.datatype.BmobPointer;
 public class WishComment extends BmobObject {
     private OthersWish wish;
     private String content;
+    private User author;
 
-    public WishComment(OthersWish wish,String content){
+    public WishComment(OthersWish wish, String content, User user) {
         this.wish = wish;
         this.content = content;
+        this.author = user;
     }
 
     public WishComment() {
 
+    }
+
+    public User getUser() {
+        return author;
+    }
+
+    public void setUser(User user) {
+        this.author = user;
     }
 
     public String getContent() {

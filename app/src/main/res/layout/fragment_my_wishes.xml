@@ -95,7 +95,7 @@
 						android:layout_weight="1"
 						android:background="?android:attr/selectableItemBackground"
 						android:text="@string/my_wish_add_view_cancel_btn"
-						android:textColor="@color/common_black"/>
+						android:textColor="@color/half_black"/>
 
 					<Button
 						android:id="@+id/my_wishes_add_btn_sure"
@@ -104,7 +104,7 @@
 						android:layout_weight="1"
 						android:background="?android:attr/selectableItemBackground"
 						android:text="@string/my_wish_add_view_sure_btn"
-						android:textColor="@color/common_black"/>
+						android:textColor="@color/half_black"/>
 				</LinearLayout>
 			</LinearLayout>
 		</android.support.v7.widget.CardView>

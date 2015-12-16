@@ -7,19 +7,24 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.iec.dwx.timer.Adapters.WishDetailsPagerAdapter;
 import com.iec.dwx.timer.Beans.CommonBean;
 import com.iec.dwx.timer.Beans.OthersWish;
+import com.iec.dwx.timer.Beans.User;
 import com.iec.dwx.timer.R;
 import com.iec.dwx.timer.Utils.DataBaseHelper.DBHelper;
 import com.iec.dwx.timer.Utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import cn.bmob.v3.Bmob;
+import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.listener.SaveListener;
 
 /**
@@ -27,43 +32,44 @@ import cn.bmob.v3.listener.SaveListener;
  */
 public class MyWishDetailsActivity extends BaseActivity implements Toolbar.OnMenuItemClickListener {
     private final String TAG = MyWishDetailsActivity.class.getSimpleName();
-    private ViewPager viewPager=null;
-    private WishDetailsPagerAdapter madapter=null;
-    private List<View> viewList=new ArrayList<View>();
+    private ViewPager viewPager = null;
+    private List<View> viewList = new ArrayList<>();
     private int ViewPagerSelectedItem;
-    private Boolean EditableFlag=false;
+    private Boolean EditableFlag = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Bmob.initialize(this, "3a39e05d106b31b3f61a8ce842933a8a");
-        viewPager= (ViewPager) findViewById(R.id.detail_viewPager);
+        viewPager = (ViewPager) findViewById(R.id.detail_viewPager);
 
 
-        madapter=new WishDetailsPagerAdapter(getViewList());
-        viewPager.setAdapter(madapter);
+        WishDetailsPagerAdapter adapter = new WishDetailsPagerAdapter(getViewList());
+        viewPager.setAdapter(adapter);
         choosePager();
         setViewPagerOnPageChangeListener(viewPager);
 
-        ((Toolbar) findViewById(R.id.toolbar_my_wishes_details)).setNavigationOnClickListener(v -> onBackPressed());
-        ((Toolbar)findViewById(R.id.toolbar_my_wishes_details)).inflateMenu(R.menu.menu_wishes_details);
-        ((Toolbar)findViewById(R.id.toolbar_my_wishes_details)).setOnMenuItemClickListener(this);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_my_wishes_details);
+        toolbar.setNavigationOnClickListener(v -> onBackPressed());
+        toolbar.inflateMenu(R.menu.menu_wishes_details);
+        toolbar.setOnMenuItemClickListener(this);
+
     }
 
-    private void setViewPagerOnPageChangeListener(ViewPager viewPager){
+    private void setViewPagerOnPageChangeListener(ViewPager viewPager) {
         viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                if (position==0){
+                if (position == 0) {
                     getSwipeBackLayout().setEdgeSize(Utils.dp2px(200));
-                }else {
+                } else {
                     getSwipeBackLayout().setEdgeSize(0);
                 }
             }
 
             @Override
             public void onPageSelected(int position) {
-                System.out.println(position+"");
+                System.out.println(position + "");
                 ViewPagerSelectedItem = position;
             }
 
@@ -74,16 +80,16 @@ public class MyWishDetailsActivity extends BaseActivity implements Toolbar.OnMen
         });
     }
 
-    private List<View> getViewList(){
+    private List<View> getViewList() {
         viewList.clear();
-        List<CommonBean> data=DBHelper.getInstance(this).getAllBeans(DBHelper.DB_TABLE_WISH);
-        View view=null;
-        for(int i=0;i<data.size();i++){
-            view=LayoutInflater.from(this).inflate(R.layout.detail_textview,null);
-            EditText editText= (EditText) view.findViewById(R.id.my_wishes_details_content_editView);
+        List<CommonBean> data = DBHelper.getInstance(this).getAllBeans(DBHelper.DB_TABLE_WISH);
+        View view;
+        for (int i = 0; i < data.size(); i++) {
+            view = LayoutInflater.from(this).inflate(R.layout.detail_textview, null);
+            EditText editText = (EditText) view.findViewById(R.id.my_wishes_details_content_editView);
             editText.setText(data.get(i).getContent());
             editText.setEnabled(false);
-            ((TextView)view.findViewById(R.id.my_wishes_details_time_textview)).setText(
+            ((TextView) view.findViewById(R.id.my_wishes_details_time_textview)).setText(
                     data.get(i).getTime()
             );
             viewList.add(view);
@@ -92,11 +98,11 @@ public class MyWishDetailsActivity extends BaseActivity implements Toolbar.OnMen
         return viewList;
     }
 
-    private void choosePager(){
+    private void choosePager() {
         int flag;
-        if(( flag=getIntent().getIntExtra("ClickPosition",-1))>-1){
+        if ((flag = getIntent().getIntExtra("ClickPosition", -1)) > -1) {
             viewPager.setCurrentItem(flag);
-            ViewPagerSelectedItem=flag;
+            ViewPagerSelectedItem = flag;
         }
     }
 
@@ -107,13 +113,13 @@ public class MyWishDetailsActivity extends BaseActivity implements Toolbar.OnMen
 
     @Override
     public boolean onMenuItemClick(MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.menu_my_wishes_detail_share:
-                System.out.println("menu_my_wishes_detail_share");
-                 clickedShare();
+//                System.out.println("menu_my_wishes_detail_share");
+                clickedShare();
                 break;
             case R.id.menu_my_wishes_detail_edit:
-                System.out.println("menu_my_wishes_detail_delete");
+//                System.out.println("menu_my_wishes_detail_delete");
                 clickedEdit();
                 break;
         }
@@ -121,8 +127,8 @@ public class MyWishDetailsActivity extends BaseActivity implements Toolbar.OnMen
     }
 
     //分享键被点击
-    private void clickedShare(){
-        List<CommonBean> data=DBHelper.getInstance(this).getAllBeans(DBHelper.DB_TABLE_WISH);
+    private void clickedShare() {
+        List<CommonBean> data = DBHelper.getInstance(this).getAllBeans(DBHelper.DB_TABLE_WISH);
 //        if(commonBean.getPicture().equals("0")){
 //            commonBean.save(this, new SaveListener() {
 //               @Override
@@ -140,16 +146,17 @@ public class MyWishDetailsActivity extends BaseActivity implements Toolbar.OnMen
 //        }else{
 //            Toast.makeText(MyWishDetailsActivity.this,"已经分享过了",Toast.LENGTH_SHORT).show();
 //        }
-        OthersWish othersWish = new OthersWish(data.get(ViewPagerSelectedItem).getContent(),0,0);
+        OthersWish othersWish = new OthersWish(data.get(ViewPagerSelectedItem).getContent(), 0, 0, BmobUser.getCurrentUser(this, User.class));
         othersWish.save(this, new SaveListener() {
             @Override
             public void onSuccess() {
-                Toast.makeText(MyWishDetailsActivity.this,"成功分享",Toast.LENGTH_SHORT).show();
+                Toast.makeText(MyWishDetailsActivity.this, "成功分享", Toast.LENGTH_SHORT).show();
+                finish();
             }
 
             @Override
             public void onFailure(int i, String s) {
-                Toast.makeText(MyWishDetailsActivity.this,"分享失败",Toast.LENGTH_SHORT).show();
+                Toast.makeText(MyWishDetailsActivity.this, "分享失败", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -157,24 +164,27 @@ public class MyWishDetailsActivity extends BaseActivity implements Toolbar.OnMen
     }
 
     //删除键被点击,现在被改为修改了
-    private void clickedEdit(){
-        List<CommonBean> data=DBHelper.getInstance(this).getAllBeans(DBHelper.DB_TABLE_WISH);
-        CommonBean commonBean=data.get(ViewPagerSelectedItem);
-        EditText editText= (EditText) viewList.get(ViewPagerSelectedItem).findViewById(R.id.my_wishes_details_content_editView);
+    private void clickedEdit() {
+        List<CommonBean> data = DBHelper.getInstance(this).getAllBeans(DBHelper.DB_TABLE_WISH);
+        CommonBean commonBean = data.get(ViewPagerSelectedItem);
+        EditText editText = (EditText) viewList.get(ViewPagerSelectedItem).findViewById(R.id.my_wishes_details_content_editView);
 
-        if(!EditableFlag){
+        if (!EditableFlag) {
             editText.setEnabled(true);
-            ((ActionMenuItemView)findViewById(R.id.menu_my_wishes_detail_edit)).setIcon(getResources().getDrawable(R.drawable.ic_done_black_24dp));
-            EditableFlag=!EditableFlag;
-        }else {
+            editText.selectAll();
+            ((InputMethodManager)this.getSystemService(INPUT_METHOD_SERVICE)).toggleSoftInputFromWindow(editText.getWindowToken(),InputMethodManager.SHOW_FORCED,0);
+
+            ((ActionMenuItemView) findViewById(R.id.menu_my_wishes_detail_edit)).setIcon(getResources().getDrawable(R.drawable.ic_done_black_24dp));
+            EditableFlag = !EditableFlag;
+        } else {
             commonBean.setContent(editText.getText().toString());
-            commonBean.setPicture(0+"");
+            commonBean.setPicture(0 + "");
             DBHelper.getInstance(this).updateBean(DBHelper.DB_TABLE_WISH, commonBean.getID(), commonBean);
             editText.setEnabled(false);
 
-            EditableFlag=!EditableFlag;
-            ((ActionMenuItemView)findViewById(R.id.menu_my_wishes_detail_edit)).setIcon(getResources().getDrawable(R.drawable.ic_mode_edit_black_24dp));
-            Toast.makeText(this,"修改成功",Toast.LENGTH_LONG).show();
+            EditableFlag = !EditableFlag;
+            ((ActionMenuItemView) findViewById(R.id.menu_my_wishes_detail_edit)).setIcon(getResources().getDrawable(R.drawable.ic_mode_edit_black_24dp));
+            Toast.makeText(this, "修改成功", Toast.LENGTH_LONG).show();
         }
     }
 

@@ -117,9 +117,10 @@ public class MyWishesFragment extends Fragment implements Toolbar.OnMenuItemClic
 
     public void registerListener() {
         if (getView() == null) return;
-        ((Toolbar) getView().findViewById(R.id.toolbar_my_wishes)).inflateMenu(R.menu.menu_my_wishes);
-        ((Toolbar) getView().findViewById(R.id.toolbar_my_wishes)).setOnMenuItemClickListener(this);
-        ((Toolbar) getView().findViewById(R.id.toolbar_my_wishes)).setNavigationOnClickListener(v -> getActivity().onBackPressed());
+        Toolbar toolbar = (Toolbar) getView().findViewById(R.id.toolbar_my_wishes);
+        toolbar.inflateMenu(R.menu.menu_my_wishes);
+        toolbar.setOnMenuItemClickListener(this);
+        toolbar.setNavigationOnClickListener(v -> getActivity().onBackPressed());
 
         EditText editText = (EditText) getView().findViewById(R.id.my_wishes_add_editText);
 
@@ -260,19 +261,13 @@ public class MyWishesFragment extends Fragment implements Toolbar.OnMenuItemClic
             add_view.setVisibility(View.GONE);
             //隐藏键盘
             imm.hideSoftInputFromInputMethod(editText.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-            list = DBHelper.getInstance(getContext()).getAllBeans(DBHelper.DB_TABLE_WISH);
-            mAdapter = new MyWishesAdapter(list, getContext());
-            mAdapter.setOnItemClickListener(new MyWishesAdapter.OnRecyclerViewItemClickListener() {
-                @Override
-                public void onItemClick(View view, int position) {
-                    System.out.println("itemClick" + position);
-                    Intent intent = new Intent(getActivity(), MyWishDetailsActivity.class);
-                    intent.putExtra("ClickPosition", position);
-                    startActivity(intent);
-                }
-            });
+//            list = DBHelper.getInstance(getContext()).getAllBeans(DBHelper.DB_TABLE_WISH);
+//            mAdapter = new MyWishesAdapter(list, getContext());
 
-            recyclerView.setAdapter(mAdapter);
+            list.add(wishBean);
+
+            mAdapter.getData().add(wishBean);
+            mAdapter.notifyItemInserted(list.size());
             Toast.makeText(getContext(), "已保存", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -296,5 +291,6 @@ public class MyWishesFragment extends Fragment implements Toolbar.OnMenuItemClic
         }
         return false;
     }
+
 
 }

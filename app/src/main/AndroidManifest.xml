@@ -59,6 +59,8 @@
 		    android:theme="@style/WishTransparent"
 			></activity>
 
+		<activity android:name=".Activities.NotificationActivity"/>
+
 		<activity
 			android:name="com.mob.tools.MobUIShell"
 			android:configChanges="keyboardHidden|orientation|screenSize"
@@ -73,6 +75,7 @@
 				<category android:name="android.intent.category.DEFAULT"/>
 			</intent-filter>
 		</activity>
+
 
 		<activity android:name=".TestActivity">
 			<!--<intent-filter>-->

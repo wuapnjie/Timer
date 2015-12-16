@@ -86,7 +86,7 @@ public class MyWishesAdapter extends RecyclerView.Adapter<MyWishesAdapter.Wishes
     @Override
     public int getItemCount() {
         //记得修改
-        return mList.size();
+        return mList==null?0:mList.size();
     }
 
     public static class WishesViewHolder extends RecyclerView.ViewHolder {

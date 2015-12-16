@@ -10,12 +10,12 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.iec.dwx.timer.Adapters.WishCommentAdapter;
 import com.iec.dwx.timer.Beans.OthersWish;
+import com.iec.dwx.timer.Beans.User;
 import com.iec.dwx.timer.Beans.WishComment;
 import com.iec.dwx.timer.BuildConfig;
 import com.iec.dwx.timer.R;
@@ -24,6 +24,7 @@ import com.iec.dwx.timer.Utils.Utils;
 import java.util.List;
 
 import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.SaveListener;
 
@@ -61,7 +62,7 @@ public class WishCommentActivity extends BaseActivity {
             mOthersWish = (OthersWish) getIntent().getExtras().getSerializable("wish");
             ((TextView) findViewById(R.id.tv_content)).setText(mOthersWish.getContent());
             ((TextView) findViewById(R.id.tv_time)).setText(mOthersWish.getCreatedAt());
-            mTvLikeNum.setText(mOthersWish.getLikeNumber() + " likes");
+            mTvLikeNum.setText(String.format("%d likes",mOthersWish.getLikeNumber()));
         }
 
         initListener();
@@ -71,16 +72,17 @@ public class WishCommentActivity extends BaseActivity {
     }
 
     private void animateLayout() {
-        int[] location = getIntent().getExtras().getIntArray("location");
+        if (getIntent().getExtras() != null) {
+            //TODO 点击位置未用
+            int[] location = getIntent().getExtras().getIntArray("location");
 
-        mContainer.setScaleY(0.1f);
-        mContainer.setPivotY(location[1]);
+            mContainer.setScaleY(0.1f);
 
-        mContainer.animate()
-                .scaleY(1)
-                .setDuration(400)
-                .setInterpolator(new AccelerateDecelerateInterpolator())
-                .start();
+            mContainer.animate()
+                    .scaleY(1)
+                    .setDuration(300)
+                    .start();
+        }
     }
 
     private void loadData() {
@@ -106,12 +108,16 @@ public class WishCommentActivity extends BaseActivity {
     private void initListener() {
         mIvSend.setOnClickListener(v -> {
             ((InputMethodManager) this.getSystemService(INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(mEditText.getWindowToken(), 0);
+
             String comment = mEditText.getText().toString();
+
             if ("".equals(comment)) {
                 Toast.makeText(this, "The comment can not be empty!", Toast.LENGTH_SHORT).show();
                 return;
             }
-            final WishComment wishComment = new WishComment(mOthersWish, comment);
+
+            final WishComment wishComment = new WishComment(mOthersWish, comment, BmobUser.getCurrentUser(this, User.class));
+
             wishComment.save(this, new SaveListener() {
                 @Override
                 public void onSuccess() {
@@ -128,6 +134,7 @@ public class WishCommentActivity extends BaseActivity {
             });
         });
     }
+
 
     private void initView() {
         ((Toolbar) findViewById(R.id.toolbar_wish_comment)).setNavigationOnClickListener(v -> onBackPressed());

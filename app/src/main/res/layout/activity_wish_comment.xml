@@ -11,19 +11,15 @@
 	android:orientation="vertical"
 	tools:context=".Activities.WishCommentActivity">
 
-	<android.support.design.widget.AppBarLayout
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content">
 
-		<android.support.v7.widget.Toolbar
-			android:id="@+id/toolbar_wish_comment"
-			android:layout_width="match_parent"
-			android:layout_height="?actionBarSize"
-			app:layout_scrollFlags="scroll|enterAlways"
-			app:navigationIcon="@drawable/ic_arrow_back_black_24dp"
-			app:subtitle="心愿墙"
-			app:subtitleTextColor="@color/toolbar_text_color"/>
-	</android.support.design.widget.AppBarLayout>
+	<android.support.v7.widget.Toolbar
+		android:id="@+id/toolbar_wish_comment"
+		android:layout_width="match_parent"
+		android:layout_height="56dp"
+		app:layout_scrollFlags="scroll|enterAlways"
+		app:navigationIcon="@drawable/ic_arrow_back_black_24dp"
+		app:subtitle="心愿墙"
+		app:subtitleTextColor="@color/toolbar_text_color"/>
 
 	<View
 		android:layout_width="match_parent"
@@ -118,14 +114,15 @@
 			android:padding="8dp"/>
 
 		<LinearLayout
-			android:layout_gravity="bottom"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
+			android:layout_gravity="bottom"
 			android:orientation="vertical">
+
 			<View
-				android:layout_marginBottom="2dp"
 				android:layout_width="match_parent"
 				android:layout_height="0.1dp"
+				android:layout_marginBottom="2dp"
 				android:background="@color/common_black"/>
 
 			<LinearLayout
@@ -137,25 +134,20 @@
 				android:paddingLeft="8dp"
 				android:paddingRight="8dp">
 
-				<android.support.design.widget.TextInputLayout
-					android:layout_width="0dp"
-					android:layout_height="wrap_content"
-					android:layout_weight="1">
 
-					<android.support.v7.widget.AppCompatEditText
-						android:id="@+id/et_comment"
-						android:layout_width="match_parent"
-						android:layout_height="match_parent"
-						android:focusable="true"
-						android:hint="@string/edit_comment_hint"/>
-				</android.support.design.widget.TextInputLayout>
+				<android.support.v7.widget.AppCompatEditText
+					android:id="@+id/et_comment"
+					android:layout_width="0dp"
+					android:layout_height="match_parent"
+					android:layout_weight="1"
+					android:focusable="true"
+					android:hint="@string/edit_comment_hint"/>
 
 				<ImageView
 					android:id="@+id/iv_send"
 					android:layout_width="48dp"
 					android:layout_height="48dp"
 					android:layout_gravity="center_vertical"
-					android:background="?attr/selectableItemBackgroundBorderless"
 					android:clickable="true"
 					android:scaleType="center"
 					android:src="@drawable/ic_send_grey_300_24dp"/>
